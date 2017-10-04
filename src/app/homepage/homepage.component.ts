@@ -12,7 +12,8 @@ movieList: object;
   constructor(private apiService: ApiSearchService) { }
 
   ngOnInit() {
-  	this.movieList = this.apiService.getMovieList();
+  	//this.movieList = this.apiService.getMovieList();
+  	this.apiService.testing_list();
   }
 
 

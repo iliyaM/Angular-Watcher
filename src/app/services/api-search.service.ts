@@ -10,6 +10,29 @@ export class ApiSearchService {
 	private sortByPopularity = '&sort_by=popularity.desc';
 
   constructor(private http: Http) { }
+//Observable<Response>
+
+  //Main Object
+  movieList = {
+    type: 'movies',
+    details: [],
+    images: {
+      posters: [],
+      backgrounds: [],
+    }
+  }
+
+  testing_list() {
+    let popular = this.http.get('https://api.themoviedb.org/3/movie/now_playing?api_key=ebbcc2bbea6a3127c6715e6d4e044f66&language=en-US');
+    //let subscription = popular.subscribe(res => console.log(res.json()))
+    let subscription = popular.subscribe(res => {
+      this.movieList['details'] = res.json().results;
+      for (var i = 0; i < this.movieList.details.length; ++i) {
+        this.movieList.images["posters"].push(this.getImageById(this.movieList.details[i].id, 'posters'));
+        this.movieList.images["backgrounds"].push(this.getImageById(this.movieList.details[i].id, 'backdrops'));
+      }
+    });
+  }
 
   getImageById(id, order='first', type='poster') {
   	// declarations
@@ -29,7 +52,7 @@ export class ApiSearchService {
 			image_obj.image_path = image_list[0].file_path
 		}
   })
-	console.warn(image_obj)
+	//console.warn(image_obj)
   	return image_obj
   }
   getMovieList() {
@@ -61,7 +84,7 @@ export class ApiSearchService {
    		movieList["apiObject"] = my_object;
    	});
 
-    // summary
+  // summary
    	console.warn(movieList)
    	console.log(query)
   	console.log(res)

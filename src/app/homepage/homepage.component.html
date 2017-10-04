@@ -1,13 +1,23 @@
-<h1>This is the motherfucking homepage</h1>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+<div class="container">
+<div class="alert alert-info" role="info">
+  Curently under construction.
+</div>
 
 <h2>Top 10 Movies</h2>
-<div class="movies">
+<div class="movies" height=100>
 	<ul>
-	<!-- Movie List Scroll bar -->
-<!-- 		<li *ngFor= "let movie of movieList.images ">
-			<img src="https://image.tmdb.org/t/p/w500{{ movie.image_path }}" alt="">
-		</li> -->
+		<li *ngFor= "let movie of movieList ">
+			<img src="https://image.tmdb.org/t/p/w80{{ movie.poster_path }}" alt="">
+		</li> 
 	</ul>
 </div>
 <h2>Top 10 TvShows</h2>
 <div class="tv"></div>
+<ul>
+	<li *ngFor= "let tv_show of tvShowList ">
+		<img src="https://image.tmdb.org/t/p/w80{{ tv_show.poster_path }}" alt="">
+	</li> 
+</ul>
+</div>

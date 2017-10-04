@@ -1,0 +1,17 @@
+div.movies {
+	display: block;
+	overflow: hidden;
+}
+
+div.movies li {
+	display: inline-block;
+	vertical-align: middle;
+	background-color: yellow;
+	padding: 1em;
+	color: red;
+}
+
+div.movies {
+	overflow: hidden;
+}
+

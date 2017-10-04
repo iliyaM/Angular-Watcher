@@ -11,11 +11,6 @@ export class ApiSearchService {
 
   constructor(private http: Http) { }
 
-  // searchMovie(query){
-  // 	return this.http
-  // 		.get(`${this.base_url}search/movie${this.apikey}&query=${query}`)
-  // 		.map(res => res.json());
-  // }
   getImageById(id, order='first', type='poster') {
   	// declarations
   	let image_obj= {image_path :''};
@@ -23,19 +18,17 @@ export class ApiSearchService {
   	// request list of images, contains posters/backdrops
   	let images =  this.http.get(`${this.base_url}movie/${id}/images${this.apikey}`).map(res => res.json());
   	let subscribtion = images.subscribe( res => {
-  		// Show first poster. change if you needed
-  		let image_list
-  		// choose poster/backdrops
-  		if (type == 'poster') { image_list = res.posters }
-  		if (type == 'backdrop') { image_list = res.backdrops }
+		// Show first poster. change if you needed
+		let image_list
+		// choose poster/backdrops
+		if (type == 'poster') { image_list = res.posters }
+		if (type == 'backdrop') { image_list = res.backdrops }
 
-  		// choose item from list by order/popularity
-  		if (order == 'first') {
-  			image_obj.image_path = image_list[0].file_path
-  			
-  		}
-  		
-  	})
+		// choose item from list by order/popularity
+		if (order == 'first') {
+			image_obj.image_path = image_list[0].file_path
+		}
+  })
 	console.warn(image_obj)
   	return image_obj
   }
@@ -68,10 +61,7 @@ export class ApiSearchService {
    		movieList["apiObject"] = my_object;
    	});
 
- 
-   	
-
-   	// summary
+    // summary
    	console.warn(movieList)
    	console.log(query)
   	console.log(res)

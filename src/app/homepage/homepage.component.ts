@@ -8,21 +8,29 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-subscription; // Interface can be added  here to define the type of observable like MovieList[]
+movieSubscription; // Interface can be added  here to define the type of observable like MovieList[]
+tvSubscription;
 movieList: Array<object>;
+tvList: Array<object>;
 imageSrc:string = 'https://image.tmdb.org/t/p/w500';
 
   constructor(private apiService: ApiSearchService) { }
 
   ngOnInit() {
   	// Subscribing to api call from service and Storing to Global
-  	this.subscription = this.apiService.getMovieList().subscribe(res => {
+  	this.movieSubscription = this.apiService.getMovieList().subscribe(res => {
   		this.movieList = res.results;
+  	});
+
+  	// Subscribing to api call from service and Storing to Global
+  	this.tvSubscription = this.apiService.getTvList().subscribe(res => {
+  		this.tvList = res.results;
   	});
   }
 
   ngOnDestroy() {
-  	this.subscription.unsubscribe();
+  	this.movieSubscription.unsubscribe();
+  	this.tvSubscription.unsubscribe();
   }
 
 

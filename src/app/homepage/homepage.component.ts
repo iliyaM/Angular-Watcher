@@ -42,6 +42,7 @@ imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small_medium}`;
   	// Subscribing to api call from service and Storing to Global
   	this.tvSubscription = this.apiService.getTvList().subscribe(res => {
   		this.tvList = res.results;
+      console.log(res);
   	});
   }
 

@@ -17,10 +17,17 @@ export class ApiSearchService {
   getMovieList() {
     return this.http.get(`${this.base_url}/movie/now_playing${this.apikey}&language=en-US&page=1`).map(res => res.json());
   }
-  
   //Calls HTTP to api with **POPULAR filter and maps to json format
   getTvList() {
     return this.http.get(`${this.base_url}/tv/popular${this.apikey}&language=en-US&page=1`).map(res => res.json());
+  }
+  //Calls HTTP to api with ID qurty and maps 
+  getTvItem(id) {
+    return this.http.get(`${this.base_url}/tv/${id}${this.apikey}&language=en-US`).map(res => res.json());
+  }
+  //Calls HTTP to api with ID qurty for SeasonEpisodes and maps 
+  findRelatedEpisodes(tvItemId, seasonNumber) {
+    return this.http.get(`${this.base_url}/tv/${tvItemId}/season/${seasonNumber}${this.apikey}&language=en-US`).map(res => res.json());
   }
 
 }

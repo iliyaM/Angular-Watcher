@@ -4,13 +4,15 @@
 </div>
 
 <h2>Top 10 Movies</h2>
-<div class="movies" height=100>
-	<ul>
-		<li *ngFor= "let movie of movieList ">
-			{{ movie.name }}
-			<img src="{{imageSrc}}{{ movie.poster_path }}" alt="">
-		</li> 
-	</ul>
+<div class="movies">
+	<div class="container">
+		<div class="row">
+			<div class="card" *ngFor= "let movie of movieList ">
+				<p class="card-text">{{ movie.title }}</p>
+				<img src="{{imageSrc}}{{ movie.poster_path }}" alt="">
+			</div> 
+		</div>
+	</div>
 </div>
 <h2>Top 10 TvShows</h2>
 <div class="tv"></div>

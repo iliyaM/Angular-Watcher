@@ -30,4 +30,13 @@ export class ApiSearchService {
     return this.http.get(`${this.base_url}/tv/${tvItemId}/season/${seasonNumber}${this.apikey}&language=en-US`).map(res => res.json());
   }
 
+  // Call http for single image with path and size of the item
+  getImage(size, path) {
+    return this.http.get(`https://image.tmdb.org/t/p/${size}${path}`);
+  }
+
+  getImages(size, path) {
+    return this.http.get(`https://image.tmdb.org/t/p/${size}${path}`).map(res => res.json());
+  }
+
 }

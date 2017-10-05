@@ -1,40 +1,45 @@
 <!-- For on seasons of the item -->
 <!-- connecting click event to show related episodes for season -->
 
-<!-- Item Details -->
-<div class="itemDetails">
-	<h2>{{tvItem.name}}</h2>
-	<img src="{{imageSrc}}{{ tvItem.poster_path }}" alt="{{tvItem.name}}">
-</div>
+<!-- If Data arrived -->
+<div *ngIf="tvItem.data">
+	<!-- Item Details -->
+	<div class="itemDetails">
+		<h2>{{tvItem.data.name}}</h2>
+		<div *ngIf="tvItem.poster">
+			<img src="{{ tvItem.poster }}" alt="{{tvItem.data.name}}">
+		</div>
+	</div>
 
-<!-- Creators -->
-<div *ngFor="let creator of tvItem.created_by" class="creators">
-	<p>CreatedBy: {{creator.name}}</p>
-	<img src="{{imageSrc}}{{ creator.profile_path }}" alt="{{creator.name}}" style="border-radius: 100%;">
-</div>
+	<!-- Creators -->
+	<div *ngFor="let creator of tvItem.data.created_by" class="creators">
+		<p>CreatedBy: {{creator.name}}</p>
+		<!-- <img src="{{imageSrc}}{{ creator.profile_path }}" alt="{{creator.name}}" style="border-radius: 100%;"> -->
+	</div>
 
-<div class="seasons">
-	<h2>Sesons</h2>
-	<ul>
-		<li *ngFor="let season of tvItemSeasons">
-			<a href="javascript:void(0)" (click)="findSeasonEpisodes($event, season.season_number)">
-				Sason Number: {{season.season_number}}
-				<img src="{{imageSrc}}{{ season.poster_path }}" alt="{{season.name}}">
-			</a>
-		</li>
-	</ul>
-</div>
-
-<!-- If episodes who content with for loop on episodes array  -->
-<div *ngIf="tvItemEpisodes">
-	<div class="episodes">
-		<h2>{{ tvItemEpisodes.name }}</h2>
-		<p>{{ tvItemEpisodes.overview }}</p>
+	<div class="seasons">
+		<h2>Sesons</h2>
 		<ul>
-			<li *ngFor="let episode of tvItemEpisodes.episodes">
-				{{ episode.name }}
-				<img src="{{imageSrc}}{{ episode.still_path }}" alt="{{episode.name}}">
+			<li *ngFor="let season of tvItem.seasons.data">
+				<a href="javascript:void(0)" (click)="findSeasonEpisodes($event, season.season_number)">
+					Sason Number: {{season.season_number}}
+					<!-- <img src="{{imageSrc}}{{ season.posters.poster_path }}" alt="{{season.name}}"> -->
+				</a>
 			</li>
 		</ul>
+	</div>
+
+	<!-- If episodes who content with for loop on episodes array  -->
+	<div *ngIf="tvItemEpisodes.data">
+		<div class="episodes">
+			<h2>{{ tvItemEpisodes.data.name }}</h2>
+			<p>{{ tvItemEpisodes.data.overview }}</p>
+			<ul>
+				<li *ngFor="let episode of tvItemEpisodes.data.episodes">
+					{{ episode.name }}
+					<!-- <img src="{{imageSrc}}{{ episode.still_path }}" alt="{{episode.name}}"> -->
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>

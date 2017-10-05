@@ -12,12 +12,24 @@ export class ItemTvComponent implements OnInit {
 //Subscriptions
 TvSubscription;
 TvEpisodesSubscription;
+imageSubscription;
 
 // Global Items
 tvId;
-tvItem;
-tvItemSeasons;
-tvItemEpisodes;
+
+tvItem = {
+	data:null,
+	poster:null,
+	seasons: {
+		data:null,
+		posters:null,
+	}
+}
+
+tvItemEpisodes = {
+	data: null,
+	posters: null,
+}
 
 // Poster sized of easier use
 posterSizes = {
@@ -42,8 +54,13 @@ imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small}`;
 
 			//Call service to fetch data with id.
 			this.TvSubscription = this.apiService.getTvItem(this.tvId).subscribe(res => {
-				this.tvItem = res;
-				this.tvItemSeasons = res.seasons;
+				this.tvItem.data = res;
+				this.tvItem.seasons.data = res.seasons;
+
+				this.imageSubscription = this.apiService.getImage(this.posterSizes.original, res.poster_path).subscribe(res => {
+					this.tvItem.poster = res.url;
+					console.log(res.url)
+				});
 			});
 		});
 	}
@@ -51,8 +68,8 @@ imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small}`;
 	//Call service to fetch spisodes of season by seasonNumber
 	findSeasonEpisodes(event, seasonNumber) {
 		event.preventDefault();
-		this.apiService.findRelatedEpisodes(this.tvId, seasonNumber).subscribe(res => {
-			this.tvItemEpisodes = res;
+		this.TvEpisodesSubscription = this.apiService.findRelatedEpisodes(this.tvId, seasonNumber).subscribe(res => {
+			this.tvItemEpisodes.data = res;
 			console.log(res);
 		});
 	}
@@ -60,5 +77,6 @@ imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small}`;
 	ngOnDestroy() {
 		this.TvSubscription.unsubscribe();
 		this.TvEpisodesSubscription.unsubscribe();
+		this.imageSubscription.usubscribe();
 	}
 }

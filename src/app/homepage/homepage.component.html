@@ -7,6 +7,7 @@
 <div class="movies" height=100>
 	<ul>
 		<li *ngFor= "let movie of movieList ">
+			{{ movie.name }}
 			<img src="{{imageSrc}}{{ movie.poster_path }}" alt="">
 		</li> 
 	</ul>
@@ -14,8 +15,9 @@
 <h2>Top 10 TvShows</h2>
 <div class="tv"></div>
 <ul>
-	<li *ngFor= "let tv_show of tvShowList ">
-		<img src="{{imageSrc}}{{ tv_show.poster_path }}" alt="">
+	<li *ngFor= "let tvShow of tvShowList ">
+		{{ tvShow.name }}
+		<img src="{{imageSrc}}{{ tvShow.poster_path }}" alt="">
 	</li> 
 </ul>
 </div>

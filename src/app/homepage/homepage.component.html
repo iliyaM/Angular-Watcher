@@ -1,5 +1,3 @@
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
 <div class="container">
 <div class="alert alert-info" role="info">
   Curently under construction.
@@ -9,7 +7,7 @@
 <div class="movies" height=100>
 	<ul>
 		<li *ngFor= "let movie of movieList ">
-			<img src="https://image.tmdb.org/t/p/w80{{ movie.poster_path }}" alt="">
+			<img src="{{imageSrc}}{{ movie.poster_path }}" alt="">
 		</li> 
 	</ul>
 </div>
@@ -17,10 +15,7 @@
 <div class="tv"></div>
 <ul>
 	<li *ngFor= "let tv_show of tvShowList ">
-		<img src="https://image.tmdb.org/t/p/w80{{ tv_show.poster_path }}" alt="">
+		<img src="{{imageSrc}}{{ tv_show.poster_path }}" alt="">
 	</li> 
 </ul>
-</div>
-<div class="movies">
-
 </div>

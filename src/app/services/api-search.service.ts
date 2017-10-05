@@ -13,15 +13,11 @@ export class ApiSearchService {
   }
 
   constructor(private http: Http) { }
-
-
-  //Calls HTTP to api with NOW PLAYING filter and maps to json format
-
   //Calls HTTP to api with **NOW PLAYING filter and maps to json format
-
   getMovieList() {
     return this.http.get(`${this.base_url}/movie/now_playing${this.apikey}&language=en-US&page=1`).map(res => res.json());
   }
+  
   //Calls HTTP to api with **POPULAR filter and maps to json format
   getTvList() {
     return this.http.get(`${this.base_url}/tv/popular${this.apikey}&language=en-US&page=1`).map(res => res.json());

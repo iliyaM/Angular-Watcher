@@ -20,6 +20,8 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ItemMovieComponent } from './item-movie/item-movie.component';
+import { ItemTvComponent } from './item-tv/item-tv.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     RegisterComponent,
     HomepageComponent,
     NavbarComponent,
+    ItemMovieComponent,
+    ItemTvComponent,
   ],
   imports: [
     HttpModule,

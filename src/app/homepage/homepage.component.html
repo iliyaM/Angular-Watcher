@@ -4,22 +4,49 @@
 </div>
 
 <h2>Top 10 Movies</h2>
+
+
 <div class="movies">
 	<div class="container">
 		<div class="row">
-			<div class="card" *ngFor= "let movie of movieList ">
-				<p class="card-text">{{ movie.title }}</p>
-				<img src="{{imageSrc}}{{ movie.poster_path }}" alt="">
+			<div *ngFor= "let movie of movieList; let i = index">
+				<div *ngIf="i < 10" class="card" [routerLink]="['/movie', movie.title.split(' ').join('_'), movie.id]">
+					<img src="{{imageSrc}}{{ movie.poster_path }}" alt="{{movie.title}}" style="width: 100%;">
+				</div>
+			</div> 
+		</div>
+	</div>
+	<a href="#" (click)="seeMoreFunction($event)">Click to see more</a>
+</div>
+
+
+<h2>Top 10 TvShows</h2>
+<div class="tv"></div>
+	<div class="container">
+		<div class="row">
+			<div *ngFor= "let tvShow of tvList; let i = index ">
+				<div *ngIf="i < 10" class="card" [routerLink]="['/tv', tvShow.name.split(' ').join('_'), tvShow.id]">
+					<img src="{{imageSrc}}{{ tvShow.poster_path }}" alt="{{tvShow.name}}" style="width: 100%;">
+				</div>
 			</div> 
 		</div>
 	</div>
 </div>
-<h2>Top 10 TvShows</h2>
-<div class="tv"></div>
-<ul>
-	<li *ngFor= "let tvShow of tvShowList ">
-		{{ tvShow.name }}
-		<img src="{{imageSrc}}{{ tvShow.poster_path }}" alt="">
-	</li> 
-</ul>
-</div>
+
+<!-- 
+====================
+	Explanation
+====================
+1. On for loop exposing index into let I and using it to stop at 10 items on the page.
+2. Router link creates a path "/tv/tvshowname/tvshowId" -> in routes.ts expects that and loads item-tv page.
+3. Url creates % on spaces. thas is why before passing GET it splits on place joins on undesrscore.
+4. API uses diffrent names for TITLES when calling MOVIES or TV.  for movies its TITLE (movie.title) for tv its NAME tvShow.name
+
+ -->
+
+<!-- Needs to be fixed 
+
+	*Need to figure out what SHOW MORE BUTTON DOSE AND HOW IT IS GOING TO AFFECT UI. 
+	* The api request brings 20 items per page. so eather open another 10.
+	* Go to another page with all the moves and inity scroll with every 20 do another api call for page 2 then 3 etc...
+-->

@@ -1,41 +1,56 @@
 <div *ngIf="tvItem">
-	
-	<h2>{{tvItem.title}}</h2>
-	<img src="{{imageSrc}}{{tvItem.poster }}" alt="{{tvItem.name}}">
-	<p>{{ tvItem.overview }}</p>
+	<div class="container">
+		<h2>{{tvItem.title}}</h2>
+		<img src="{{imageSrc}}{{posterSizes.huge}}{{tvItem.poster }}" alt="{{tvItem.name}}">
+		<p>{{ tvItem.overview }}</p>
 
-	<h5>Creators:</h5>
-	<div *ngFor="let creator of tvItem.creators" class="creators">
-		<p>{{creator.name}}</p>
-		<p>{{creator.id}}</p>
-		<img src="{{imageSrc}}{{creator.profile_poster}}" alt="{{creator.name}}">
-	</div>
+		<h5>Creators:</h5>
+		<div class="creators">
+			<div *ngFor="let creator of tvItem.creators" class="creator">
+				<img src="{{imageSrc}}{{posterSizes.small}}{{creator.profile_poster}}" alt="{{creator.name}}">
+				<p>{{creator.name}}</p>
+			</div>
+		</div>
 
-Seasons
-<div class="seasons">
-	<h2>Sesons</h2>
-	<ul>
-		<li *ngFor="let season of tvItem.seasons">
-			<a href="javascript:void(0)" (click)="findSeasonEpisodes($event, seasons.season_number)">
 
-				Season Number: {{season.season_number}}
-				<img src={{season.posters}} alt="{{tvItem.name}}">
-			</a>
-		</li>
-	</ul>
-</div>
-
-<div *ngIf="episodes">
- 	<div class="episodes">
-		<h2>{{ item.episodes.name }}</h2>
-		<p>{{ item.episodes.overview }}</p>
-		<ul>
-			<li *ngFor="let episode of item.episodes">
-				{{ episode.name }}
-				<img src="{{imageSrc}}{{ episode.still_path }}" alt="{{episode.name}}">
-			</li>
-		</ul>
+		<div class="seasons">
+			<h2>Sesons</h2>
+			<ul>
+				<li *ngFor="let season of tvItem.seasons" (click)="findSeasonEpisodes(season.season_number)">
+					<a href="javascript:void(0)">
+						<span>{{season.season_number}}</span>
+						<img src={{imageSrc}}{{posterSizes.medium}}{{season.poster}} alt="{{tvItem.name}}">
+					</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
 
+<div *ngIf="TvSeason">
+	<app-season-information [season]='TvSeason'></app-season-information>
 </div>
+
+<!--  
+Season information
+release of the season
+id of the season
+name of the season
+image of the season
+overview of the season
+
+
+episodes of the season (in the same call) array
+
+	release date of the episode
+	crew of the episodes
+	episode number
+	id of the episodes
+	name of the episdose
+	oeverview of the episode.
+	image of the episode.
+
+
+-->
+
+

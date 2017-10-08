@@ -1,32 +1,3 @@
-div.seasons {
-
-}
-
-div.seasons h2 {
-	display: block;
-}
-
-div.seasons ul {
-	padding: 0 1em;
-	list-style: none;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: baseline;
-}
-
-div.seasons ul li {
-	display: flex;
-	flex-direction: column;
-	padding: 1em;
-}
-
-div.seasons ul li a {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
 div.itemDetails {
 	display: flex;
 	flex: 1;
@@ -41,4 +12,61 @@ div.creators {
 	flex-direction: row;
 	align-items: center;
 	color: orange;
+}
+
+div.creator{
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+	color: orange;
+	align-self: baseline;
+}
+
+div.creators p {
+	padding: 1em 0;
+}
+
+div.creators img {
+	border-radius: 100%;
+}
+
+div.seasons h2 {
+	display: block;
+}
+
+div.seasons ul {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: baseline;
+	flex: 1;
+	padding: 0;
+}
+
+div.seasons ul li {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1em;
+	align-items: center;
+
+	border: 1px solid lightgrey;
+	padding: 0.5em 1em;
+	margin: 0 1em;
+}
+
+div.seasons ul li:hover {
+	transition: all 0.3s;
+	background-color: lightgrey;
+	trasnsform: scale(1.1);
+	cursor: pointer;
+}
+
+div.seasons ul li a {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-decoration: none;
+	color: black;
 }

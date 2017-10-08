@@ -1,9 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { ApiSearchService } from '../services/api-search.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { TvItem } from '../interfaces/tv-item';
+import { TvSeason } from '../interfaces/tv-season';
+
+import { SeasonInformationComponent } from '../season-information/season-information.component';
 
 @Component({
   selector: 'app-item-tv',
@@ -14,11 +17,14 @@ import { TvItem } from '../interfaces/tv-item';
 export class ItemTvComponent implements OnInit {
 tvId:string;
 tvItem:TvItem;
-
+TvSeason:TvSeason;
 
 subscriber;
+seasonSubscriber;
+
 
 // Poster sized of easier use
+imageSrc:string = `https://image.tmdb.org/t/p/`;
 posterSizes = {
 	super_small: 'w92',
 	small: 'w154',
@@ -29,9 +35,6 @@ posterSizes = {
 	original: 'original'
 }
 
-// Settting overall size of images of component view
-imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.medium}`;
-
   constructor(private apiService: ApiSearchService, private activeRoute: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -40,12 +43,16 @@ imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.medium}`;
 
 			this.subscriber = this.apiService.fetchTvItem(this.tvId).subscribe(res => {
 				this.tvItem = this.apiService.constructTvItem(res);
-				console.log(this.tvItem);
 			});
 		});
 	}
 
+	findSeasonEpisodes(number) {
+		this.seasonSubscriber = this.apiService.fetchSeasonEpisodes(this.tvId, number).subscribe(res=> this.TvSeason = res);
+	}
+
 	ngOnDestroy() {
 		this.subscriber.unsubscribe();
+		this.seasonSubscriber.unsubscribe();
 	}
 }

@@ -6,6 +6,8 @@ import * as Rx from "rxjs/Rx";
 import { TvShow } from '../interfaces/tv-show';
 import { Movie } from '../interfaces/movie';
 import { TvItem } from '../interfaces/tv-item';
+import { TvSeason } from '../interfaces/tv-season';
+import { TvEpisode } from '../interfaces/tv-episode';
 
 @Injectable()
 export class ApiSearchService {
@@ -65,7 +67,9 @@ export class ApiSearchService {
   }
 
   constructTvItem(res) {
-    let mainObject:TvItem = {
+    let mainObject = new TvItem();
+
+    mainObject = {
       id: res.id,
       title: res.name,
       poster: res.backdrop_path,
@@ -100,6 +104,41 @@ export class ApiSearchService {
     });
  
     return mainObject
+  }
+
+  fetchSeasonEpisodes(itemId, number) {
+    let season =  new TvSeason();
+    
+    let data = this.http.get(`${this.base_url}/tv/${itemId}/season/${number}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
+    //Getting observable and fetching json and forEaching and constructing.
+    data.forEach(res => {
+      season.id = res.id;
+      season.name = res.name;
+      season.release_data = res.air_date;
+      season.poster = res.poster_path;
+      season.overview = res.overview;
+
+      res.episodes.forEach(res => {
+        let episode = new TvEpisode();
+
+        episode.id = res.id,
+        episode.name  = res.name,
+        episode.release_date  = res.air_date,
+        episode.poster  = res.still_path,
+        episode.overview = res.overview,
+
+        season.episodes.push(episode);
+      });
+    });
+
+    //Create custom fucking observable and subscribe in component.
+    let observable = Observable.create(observer => {
+      observer.next(season);
+      observer.complete(console.log('completed'));
+      observer.error(new Error("error"));
+    });
+
+    return observable;
   }
 
 

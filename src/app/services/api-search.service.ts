@@ -126,11 +126,13 @@ export class ApiSearchService {
         episode.release_date  = res.air_date,
         episode.poster  = res.still_path,
         episode.overview = res.overview,
+        episode.number = res.episode_number;
 
         season.episodes.push(episode);
       });
     });
 
+    console.log(season)
     //Create custom fucking observable and subscribe in component.
     let observable = Observable.create(observer => {
       observer.next(season);

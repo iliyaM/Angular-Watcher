@@ -19,7 +19,6 @@
 				<li *ngFor="let season of tvItem.seasons" (click)="findSeasonEpisodes(season.season_number)">
 					<a href="javascript:void(0)">
 						<span>{{season.season_number}}</span>
-						<img src={{imageSrc}}{{posterSizes.medium}}{{season.poster}} alt="{{tvItem.name}}">
 					</a>
 				</li>
 			</ul>

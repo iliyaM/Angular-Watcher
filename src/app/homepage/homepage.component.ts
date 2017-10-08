@@ -10,17 +10,7 @@ import { Movie } from '../interfaces/movie';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-/*
-Array of objects with keys
-   id
-   title
-   vote_count
-   posters
-   overview
-   genre_ids
-   release_date
-*/
-
+  
 tvList:Array<TvShow>;
 movieList:Array<Movie>;
 subscriber;

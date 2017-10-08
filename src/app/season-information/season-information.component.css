@@ -1,0 +1,45 @@
+h2 {
+	display: block;
+	margin: 0 auto;
+}
+
+div.Season_information {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	margin-bottom: 2em;
+}
+
+div.thumnbnail {
+	padding-right: 1em;
+}
+
+div.Season_information div.info {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding-right: 1em;
+}
+
+
+div.episodes_list {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+
+div.episodes_list ul {
+	padding: 0;
+	list-style: none;
+}
+
+div.episodes_list ul li.episode {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	margin-bottom: 1.5em;
+	box-shadow: -3px 7px 23px -3px rgba(0,0,0,0.35);
+	box-sizing: border-box;
+	padding: 0.5em;
+}

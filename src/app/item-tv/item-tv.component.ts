@@ -40,15 +40,12 @@ posterSizes = {
 	ngOnInit() {
 		this.activeRoute.params.subscribe(( params:Params ) => {
 			this.tvId = params['id'];
-
-			this.subscriber = this.apiService.fetchTvItem(this.tvId).subscribe(res => {
-				this.tvItem = this.apiService.constructTvItem(res);
-			});
+			this.subscriber = this.apiService.fetchTvItem(this.tvId).subscribe(res => this.tvItem = res);
 		});
 	}
 
-	findSeasonEpisodes(number) {
-		this.seasonSubscriber = this.apiService.fetchSeasonEpisodes(this.tvId, number).subscribe(res=> this.TvSeason = res);
+	fetchSeasonEpisodes(seasonNumber) {
+		this.seasonSubscriber = this.apiService.fetchSeasonEpisodes(this.tvId, seasonNumber).subscribe(res => this.TvSeason = res);
 	}
 
 	ngOnDestroy() {

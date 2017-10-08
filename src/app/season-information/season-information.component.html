@@ -1,22 +1,28 @@
 <div class="container">
+	<h2>{{ season.name }}</h2>
 	<div class="Season_information">
-		<h2>{{ season.name }}</h2>
-		<img src="https://image.tmdb.org/t/p/{{posterSizes.medium}}{{season.poster}}" alt="{{season.name}}">
-		<p>Summery: {{season.overview}}</p>
-		<p>Released on: {{season.release_date}}</p>
-		<p>Episodes: {{season.episodes.length}}</p>
+		<div class="thumnbnail">
+			<img src="https://image.tmdb.org/t/p/{{posterSizes.medium}}{{season.poster}}" alt="{{season.name}}">
+		</div>
+		<div class="info">
+			<p>Summery: {{season.overview}}</p>
+			<p>Released on: {{season.release_date}}</p>
+			<p>Episodes: {{season.episodes.length}}</p>
+		</div>
 	</div>
 </div>
 
 <div class="container">
 	<div class="episodes_list">
 		<ul>
-			<li *ngFor="let episode of season.episodes">
-				<p>Episode: {{episode.number}}</p>
-				<p>Name: {{ episode.name }}</p>
-				<p>Summery: {{episode.overview}}</p>
-				<p>Released: {{ episode.release_date }}</p>
-				<img src="{{imageSrc}}{{posterSizes.medium}}{{episode.poster}}" alt="{{episode.name}}">
+			<li *ngFor="let episode of season.episodes" class="episode">
+				<div class="info">
+					<p>Episode: {{episode.number}}</p>
+					<p>Name: {{ episode.name }}</p>
+					<p>Summery: {{episode.overview}}</p>
+					<p>Released: {{ episode.release_date }}</p>
+				</div>
+				<img src="{{imageSrc}}{{posterSizes.large}}{{episode.poster}}" alt="{{episode.name}}">
 			</li>
 		</ul>
 	</div>

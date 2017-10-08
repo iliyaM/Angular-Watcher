@@ -16,7 +16,7 @@
 		<div class="seasons">
 			<h2>Sesons</h2>
 			<ul>
-				<li *ngFor="let season of tvItem.seasons" (click)="findSeasonEpisodes(season.season_number)">
+				<li *ngFor="let season of tvItem.seasons" (click)="fetchSeasonEpisodes(season.season_number)">
 					<a href="javascript:void(0)">
 						<span>{{season.season_number}}</span>
 					</a>

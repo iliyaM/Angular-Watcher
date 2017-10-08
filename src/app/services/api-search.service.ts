@@ -6,8 +6,10 @@ import * as Rx from "rxjs/Rx";
 import { TvShow } from '../interfaces/tv-show';
 import { Movie } from '../interfaces/movie';
 import { TvItem } from '../interfaces/tv-item';
+import { TvSeasonInfo } from '../interfaces/tv-season-information';
 import { TvSeason } from '../interfaces/tv-season';
 import { TvEpisode } from '../interfaces/tv-episode';
+import { TvCreators } from '../interfaces/tv-creators';
 
 @Injectable()
 export class ApiSearchService {
@@ -18,6 +20,9 @@ export class ApiSearchService {
 
   constructor(private http: Http) {  }
 
+  /*
+   * Initial Page load Batch call for popular on tv and movie
+  */
   getTopTen() {
     return Rx.Observable.forkJoin(
         this.http.get(`${this.base_url}/tv/popular${this.apikey}&language=en-US&page=1&`).map((res:Response) => res.json()),
@@ -25,6 +30,9 @@ export class ApiSearchService {
       )
   }
 
+  /*
+   * Extract Information from popular tv and movie and return
+  */
   getTvCustomData(data) {
     let object:Array<TvShow> = [];
 
@@ -62,55 +70,71 @@ export class ApiSearchService {
      return object;
   }
 
-  fetchTvItem(itemId) {
-    return this.http.get(`${this.base_url}/tv/${itemId}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
-  }
+  /*
+   * Get infomation on tv item by Id
+   * Extracting information from data
+   * Creating custom observable and returning
+  */
 
-  constructTvItem(res) {
+  fetchTvItem(itemId) {
+
+    let data = this.http.get(`${this.base_url}/tv/${itemId}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
     let mainObject = new TvItem();
 
-    mainObject = {
-      id: res.id,
-      title: res.name,
-      poster: res.backdrop_path,
-      first_air_date: res.first_air_date,
-      number_of_seasons: res.number_of_seasons,
-      number_of_episodes: res.number_of_episodes,
-      overview: res.overview,
-      status: res.status,
-      seasons: [],
-      creators: [],
-    }
+    data.forEach(res => {
+      mainObject.id =  res.id;
+      mainObject.title =  res.name;
+      mainObject.poster =  res.backdrop_path;
+      mainObject.first_air_date =  res.first_air_date;
+      mainObject.number_of_seasons =  res.number_of_seasons;
+      mainObject.number_of_episodes =  res.number_of_episodes;
+      mainObject.overview =  res.overview;
+      mainObject.status =  res.status;
 
-    //Check seasons
-    res.seasons.forEach(function(season){
-      let construction = {
-        id: season.id,
-        season_number: season.season_number,
-        episode_count: season.episode_count,
-        poster: season.poster_path,
-      }
-      mainObject.seasons.push(construction) //Push to main object
+      //Construct Seasons
+      res.seasons.forEach(season =>{
+        let object = new TvSeasonInfo();
+
+        object.id = season.id;
+        object.season_number = season.season_number;
+        object.episode_count = season.episode_count;
+        object.poster = season.poster_path;
+        
+        mainObject.seasons.push(object)
+      });
+
+      //Construct Creators
+      res.created_by.forEach(creators => {
+        let Creators = new TvCreators();
+
+        Creators.creator_id =  creators.id;
+        Creators.name =  creators.name;
+        Creators.profile_poster =  creators.profile_path;
+
+        mainObject.creators.push(Creators)
+      });
     });
 
-    //Check creators
-    res.created_by.forEach(function(creators){
-      let object = {
-        creator_id: creators.id,
-        name: creators.name,
-        profile_poster: creators.profile_path,
-      }
-      mainObject.creators.push(object) //Push to main object
+    //Create observable from consctucted data
+    let observable = Observable.create(observer => {
+      observer.next(mainObject);
+      observer.complete(console.log('TvItem completed'));
+      observer.error(new Error("error TvItem"));
     });
- 
-    return mainObject
+
+    return observable;
   }
 
+  /*
+   * Get episodes to related season by item-id and season n
+   * Extracting information from data
+   * Creating custom observable and returning
+  */
   fetchSeasonEpisodes(itemId, number) {
     let season =  new TvSeason();
     
     let data = this.http.get(`${this.base_url}/tv/${itemId}/season/${number}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
-    //Getting observable and fetching json and forEaching and constructing.
+
     data.forEach(res => {
       season.id = res.id;
       season.name = res.name;

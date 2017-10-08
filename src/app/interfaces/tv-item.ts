@@ -1,3 +1,6 @@
+import { TvSeasonInfo } from './tv-season-information';
+import { TvCreators } from './tv-creators';
+
 export class TvItem {
 	id: number;
 	title: string;
@@ -7,6 +10,6 @@ export class TvItem {
 	number_of_episodes: number;
 	overview: string;
 	status: string;
-	seasons:Array<any>;
-	creators:Array<any>;
+	seasons:Array<TvSeasonInfo> = [];
+	creators:Array<TvCreators> = [];
 }

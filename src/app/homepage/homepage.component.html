@@ -4,14 +4,12 @@
 </div>
 
 <h2>Top 10 Movies</h2>
-
-
 <div class="movies">
 	<div class="container">
 		<div class="row">
 			<div *ngFor= "let movie of movieList; let i = index">
 				<div *ngIf="i < 10" class="card" [routerLink]="['/movie', movie.title.split(' ').join('_'), movie.id]">
-					<img src="{{imageSrc}}{{ movie.poster_path }}" alt="{{movie.title}}" style="width: 100%;">
+					<img src="{{imageSrc}}{{movie.posters}}" alt="{{movie.title}}" style="width: 100%;">
 				</div>
 			</div> 
 		</div>
@@ -19,19 +17,19 @@
 	<a href="#" (click)="seeMoreFunction($event)">Click to see more</a>
 </div>
 
-
 <h2>Top 10 TvShows</h2>
 <div class="tv"></div>
 	<div class="container">
 		<div class="row">
-			<div *ngFor= "let tvShow of tvList; let i = index ">
-				<div *ngIf="i < 10" class="card" [routerLink]="['/tv', tvShow.name.split(' ').join('_'), tvShow.id]">
-					<img src="{{imageSrc}}{{ tvShow.poster_path }}" alt="{{tvShow.name}}" style="width: 100%;">
+			<div *ngFor= "let tv of tvList; let i = index ">
+				<div *ngIf="i < 10" class="card" [routerLink]="['/tv', tv.title.split(' ').join('_'), tv.id]">
+					<img src="{{imageSrc}}{{ tv.posters }}" alt="{{tv.name}}" style="width: 100%;">
 				</div>
 			</div> 
 		</div>
 	</div>
 </div>
+
 
 <!-- 
 ====================
@@ -42,11 +40,11 @@
 3. Url creates % on spaces. thas is why before passing GET it splits on place joins on undesrscore.
 4. API uses diffrent names for TITLES when calling MOVIES or TV.  for movies its TITLE (movie.title) for tv its NAME tvShow.name
 
- -->
+
 
 <!-- Needs to be fixed 
 
 	*Need to figure out what SHOW MORE BUTTON DOSE AND HOW IT IS GOING TO AFFECT UI. 
 	* The api request brings 20 items per page. so eather open another 10.
 	* Go to another page with all the moves and inity scroll with every 20 do another api call for page 2 then 3 etc...
--->
+--> -->

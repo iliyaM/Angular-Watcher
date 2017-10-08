@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiSearchService } from '../services/api-search.service';
 import { Observable } from 'rxjs/Observable';
+import { TvShow } from '../interfaces/tv-show';
+import { Movie } from '../interfaces/movie';
 
 @Component({
   selector: 'app-homepage',
@@ -8,20 +10,39 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-movieSubscription; // Interface can be added  here to define the type of observable like MovieList[]
-tvSubscription;
-movieList: Array<object>;
-tvList: Array<object>;
-displayCount:number = 20;
+/*
+Array of objects with keys
+   id
+   title
+   vote_count
+   posters
+   overview
+   genre_ids
+   release_date
+*/
+
+tvList:Array<TvShow>;
+movieList:Array<Movie>;
+subscriber;
 
 posterSizes = {
-	super_small: 'w92',
-	small: 'w154',
-	small_medium: 'w185',
-	medium: 'w342',
-	large: 'w500',
-	huge: 'w780',
-	original: 'original'
+  super_small: 'w92',
+  small: 'w154',
+  small_medium: 'w185',
+  medium: 'w342',
+  large: 'w500',
+  huge: 'w780',
+  original: 'original'
+}
+
+filters = { //See if there are more filters. dont care at the momoent.
+  popular: 'popular',
+  toRated: 'top_raterd',
+  upcoming: 'upcoming',
+  tv: {
+   airing_today: 'airing_today',
+   on_the_air: 'on_the_air',
+  }
 }
 
 seeMoreFunction(event) {
@@ -34,21 +55,14 @@ imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small_medium}`;
   constructor(private apiService: ApiSearchService) { }
 
   ngOnInit() {
-  	// Subscribing to api call from service and Storing to Global
-  	this.movieSubscription = this.apiService.getMovieList().subscribe(res => {
-  		this.movieList = res.results;
-  	});
-
-  	// Subscribing to api call from service and Storing to Global
-  	this.tvSubscription = this.apiService.getTvList().subscribe(res => {
-  		this.tvList = res.results;
-      console.log(res);
-  	});
+    this.subscriber = this.apiService.getTopTen().subscribe(data => {
+        this.tvList = this.apiService.getTvCustomData(data[0].results);
+        this.movieList = this.apiService.getMovieCustomData(data[1].results);
+    });
   }
 
   ngOnDestroy() {
-  	this.movieSubscription.unsubscribe();
-  	this.tvSubscription.unsubscribe();
+  	this.subscriber.unsubscribe();
   }
 
 

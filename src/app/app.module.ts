@@ -22,6 +22,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ItemMovieComponent } from './item-movie/item-movie.component';
 import { ItemTvComponent } from './item-tv/item-tv.component';
+import { TestingComponent } from './testing/testing.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ItemTvComponent } from './item-tv/item-tv.component';
     NavbarComponent,
     ItemMovieComponent,
     ItemTvComponent,
+    TestingComponent,
   ],
   imports: [
     HttpModule,

@@ -4,7 +4,7 @@ import { RegisterComponent } from '../register/register.component';
 import { HomepageComponent } from '../homepage/homepage.component';
 import { ItemMovieComponent } from '../item-movie/item-movie.component';
 import { ItemTvComponent } from '../item-tv/item-tv.component';
-
+import { TestingComponent } from '../testing/testing.component';
 
 export const appRoutes: Routes = [
 	{ path: 'home', component: HomepageComponent },

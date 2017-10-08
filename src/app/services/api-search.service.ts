@@ -2,41 +2,110 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
+import * as Rx from "rxjs/Rx";
+import { TvShow } from '../interfaces/tv-show';
+import { Movie } from '../interfaces/movie';
+import { TvItem } from '../interfaces/tv-item';
 
 @Injectable()
 export class ApiSearchService {
-	private base_url:string = 'https://api.themoviedb.org/3';
-	private apikey: string = '?api_key=ebbcc2bbea6a3127c6715e6d4e044f66';
-	private sorting = {
-    now_playing: 'now_playing',
-    popularity: '&popularity'
+  private base_url:string = 'https://api.themoviedb.org/3';
+  private apikey: string = '?api_key=ebbcc2bbea6a3127c6715e6d4e044f66';
+
+  subscribtion;
+
+  constructor(private http: Http) {  }
+
+  getTopTen() {
+    return Rx.Observable.forkJoin(
+        this.http.get(`${this.base_url}/tv/popular${this.apikey}&language=en-US&page=1&`).map((res:Response) => res.json()),
+        this.http.get(`${this.base_url}/movie/now_playing${this.apikey}&language=en-US&page=1&`).map((res:Response) => res.json())
+      )
   }
 
-  constructor(private http: Http) { }
-  //Calls HTTP to api with **NOW PLAYING filter and maps to json format
-  getMovieList() {
-    return this.http.get(`${this.base_url}/movie/now_playing${this.apikey}&language=en-US&page=1`).map(res => res.json());
-  }
-  //Calls HTTP to api with **POPULAR filter and maps to json format
-  getTvList() {
-    return this.http.get(`${this.base_url}/tv/popular${this.apikey}&language=en-US&page=1`).map(res => res.json());
-  }
-  //Calls HTTP to api with ID qurty and maps 
-  getTvItem(id) {
-    return this.http.get(`${this.base_url}/tv/${id}${this.apikey}&language=en-US`).map(res => res.json());
-  }
-  //Calls HTTP to api with ID qurty for SeasonEpisodes and maps 
-  findRelatedEpisodes(tvItemId, seasonNumber) {
-    return this.http.get(`${this.base_url}/tv/${tvItemId}/season/${seasonNumber}${this.apikey}&language=en-US`).map(res => res.json());
+  getTvCustomData(data) {
+    let object:Array<TvShow> = [];
+
+    data.forEach(result => {
+
+      let custom = {
+        title: result.name,
+        vote_count : result.vote_count,
+        posters :  result.poster_path,
+        overview : result.overview,
+        genre_ids :  result.genre_ids,
+        id :  result.id,
+        release_date : result.first_air_date,
+      }
+      object.push(custom)
+    });
+    return object;
   }
 
-  // Call http for single image with path and size of the item
-  getImage(size, path) {
-    return this.http.get(`https://image.tmdb.org/t/p/${size}${path}`);
+  getMovieCustomData(data) {
+     let object:Array<Movie> = [];
+
+     data.forEach(result => {
+       let custom = {
+         title: result.title,
+         vote_count : result.vote_count,
+         posters :  result.poster_path,
+         overview : result.overview,
+         genre_ids :  result.genre_ids,
+         id :  result.id,
+         release_date : result.release_date,
+       }
+       object.push(custom)
+     });
+     return object;
   }
 
-  getImages(size, path) {
-    return this.http.get(`https://image.tmdb.org/t/p/${size}${path}`).map(res => res.json());
+  fetchTvItem(itemId) {
+    return this.http.get(`${this.base_url}/tv/${itemId}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
   }
+
+  constructTvItem(res) {
+    let mainObject:TvItem = {
+      id: res.id,
+      title: res.name,
+      poster: res.backdrop_path,
+      first_air_date: res.first_air_date,
+      number_of_seasons: res.number_of_seasons,
+      number_of_episodes: res.number_of_episodes,
+      overview: res.overview,
+      status: res.status,
+      seasons: [],
+      creators: [],
+    }
+
+    //Check seasons
+    res.seasons.forEach(function(season){
+      let construction = {
+        id: season.id,
+        season_number: season.season_number,
+        episode_count: season.episode_count,
+        poster: season.poster_path,
+      }
+      mainObject.seasons.push(construction) //Push to main object
+    });
+
+    //Check creators
+    res.created_by.forEach(function(creators){
+      let object = {
+        creator_id: creators.id,
+        name: creators.name,
+        profile_poster: creators.profile_path,
+      }
+      mainObject.creators.push(object) //Push to main object
+    });
+ 
+    return mainObject
+  }
+
+
+  unsubscribe() {
+    this.subscribtion.unsubscribe();
+  }
+
 
 }

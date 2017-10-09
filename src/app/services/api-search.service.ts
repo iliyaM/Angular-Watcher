@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map'
 import * as Rx from "rxjs/Rx";
 import { TvShow } from '../interfaces/tv-show';
 import { Movie } from '../interfaces/movie';
+import { MovieItem } from '../interfaces/movie-item';
 import { TvItem } from '../interfaces/tv-item';
 import { TvSeasonInfo } from '../interfaces/tv-season-information';
 import { TvSeason } from '../interfaces/tv-season';
@@ -125,6 +126,44 @@ export class ApiSearchService {
     return observable;
   }
 
+  fetchMovieItem(movieId) {
+    let movie = new MovieItem();
+
+    let data = this.http.get(`${this.base_url}/movie/${movieId}${this.apikey}&append_to_response=videos,images&include_image_language=en`).map(res => res.json());
+    
+    data.forEach(result => {
+      console.log(result);
+      movie.backdrop = result.backdrop_path;
+      movie.release_date = result.release_date;
+      movie.main_image = result.poster_path;
+      movie.title = result.title;
+      movie.vote_count = result.vote_count;
+      movie.status = result.status;
+      movie.id = result.id;
+      movie.overview = result.overview;
+
+      result.images.posters.forEach(poster => {
+        movie.images.push(poster.file_path);
+      });
+
+      result.videos.results.forEach(video => {
+        let videoItem = {
+          key: video.key,
+          name: video.name,
+        };
+        movie.videos.push(videoItem);
+      });
+    });
+
+    //Create custom observable and subscribe in component.
+    let observable = Observable.create(observer => {
+      observer.next(movie);
+      observer.complete(console.log('Movie Completed'));
+      observer.error(new Error("error"));
+    });
+
+    return observable;
+  }
   /*
    * Get episodes to related season by item-id and season n
    * Extracting information from data
@@ -157,7 +196,7 @@ export class ApiSearchService {
     });
 
     console.log(season)
-    //Create custom fucking observable and subscribe in component.
+    //Create custom observable and subscribe in component.
     let observable = Observable.create(observer => {
       observer.next(season);
       observer.complete(console.log('completed'));

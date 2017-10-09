@@ -1,3 +1,31 @@
-<p>
-  item-movie works!
-</p>
+<div class="container">
+  <div class="movie_header">
+    <div class="image">
+      <img src="{{imageSrc}}{{posterSizes.medium}}{{MovieItem.main_image}}" alt="{{MovieItem.title}}">
+    </div>
+
+    <div class="movie_info">
+      <h2>{{MovieItem.title}}</h2>
+      <p>{{MovieItem.overview}}</p>
+      <p>Release Date: {{MovieItem.release_date}}</p>
+      <p>Status: {{MovieItem.status}}</p>
+    </div>
+
+  </div>
+
+  <!-- <div class="movie_media">
+    <div class="videos">
+      <div *ngFor="let video of MovieItem.videos">
+          <iframe src="wwww.youtube.com/embed/WYp9Eo9T3BA | SafeUrlPipe" width="560" height="315" frameborder="0"></iframe>
+      </div>
+    </div>  
+  </div> -->
+
+    <div class="images">
+          <ul>
+            <li *ngFor="let img of MovieItem.images; let index = index">
+                <img src="{{imageSrc}}{{posterSizes.small_medium}}{{img}}" alt="{{MovieItem.title}}index">
+            </li>
+          </ul>
+    </div>
+</div>

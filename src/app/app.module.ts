@@ -23,6 +23,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ItemMovieComponent } from './item-movie/item-movie.component';
 import { ItemTvComponent } from './item-tv/item-tv.component';
 import { SeasonInformationComponent } from './season-information/season-information.component';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SeasonInformationComponent } from './season-information/season-informat
     ItemMovieComponent,
     ItemTvComponent,
     SeasonInformationComponent,
+    SafeUrlPipe,
   ],
   imports: [
     HttpModule,

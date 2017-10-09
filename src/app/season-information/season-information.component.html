@@ -1,13 +1,13 @@
 <div class="container">
-	<h2>{{ season.name }}</h2>
+	<h2>{{ TvSeason.name }}</h2>
 	<div class="Season_information">
 		<div class="thumnbnail">
-			<img src="https://image.tmdb.org/t/p/{{posterSizes.medium}}{{season.poster}}" alt="{{season.name}}">
+			<img src="https://image.tmdb.org/t/p/{{posterSizes.medium}}{{TvSeason.poster}}" alt="{{TvSeason.name}}">
 		</div>
 		<div class="info">
-			<p>Summery: {{season.overview}}</p>
-			<p>Released on: {{season.release_date}}</p>
-			<p>Episodes: {{season.episodes.length}}</p>
+			<p>Summery: {{TvSeason.overview}}</p>
+			<p>Released on: {{TvSeason.release_date}}</p>
+			<p>Episodes: {{TvSeason.episodes.length}}</p>
 		</div>
 	</div>
 </div>
@@ -15,7 +15,7 @@
 <div class="container">
 	<div class="episodes_list">
 		<ul>
-			<li *ngFor="let episode of season.episodes" class="episode">
+			<li *ngFor="let episode of TvSeason.episodes" class="episode">
 				<div class="info">
 					<p>Episode: {{episode.number}}</p>
 					<p>Name: {{ episode.name }}</p>

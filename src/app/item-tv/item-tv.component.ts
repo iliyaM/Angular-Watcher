@@ -4,8 +4,6 @@ import { ApiSearchService } from '../services/api-search.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { TvItem } from '../interfaces/tv-item';
-import { TvSeason } from '../interfaces/tv-season';
-
 import { SeasonInformationComponent } from '../season-information/season-information.component';
 
 @Component({
@@ -17,11 +15,7 @@ import { SeasonInformationComponent } from '../season-information/season-informa
 export class ItemTvComponent implements OnInit {
 tvId:string;
 tvItem:TvItem;
-TvSeason:TvSeason;
-
 subscriber;
-seasonSubscriber;
-
 
 // Poster sized of easier use
 imageSrc:string = `https://image.tmdb.org/t/p/`;
@@ -44,12 +38,7 @@ posterSizes = {
 		});
 	}
 
-	fetchSeasonEpisodes(seasonNumber) {
-		this.seasonSubscriber = this.apiService.fetchSeasonEpisodes(this.tvId, seasonNumber).subscribe(res => this.TvSeason = res);
-	}
-
 	ngOnDestroy() {
 		this.subscriber.unsubscribe();
-		this.seasonSubscriber.unsubscribe();
 	}
 }

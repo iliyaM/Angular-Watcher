@@ -14,26 +14,30 @@
 		OR an admin login that shows another version of the site with explicit explanations\
 
 ## Components
-* Login/Signup pages
-* Home page
-* Browse page
-* ShowItem page
-* Subscription page
-* User profile page
-* Service
+* [ ] Login/Signup pages
+* [x] Home page - Shows top ten movies and tvShows.
+* [x] ShowItem Tv page
+* [ ] ShowItem Movie page
+* [ ] Browse page
+* [ ] Subscription page
+* [ ] User profile page
+* [ ] Service
 
 
 ### Todo:
 * [ ] Service function to call query all movies by their popularity and call all images and display one.
-	* [ ] In tempale Homepage confine showing only 10 with option to 'show more'.
+* [ ] In tempale Homepage confine showing only 10 with option to 'show more'.
 
 * [ ] Service function called for GetItemById
-	* Queries api with id and brings all related images
-	* Checks to see if movie or tvshow once and bring additional data.
+* Queries api with id and brings all related images
+* Checks to see if movie or tvshow once and bring additional data.
 
 * [ ] Two seprate templates according to item type the expect specific data to work with.
 * [ ] TvShow item template is seperated into one include to handle episodes to each season.
 
+
+
+** Refrence
 "backdrop_sizes": [
   "w300",
   "w780",

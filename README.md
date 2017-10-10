@@ -17,23 +17,22 @@
 * [ ] Login/Signup pages
 * [x] Home page - Shows top ten movies and tvShows.
 * [x] ShowItem Tv page
-* [ ] ShowItem Movie page
+* [x] ShowItem Movie page
 * [ ] Browse page
 * [ ] Subscription page
 * [ ] User profile page
-* [ ] Service
-
+* [x] Service
+* [ ] Do Search in header and show result in drop down. on click implement same functionality as allways.
 
 ### Todo:
-* [ ] Service function to call query all movies by their popularity and call all images and display one.
-* [ ] In tempale Homepage confine showing only 10 with option to 'show more'.
+* [x] Service function to call query all movies by their popularity and call all images and display one.
 
-* [ ] Service function called for GetItemById
+* [x] Service function called for GetItemById
 * Queries api with id and brings all related images
 * Checks to see if movie or tvshow once and bring additional data.
 
-* [ ] Two seprate templates according to item type the expect specific data to work with.
-* [ ] TvShow item template is seperated into one include to handle episodes to each season.
+* [x] Two seprate templates according to item type the expect specific data to work with.
+* [x] TvShow item template is seperated into one include to handle episodes to each season (Done with subscribing to child route).
 
 
 

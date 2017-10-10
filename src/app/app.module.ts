@@ -24,6 +24,7 @@ import { ItemMovieComponent } from './item-movie/item-movie.component';
 import { ItemTvComponent } from './item-tv/item-tv.component';
 import { SeasonInformationComponent } from './season-information/season-information.component';
 import { SafeUrlPipe } from './safe-url.pipe';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SafeUrlPipe } from './safe-url.pipe';
     ItemTvComponent,
     SeasonInformationComponent,
     SafeUrlPipe,
+    SearchResultsComponent,
   ],
   imports: [
     HttpModule,

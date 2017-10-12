@@ -1,5 +1,63 @@
-<p>
-  {{ results }}
-</p>
+<!-- Search Buttons -->
+<div class="searchButtons">
 
-div
+  <label>
+    <input #TvCheckbox type="checkbox" (change)="isTv=TvCheckbox.checked; type='tv'">
+    <button [ngClass]="{'active': isTv}">Tv Shows</button>
+  </label>
+
+  <label>
+    <input #movieCheckBox type="checkbox" (change)="isMovie=movieCheckBox.checked; type='movie'">
+    <button [ngClass]="{'active': isMovie}">Movies</button>
+  </label>
+      
+</div>
+
+<!-- Search input -->
+<input type="text" class="search" [formControl]="search">
+
+<!-- If there are results show drop down -->
+<div *ngIf="results">
+
+  <div id="dropdown" [ngClass]="{'active':menuSwitcher}">
+
+    <!-- Switch drop down menue by type -->
+    <div *ngIf="type == 'tv'; else movies">
+        <ul>
+            <li *ngFor="let result of results.results" [routerLink]="['/tv', result.name.split(' ').join('_'), result.id]">
+      
+                <div *ngIf="!result.poster_path; else content" class="no_image">
+                    <span class="noImage">
+                        <i class="fa fa-battery-quarter"  aria-hidden="true"></i>
+                    </span>
+                    <p>{{ result.name }}</p> 
+                </div>
+      
+                <ng-template #content>
+                    <span> <img src="{{imageSrc}}{{posterSizes.super_small}}{{result.poster_path}}" alt="{{ result.name }}"></span>
+                    <p>{{ result.name }}</p> 
+                </ng-template>
+            </li>
+          </ul>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #movies>
+    <ul>
+        <li *ngFor="let result of results.results" [routerLink]="['/movie', result.title.split(' ').join('_'), result.id]">
+              <div *ngIf="!result.poster_path; else content" class="no_image">
+                <span class="noImage">
+                    <i class="fa fa-battery-quarter"  aria-hidden="true"></i>
+                </span>
+                <p>{{ result.title }}</p> 
+            </div>
+  
+            <ng-template #content>
+                <span> <img src="{{imageSrc}}{{posterSizes.super_small}}{{result.poster_path}}" alt="{{ result.title }}"></span>
+                <p>{{ result.title }}</p> 
+            </ng-template>
+        </li>
+      </ul>
+</ng-template>

@@ -205,18 +205,14 @@ export class ApiSearchService {
 
     return observable;
   }
+
   /**
-   * Simple api call and returning observable.
-   * @param type tv or movie
-   * @param queryString comming from event.target.value navbar component
+   * Query api based on type. return back and create obserable with image handling.
+   * @param type 
    */
-  // RESULTS COMMING IN WITHOUT IMAGES LOOKS BROKEN
-  query(type, queryString:string) {
-    if (type =='tv') {
-      return this.http.get(`${this.base_url}/search/tv${this.apikey}&language=en-US&query=${queryString}`).map(res => res.json());
-    } else {
-      return this.http.get(`${this.base_url}/search/movie${this.apikey}&language=en-US&query=${queryString}`).map(res => res.json());
-    }
+  search(type, queryString:string) {
+    console.log(type)
+    return this.http.get(`${this.base_url}/search/${type}${this.apikey}&language=en-US&query=${queryString}`).map(res => res.json());
   }
 
 }

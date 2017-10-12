@@ -1,0 +1,130 @@
+/* Search Container */
+
+div.searchButtons {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.searchButtons button {
+	color: #007bff;
+	border: 1px solid #007bff;
+	background-color: white;
+	transition: all 0.3s;
+}
+
+div.searchButtons button:hover {
+	background-color: #0056b3;
+	color: white;
+}
+
+div.searchButtons button.active {
+	background-color: #ff0000;
+	color: white;
+}
+
+/* Hidden input */
+div.searchButtons label {
+	position: relative;
+	margin: 0;
+}
+
+div.searchButtons label input[type='checkbox'] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+
+}
+
+input.search  {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#dropdown {
+    display: none;
+	position: absolute;
+	top: 29px;
+	background-color: white;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	z-index: 1;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 0px 0px 5px 5px;
+	overflow: hidden;
+	border-top: none;
+	transition: all 0.3s;
+	height: 0px;
+}
+
+#dropdown.active {
+	display: block;
+	height: 500px;
+}
+
+#dropdown ul {
+	display: flex;
+	flex-direction: column;
+	padding: 0;
+}
+
+#dropdown ul li {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	border-bottom: 1px solid #efefef;
+	transition: all 0.3s;
+	box-sizing: border-box;
+	padding: 5px;
+}
+
+#dropdown ul li span {
+	margin-right: 1em;
+}
+
+#dropdown ul li:hover {
+	background-color: #F8F1BE;
+}
+
+#dropdown ul li img {
+	height: 51px;
+	width: 54px;
+}
+
+/* NoImage style */
+
+#dropdown ul li div.no_image {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+#dropdown ul li div.no_image span.noImage{
+	height: 51px;
+	width: 54px;
+	margin-right: 1em;
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background-color: #dbdbdb;
+}
+
+#dropdown ul li div.no_image p {
+	margin: 0;
+}
+
+#dropdown div.noImage p {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+

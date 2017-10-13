@@ -174,8 +174,8 @@ export class ApiSearchService {
     let season =  new TvSeason();
     
     let data = this.http.get(`${this.base_url}/tv/${itemId}/season/${number}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
-
     data.forEach(res => {
+      console.log(res)
       season.id = res.id;
       season.name = res.name;
       season.release_data = res.air_date;

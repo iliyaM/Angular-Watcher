@@ -1,9 +1,9 @@
 <!-- Search input -->
 <input type="text" class="search" [formControl]="search">
 
-<div *ngIf="results" clickOutsideDirective>
+<div *ngIf="results">
 
-    <div id="dropdown" [ngClass]="{'active':menuSwitcher}">
+    <div id="dropdown" [ngClass]="{'active':menuSwitcher}" (clickOutside)="close($event)">
         <ul>
             <li *ngFor="let result of results" (click)="navigateToPage(result.media_type, result.name, result.id)">
                     <!-- [routerLink]="['/tv', result.name.split(' ').join('_'), result.id] -->

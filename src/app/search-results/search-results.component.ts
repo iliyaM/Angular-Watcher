@@ -1,4 +1,4 @@
-import { Component, OnInit, Directive } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ApiSearchService } from '../services/api-search.service';
@@ -30,6 +30,9 @@ navigateToPage(type, name, id) {
   this.router.navigate([type, name, id]);
 }
 
+close() {
+  this.menuSwitcher = false;
+}
   constructor(private apiSearch: ApiSearchService, private router:Router) { }
 
   ngOnInit() {

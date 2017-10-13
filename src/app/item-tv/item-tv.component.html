@@ -1,13 +1,17 @@
 <div *ngIf="tvItem">
 	<div class="container">
 		<h2>{{tvItem.title}}</h2>
-		<img src="{{imageSrc}}{{posterSizes.huge}}{{tvItem.poster }}" alt="{{tvItem.name}}">
+		<div *ngIf="tvItem.poster; else noImage">
+			<img src="{{imageSrc}}{{posterSizes.huge}}{{tvItem.poster }}" alt="{{tvItem.name}}">
+		</div>
 		<p>{{ tvItem.overview }}</p>
 
 		<h5>Creators:</h5>
 		<div class="creators">
 			<div *ngFor="let creator of tvItem.creators" class="creator">
-				<img src="{{imageSrc}}{{posterSizes.small}}{{creator.profile_poster}}" alt="{{creator.name}}">
+				<div *ngIf="creator.profile_poster; else noImage">
+					<img src="{{imageSrc}}{{posterSizes.small}}{{creator.profile_poster}}" alt="{{creator.name}}">
+				</div>	
 				<p>{{creator.name}}</p>
 			</div>
 		</div>
@@ -26,3 +30,10 @@
 	</div>
 </div>
 <router-outlet></router-outlet>
+
+<!-- No Image Template -->
+<ng-template #noImage>
+		<span class="noImage">
+			<i class="fa fa-battery-quarter"  aria-hidden="true"></i>
+		</span>
+</ng-template>

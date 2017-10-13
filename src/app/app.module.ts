@@ -23,8 +23,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ItemMovieComponent } from './item-movie/item-movie.component';
 import { ItemTvComponent } from './item-tv/item-tv.component';
 import { SeasonInformationComponent } from './season-information/season-information.component';
-import { SafeUrlPipe } from './safe-url.pipe';
 import { SearchResultsComponent } from './search-results/search-results.component';
+
+//Directives
+import { clickOutsideDirective } from './directives/click';
 
 @NgModule({
   declarations: [
@@ -35,8 +37,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     ItemMovieComponent,
     ItemTvComponent,
     SeasonInformationComponent,
-    SafeUrlPipe,
     SearchResultsComponent,
+    clickOutsideDirective,
   ],
   imports: [
     HttpModule,

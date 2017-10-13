@@ -1,54 +1,12 @@
-/* Search Container */
-
-div.searchButtons {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-div.searchButtons button {
-	color: #007bff;
-	border: 1px solid #007bff;
-	background-color: white;
-	transition: all 0.3s;
-}
-
-div.searchButtons button:hover {
-	background-color: #0056b3;
-	color: white;
-}
-
-div.searchButtons button.active {
-	background-color: #ff0000;
-	color: white;
-}
-
-/* Hidden input */
-div.searchButtons label {
-	position: relative;
-	margin: 0;
-}
-
-div.searchButtons label input[type='checkbox'] {
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-
-}
-
 input.search  {
-	display: inline-block;
-	vertical-align: middle;
+	display: block;
+	width: 100%;
+	border: 1px solid black;
 }
 
 #dropdown {
-    display: none;
 	position: absolute;
-	top: 29px;
+	top: 28px;
 	background-color: white;
 	bottom: 0;
 	right: 0;
@@ -58,13 +16,12 @@ input.search  {
 	border: 1px solid black;
 	border-radius: 0px 0px 5px 5px;
 	overflow: hidden;
-	border-top: none;
+	border-top: 1px solid transparent;
 	transition: all 0.3s;
 	height: 0px;
 }
 
 #dropdown.active {
-	display: block;
 	height: 500px;
 }
 

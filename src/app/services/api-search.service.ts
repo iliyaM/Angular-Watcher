@@ -11,6 +11,7 @@ import { TvSeasonInfo } from '../interfaces/tv-season-information';
 import { TvSeason } from '../interfaces/tv-season';
 import { TvEpisode } from '../interfaces/tv-episode';
 import { TvCreators } from '../interfaces/tv-creators';
+import { MediaItem } from '../interfaces/media_item';
 
 @Injectable()
 export class ApiSearchService {
@@ -210,9 +211,37 @@ export class ApiSearchService {
    * Query api based on type. return back and create obserable with image handling.
    * @param type 
    */
-  search(type, queryString:string) {
-    console.log(type)
-    return this.http.get(`${this.base_url}/search/${type}${this.apikey}&language=en-US&query=${queryString}`).map(res => res.json());
+  search(queryString:string) {
+    let array:Array<MediaItem>=[];
+    let data:Observable<any> = this.http.get(`${this.base_url}/search/multi${this.apikey}&language=en-US&query=${queryString}`).map(res => res.json());
+    data.forEach(object => {
+
+      object.results.forEach(data => {
+        let object = new MediaItem();
+
+        if(data.name) {
+          object.name = data.name;
+        }
+        else if(data.title) {
+          object.name = data.title;
+        }
+
+        object.poster_path = data.poster_path;
+        object.media_type = data.media_type;
+        object.id = data.id;
+        array.push(object);
+      
+      });
+    });
+
+    //Create custom observable and subscribe in component.
+    let observable = Observable.create(observer => {
+      observer.next(array);
+      observer.complete(console.log('completed'));
+      observer.error(new Error("error"));
+    });
+
+    return observable;
   }
 
 }

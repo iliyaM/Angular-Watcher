@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ApiSearchService } from '../services/api-search.service';
+import { MediaItem } from '../interfaces/media_item';
 
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.css']
 })
-export class SearchResultsComponent implements OnInit {
-public type:string = 'tv';
-public results;
-public menuSwitcher:boolean = false;
 
-public isMovie:boolean;
-public isTv:boolean = true;
+export class SearchResultsComponent implements OnInit {
+public results:Array<MediaItem>;
+public menuSwitcher:boolean = false;
+public search = new FormControl();
 
 imageSrc:string = `https://image.tmdb.org/t/p/`;
 posterSizes = {
@@ -26,9 +26,11 @@ posterSizes = {
 	original: 'original'
 }
 
-public search = new FormControl();
+navigateToPage(type, name, id) {
+  this.router.navigate([type, name, id]);
+}
 
-  constructor(private apiSearch: ApiSearchService) { }
+  constructor(private apiSearch: ApiSearchService, private router:Router) { }
 
   ngOnInit() {
 
@@ -37,7 +39,7 @@ public search = new FormControl();
           this.menuSwitcher = false;
         } else {
           this.menuSwitcher = true;
-          this.apiSearch.search(this.type, data).subscribe(result => this.results = result);
+          this.apiSearch.search(data).subscribe(res => this.results = res);
         }
     });
   }

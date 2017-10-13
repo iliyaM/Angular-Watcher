@@ -6,6 +6,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent implements OnInit {
 
   constructor() { }

@@ -1,13 +1,9 @@
-h2 {
-	display: block;
-	margin: 0 auto;
-}
-
 div.Season_information {
 	display: flex;
 	flex: 1;
 	flex-direction: row;
 	margin-bottom: 2em;
+	align-items: center;
 }
 
 div.thumnbnail {
@@ -42,4 +38,9 @@ div.episodes_list ul li.episode {
 	box-shadow: -3px 7px 23px -3px rgba(0,0,0,0.35);
 	box-sizing: border-box;
 	padding: 0.5em;
+	justify-content: space-between;
+}
+
+div.episodes_list ul li.episode img {
+	padding-left: 2em;
 }

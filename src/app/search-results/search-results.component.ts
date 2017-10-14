@@ -27,7 +27,8 @@ posterSizes = {
 }
 
 navigateToPage(type, name, id) {
-  this.router.navigate([type, name, id]);
+  let newName = name.split(' ').join('_');
+  this.router.navigate([type, newName, id]);
 }
 
 close() {

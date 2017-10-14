@@ -18,6 +18,8 @@ routeParentsub;
 
 TvSeason:TvSeason;
 
+private fragment:string;
+
 imageSrc:string = `https://image.tmdb.org/t/p/`;
 posterSizes = {
 	super_small: 'w92',
@@ -41,8 +43,16 @@ posterSizes = {
         this.season_number = params['season_number'];
         this.seasonSubscriber = this.apiService.fetchSeasonEpisodes(this.tvId, this.season_number).subscribe(res => this.TvSeason = res);
         
+        this.activeRoute.parent.fragment.subscribe(res => this.fragment = res);
+      
     });
 
+  }
+
+  ngAfterViewInit() {
+    try {
+      document.querySelector('#' + this.fragment).scrollIntoView();
+    } catch (e) {}
   }
 
   ngOnDestroy() {

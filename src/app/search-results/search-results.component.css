@@ -1,7 +1,12 @@
 input.search  {
 	display: block;
-	width: 100%;
-	border: 1px solid black;
+	width: 400px;
+	border: 1px solid grey;
+	transition: all 0.3s;
+}
+
+input.search:focus {
+	border: 1px solid #007bff;
 }
 
 #dropdown {
@@ -13,16 +18,18 @@ input.search  {
 	left: 0;
 	z-index: 1;
 	background-color: white;
-	border: 1px solid black;
-	border-radius: 0px 0px 5px 5px;
+	border: 1px solid rgba(0,0,0,0.65);
+	box-shadow: -3px 7px 23px -3px rgba(0,0,0,0.35);
+	border-radius: 0px 0px 15px 15px;
 	overflow: hidden;
-	border-top: 1px solid transparent;
 	transition: all 0.3s;
 	height: 0px;
+	opacity: 0;
 }
 
 #dropdown.active {
 	height: 500px;
+	opacity: 1;
 }
 
 #dropdown ul {
@@ -48,6 +55,7 @@ input.search  {
 
 #dropdown ul li:hover {
 	background-color: #F8F1BE;
+	cursor: pointer;
 }
 
 #dropdown ul li img {
@@ -63,7 +71,7 @@ input.search  {
 	justify-content: flex-start;
 }
 
-#dropdown ul li div.no_image span.noImage{
+#dropdown ul li div.no_image span.noImage {
 	height: 51px;
 	width: 54px;
 	margin-right: 1em;
@@ -73,6 +81,10 @@ input.search  {
 	justify-content: center;
 
 	background-color: #dbdbdb;
+}
+
+#dropdown ul li div.no_image span.noImage i {
+	font-size: initial;
 }
 
 #dropdown ul li div.no_image p {

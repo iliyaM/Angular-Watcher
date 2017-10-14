@@ -1,10 +1,18 @@
-div.itemDetails {
-	display: flex;
-	flex: 1;
-	flex-direction: row;
-	align-items: center;
-	color: green;
+div.title {
+	text-align: center;
+	padding: 2em 0;
 }
+
+div.content {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+div.content div.info {
+	padding-left: 1em;
+}
+
 
 div.creators {
 	display: flex;
@@ -12,15 +20,7 @@ div.creators {
 	flex-direction: row;
 	align-items: center;
 	color: orange;
-}
-
-div.creator{
-	display: flex;
-	flex: 1;
-	flex-direction: column;
-	align-items: center;
-	color: orange;
-	align-self: baseline;
+	flex-wrap: wrap;
 }
 
 div.creators p {
@@ -28,11 +28,7 @@ div.creators p {
 }
 
 div.creators img {
-	border-radius: 100%;
-}
-
-div.seasons h2 {
-	display: block;
+	border-radius: 20px;
 }
 
 div.seasons ul {
@@ -43,7 +39,7 @@ div.seasons ul {
 	align-items: baseline;
 	flex: 1;
 	padding: 0;
-	justify-content: flex-start;
+	justify-content: center;
 }
 
 div.seasons ul li {

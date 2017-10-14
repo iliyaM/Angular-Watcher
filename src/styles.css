@@ -4,3 +4,21 @@ body {
 	margin-top: 50px;
 	font-family: 'Roboto', sans-serif;
 }
+
+span.noImage {
+    display: flex;
+    align-items: center;
+	width: 150px;
+	height: 150px;
+    background-color: #dbdbdb;
+    justify-content: center;
+}
+
+span.noImage i {
+    font-size: 50px;
+}
+
+div.creators span.noImage {
+	width: 150px;
+	height: 150px;
+}

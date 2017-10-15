@@ -13,7 +13,6 @@ div.content div.info {
 	padding-left: 1em;
 }
 
-
 div.creators {
 	display: flex;
 	flex: 1;
@@ -21,6 +20,7 @@ div.creators {
 	align-items: center;
 	color: orange;
 	flex-wrap: wrap;
+	justify-content: space-around;
 }
 
 div.creators p {
@@ -29,6 +29,12 @@ div.creators p {
 
 div.creators img {
 	border-radius: 20px;
+}
+
+div.creators span.noImage {
+	width: 100px;
+	height: 100px;
+	margin-right: 1em;
 }
 
 div.seasons ul {

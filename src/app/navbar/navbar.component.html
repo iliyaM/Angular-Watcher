@@ -1,9 +1,27 @@
-<nav class="main navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+<nav class="main">
   <div class="links_container">
     <a href="#">Home</a>
+    <div *ngIf=" auth.user | async; then authenticated else guest"></div>
   </div>
 
   <div class="search_container">
     <app-search-results></app-search-results>
   </div> 
 </nav>
+
+
+<ng-template #guest>
+  <a href="javascript:void(0)" (click)="auth.googleLogin()" >Login Guest</a>
+</ng-template>
+
+<ng-template #authenticated>
+  <div *ngIf="auth.user | async as user">
+
+      <a href="javascript:void(0)">{{ user.displayName }}</a>
+
+      <span class="avatar_icon"><svg><use attr.xlink:href="assets/sprite.svg#{{ user.avatar }}"></use></svg></span>
+
+      <a href="javascript:void(0)" (click)="auth.signOut()">SignOut</a>
+
+  </div>
+</ng-template>

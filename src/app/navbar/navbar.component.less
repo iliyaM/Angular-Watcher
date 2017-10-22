@@ -1,0 +1,48 @@
+nav.main {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 50px;
+	display: flex;
+	box-sizing: border-box;
+	padding: 0 1em;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #292b2c;
+
+	padding: 1em calc(~'(100% - 1200px) / 2');
+}
+
+div.search_container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	position: relative;
+}
+
+div.links_container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+div.links_container a {
+	padding-right: 1em;
+}
+
+div.links_container span.avatar_icon {
+	border-radius: 100%;
+	border: 1px solid white;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 1em;
+}
+
+div.links_container span.avatar_icon svg {
+	display: block;
+	margin: 0 auto;
+	width: 35px;
+	height: 35px;
+}

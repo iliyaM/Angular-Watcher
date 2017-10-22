@@ -5,15 +5,17 @@ import { appRoutes } from './routes/routes';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+
+//FireStore AUTH
+import { CoreModule } from './core/core.module';
+
 //Firebase
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 //Services
-import { AuthService } from './services/auth.service';
 import { ApiSearchService } from './services/api-search.service';
+import { DbService } from './services/db.service';
 
 //Components
 import { AppComponent } from './app.component';
@@ -41,16 +43,15 @@ import { clickOutsideDirective } from './directives/click';
     clickOutsideDirective,
   ],
   imports: [
+    CoreModule,
     HttpModule,
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     RouterModule.forRoot(appRoutes),
     FormsModule,
     ReactiveFormsModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
   ],
-  providers: [AuthService,ApiSearchService],
+  providers: [ApiSearchService,DbService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,32 +1,61 @@
+<section class="signIn">
+	<div *ngIf="auth.user | async as user">
 
-<h2>Testing Authentications</h2>
-<!-- <form [formGroup]="singupForm" (ngSubmit)="signUpFormSubmit()" id="signUpForm">
-	<div class="form-group">
-
-		<label for="email">Email</label>
-		<input type="email" [formControl]="singupForm.controls['email']" class="form-control">
-
-		<div class="error" *ngIf="titleError">
-			<p>{{emailError}}</p>
-		</div>
-
-
-		<label for="password">Password</label>
-		<input type="password" formControlName="password" [formControl]="singupForm.controls['password']" class="form-control">
-
-		<div class="error"*ngIf="passwordError">
-			<p>{{passwordEmail}}</p>
-		</div>
-
+		<h2>Welcome: <span class="userName">{{ user.displayName }}</span> to your Personal Page</h2>
 		
-		<label for="displayName">NickName</label>
-		<input type="displayName" [formControl]="singupForm.controls['displayName']" class="form-control">
+		<div class="formContainer">
+			<form [formGroup]="singupForm" (ngSubmit)="signUpFormSubmit()" id="signUpForm">
+				<label for="displayName">
+					<span>You can change you name</span>
+					<input
+						type="displayName"
+						[value]="user.displayName"
+						[formControl]="singupForm.controls['displayName']">
 
-		<div class="error" *ngIf="displayNameError">
-			<p>{{displayNameError}}</p>
+					<div class="error" *ngIf="displayNameError"><p>{{displayNameError}}</p></div>
+				</label>
+
+				<div class="randomizer">
+					<span>Or Create a random one</span>
+					<button (click)="generateRandom()">Generate</button>
+				</div>
+
+				<label for="phoneNumber">
+					<span>PhoneNumber</span>
+					<input type="phoneNumber" [formControl]="singupForm.controls['phoneNumber']">
+					<div class="error" *ngIf="phoneNumberError"><p>{{phoneNumberError}}</p></div>
+				</label>
+		
+				<button type="submit" class="submitBtn" [disabled]="singupForm.invalid">Submit</button>
+			</form>
+		</div>	
+
+		<!-- Avatar -->
+		<div class="avatar">
+			<h2>Choose your Avatar</h2>
+			<button (click)="male = true; index = 0" class="fa fa-mars male"></button>
+			<button (click)="male = false; index = 0" class="fa fa-venus female"></button>
+
+			<div *ngIf="male; else female" class="icons">
+					<svg><use attr.xlink:href="assets/menIcons.svg#{{menAvatars[index]}}"></use></svg>
+					<div class="buttons">
+							<button (click)="prev(menAvatars)" class="fa fa-arrow-left arrowLeft"></button>
+							<button (click)="next(menAvatars)" class="fa fa-arrow-right arrowRight"></button>
+					</div>
+			</div>
+			<ng-template #female>
+				<div class="icons">
+					<svg><use attr.xlink:href="assets/womenIcons.svg#{{womenAvatars[index]}}"></use></svg>
+		
+					<div class="buttons">
+							<button (click)="next(womenAvatars)" class="fa fa-arrow-right arrowRight"></button>
+							<button (click)="prev(womenAvatars)" class="fa fa-arrow-left arrowLeft"></button>
+					</div>
+				</div>
+			</ng-template>
 		</div>
-
-		<button type="submit" [disabled]="singupForm.invalid">Submit</button>
 	</div>
-</form> -->
 
+
+	
+</section>

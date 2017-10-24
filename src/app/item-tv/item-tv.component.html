@@ -24,7 +24,12 @@
 		
 		<div class="title">
 			<h5>Creators:</h5>
-		</div>	
+		</div>
+
+		<!-- Subscribe Component -->
+		<app-subscriber [information]="{status:tvItem.status, title:tvItem.title, id:tvItem.id, seasons:tvItem.seasons}"></app-subscriber>
+
+
 		<div class="creators">
 			<div *ngFor="let creator of tvItem.creators" class="creator">
 				<div *ngIf="creator.profile_poster; else noImage">

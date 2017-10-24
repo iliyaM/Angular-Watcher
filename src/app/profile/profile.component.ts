@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 //services
 import { AuthService } from '../services/auth.service';
 import { DbService } from '../services/db.service';
-
+import { ApiSearchService} from '../services/api-search.service';
 //Interfaces;
 import { User } from '../interfaces/user';
 
@@ -17,13 +17,15 @@ import { User } from '../interfaces/user';
 import { getRandomName } from '../../assets/random_names';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.less']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.less']
 })
-export class RegisterComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 userLoggedIn:User; //User object from authentication subscription
+
 subscribtion: Subscription; 
+mySubscriptions:Array<number>;
 
 singupForm: FormGroup; //From group
 
@@ -37,7 +39,7 @@ male:boolean = true;
 menAvatars:Array<string> = ['icon-man2','icon-man3','icon-man4','icon-man5','icon-man'];
 womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-woman4','icon-woman5','icon-woman6','icon-woman7','icon-woman8','icon-woman9'];
 
-	constructor(private fb: FormBuilder, public auth: AuthService, private db: DbService) {
+	constructor(private fb: FormBuilder, public auth: AuthService, private db: DbService, private apiService: ApiSearchService) {
 		//Subscribe to the user observable in auth service
 		this.subscribtion = this.auth.user.subscribe(res => {
 			this.userLoggedIn = res;
@@ -50,10 +52,15 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 			'phoneNumber':['', Validators.compose([Validators.required, Validators.pattern(/^05\d([-]{0,1})\d{7}$/)])]
 		});
 		this.singupForm.valueChanges.subscribe(res => this.validation()); //Subscribe to value changes and run validation function
+		this.getSupscriptionDate();
 	}
 
 	ngOnDestroy() {
 		this.subscribtion.unsubscribe();
+	}
+
+	getSupscriptionDate() {
+		this.mySubscriptions = this.db.getMySubscriptions();
 	}
 
 	//Form validation function
@@ -102,7 +109,7 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 		if(displayName == '') {
 			displayName = this.userLoggedIn.displayName;
 		}
-		this.auth.updateUser(avatar, phoneNumber, this.userLoggedIn.userId, displayName);
+		this.db.updateUser(avatar, phoneNumber, this.userLoggedIn.userId, displayName);
 	}
 
 	//Avatar buttons

@@ -23,11 +23,11 @@ userDocument: AngularFirestoreDocument<User>;
     // Get auth data
     this.user = this.afAuth.authState.switchMap(user => {
       if(user) {
-        return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+        return this.afs.doc<User>(`users/${user.uid}/info/${user.uid}`).valueChanges();
       } else {
         return Observable.of(null);
       }
-    })
+    });
   }
 
   googleLogin() {
@@ -43,27 +43,21 @@ userDocument: AngularFirestoreDocument<User>;
   }
 
   //Create data from loginProvider and navigate
-  private updateUserData(user) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-    this.router.navigate(['/register']);
+  private updateUserData(userCredential) {
 
+    //Get user document
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${userCredential.uid}/info/${userCredential.uid}`);
+
+    //Construct user data object
     const data: User = {
-      userId: user.uid,
-      email: user.email,
-      displayName: user.displayName,
+      userId: userCredential.uid,
+      email: userCredential.email,
+      displayName: userCredential.displayName,
     }
+    userRef.update(data);
 
-    return userRef.set(data);
-  }
-
-  updateUser(avatar:string, phoneNumber:number, userId:string, displayName:string){
-    let data = {
-        avatar: avatar,
-        phoneNumber: phoneNumber,
-        displayName: displayName,
-      }
-    let user:AngularFirestoreDocument<User> = this.afs.doc(`users/${userId}`); //Where to update
-    user.update(data);
+    this.router.navigate(['profile']);
+    return;
   }
 
   signOut() {

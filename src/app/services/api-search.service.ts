@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+
+//Rxjs
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/map'
 import * as Rx from "rxjs/Rx";
+
+//Interfaces
 import { TvShow } from '../interfaces/tv-show';
 import { Movie } from '../interfaces/movie';
 import { MovieItem } from '../interfaces/movie-item';
@@ -133,7 +138,6 @@ export class ApiSearchService {
     let data = this.http.get(`${this.base_url}/movie/${movieId}${this.apikey}&append_to_response=videos,images&include_image_language=en`).map(res => res.json());
     
     data.forEach(result => {
-      console.log(result);
       movie.backdrop = result.backdrop_path;
       movie.release_date = result.release_date;
       movie.main_image = result.poster_path;
@@ -175,7 +179,6 @@ export class ApiSearchService {
     
     let data = this.http.get(`${this.base_url}/tv/${itemId}/season/${number}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
     data.forEach(res => {
-      console.log(res)
       season.id = res.id;
       season.name = res.name;
       season.release_data = res.air_date;
@@ -196,7 +199,6 @@ export class ApiSearchService {
       });
     });
 
-    console.log(season)
     //Create custom observable and subscribe in component.
     let observable = Observable.create(observer => {
       observer.next(season);
@@ -209,31 +211,28 @@ export class ApiSearchService {
 
   /**
    * Query api based on type. return back and create obserable with image handling.
-   * @param type 
    */
   search(queryString:string) {
     let array:Array<MediaItem>=[];
     let data:Observable<any> = this.http.get(`${this.base_url}/search/multi${this.apikey}&language=en-US&query=${queryString}`).map(res => res.json());
     data.forEach(object => {
-      console.log(object)
       object.results.forEach(data => {
         if(data.media_type == "person") {
-          console.log('Found Person')
           return
         } else {
           let object = new MediaItem();
           
-                  if(data.name) {
-                    object.name = data.name;
-                  }
-                  else if(data.title) {
-                    object.name = data.title;
-                  }
-          
-                  object.poster_path = data.poster_path;
-                  object.media_type = data.media_type;
-                  object.id = data.id;
-                  array.push(object);
+          if(data.name) {
+            object.name = data.name;
+          }
+          else if(data.title) {
+            object.name = data.title;
+          }
+  
+          object.poster_path = data.poster_path;
+          object.media_type = data.media_type;
+          object.id = data.id;
+          array.push(object);
         }
 
       
@@ -250,4 +249,13 @@ export class ApiSearchService {
     return observable;
   }
 
+
+  //FindFinalEpisode
+  findFinalEpisode(itemid, seasonNumber) {
+    let data = this.http.get(`${this.base_url}/tv/${itemid}/season/${seasonNumber}${this.apikey}&language=en-US&page=1&`).map(res => res.json())
+    return data;
+  }
+
 }
+
+

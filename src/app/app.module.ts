@@ -19,7 +19,7 @@ import { DbService } from './services/db.service';
 
 //Components
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ItemMovieComponent } from './item-movie/item-movie.component';
@@ -29,11 +29,12 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 
 //Directives
 import { clickOutsideDirective } from './directives/click';
+import { SubscriberComponent } from './subscriber/subscriber.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
+    ProfileComponent,
     HomepageComponent,
     NavbarComponent,
     ItemMovieComponent,
@@ -41,6 +42,7 @@ import { clickOutsideDirective } from './directives/click';
     SeasonInformationComponent,
     SearchResultsComponent,
     clickOutsideDirective,
+    SubscriberComponent,
   ],
   imports: [
     CoreModule,

@@ -1,6 +1,6 @@
 section.signIn {
     padding: 0 calc(~'(100% - 1200px) / 2');
-    padding-top: 2em;
+    padding-top: 1em;
     text-align: center;
 }
 
@@ -15,8 +15,36 @@ section.signIn h2 {
      }
 }
 
-section.signIn div.avatar,
-section.signIn div.formContainer {
+section.formContainer {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+section.formContainer form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+section.formContainer form label {
+    padding-bottom: 0.5em;
+}
+
+section.formContainer form label span {
+    padding-right: 1em;
+}
+
+section.formContainer div.formInfo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding:  0 100px;
+}
+
+section.signIn div.avatar {
     display: inline-block;
     vertical-align: top;
     margin: 0;
@@ -46,4 +74,31 @@ section.signIn div.formContainer div.randomizer,
 section.signIn div.formContainer label {
     margin-bottom: 1em;
 
+}
+
+section.subscriptions {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+section.subscriptions a img {
+    box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.3);
+}
+
+section.subscriptions div.sub-buttons button {
+    margin-top: 1em;
+    background-color: rgba(255,0,0,.9);
+    color: white;
+    font-size: 1.2em;
+    border-radius: 5px;
+    transition: all 0.3s;
+    border: 1px solid lightgray;
+    padding: 0.5em 1em;
+}
+
+section.subscriptions div.sub-buttons button:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }

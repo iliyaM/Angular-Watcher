@@ -1,0 +1,71 @@
+@import '../common.less';
+
+div.sidebar {
+    display: flex;
+    width: 250px;
+    background-color: @color_darkBlue;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0 1em;
+    height: 100vh;
+    transition: all 0.3s;
+
+    position: relative;
+
+    & a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        padding-bottom: 1em;
+    }
+}
+
+// logo
+div.sidebar div.logo {
+    border-bottom: 1px solid @color_darkBlue;
+
+     & a {
+        height: 100px;
+     }
+}
+
+// Avatar
+div.sidebar div.avatarIcon {
+    height: 230px;
+    border-radius: 100%;
+    border: 1px solid @color_white;
+}
+
+div.sidebar div.avatarIcon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+div.sidebar div.sidebarBtn {
+    position: absolute;
+    top: 200px;
+    right: -10px;
+    width: 30px;
+    height: 200px;
+    background-color: black;
+
+}
+
+div.sidebar h3 {
+    text-align: center;
+    color: @color_white;
+}
+
+
+// Close button
+div.sidebar.closed {
+    width: 0;
+    left: -300px;
+}
+
+div.sidebar.closed div.sidebarBtn {
+    background-color: red;
+    right: -300px;
+}

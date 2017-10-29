@@ -14,6 +14,9 @@ import { ApiSearchService } from '../services/api-search.service';
 //Interfaces
 import { User } from '../interfaces/user';
 
+// Moment JS
+import * as moment  from 'moment';
+
 @Component({
   selector: 'app-subscriber',
   templateUrl: './subscriber.component.html',
@@ -23,23 +26,24 @@ export class SubscriberComponent implements OnInit {
 subscriber:Subscription;
 userId:string;
 
+popupMessage = {
+	title: null,
+	content: null,
+	isOpen: false,
+}
+
 @Input()information;
 
   constructor(private db:DbService, private auth:AuthService, private api:ApiSearchService) { }
 
   ngOnInit() {
-    // Query on stage release date
-    this.db.checkOnStage();
+	  
   }
 
-  OnDestroy () {
-    this.subscriber.unsubscribe();
-  }
-
-  
   followInit() {
+    //Check status of tvShow
     if(this.information.status == "Ended") {
-      alert('you cannot susbsribe to an ended series') //Check status of tvShow
+      alert('you cannot susbsribe to an ended series') 
       return;
     } else {
       //Check Authentication state. if not user disable button functions
@@ -47,17 +51,23 @@ userId:string;
           if(res == null) {
             alert('You must be loggen in')
           } else {
-            this.getFinalEpisode(res);
+            alert('subscription has been added to your profile page'); // Change to something more appealing
+            this.getEpisode(res);
           }
       });
     }
   }
 
   //Grab Series information
-  getFinalEpisode(user) {
-    let date = new Date().toISOString().slice(0,10); //Create date of today to compare.
-    let episodeReleaseDate:number;
-    
+  getEpisode(user) {
+
+	let episodeData = {
+		episodesReleaseDate: null,
+		episodeNumber: null,
+		name: null,
+	}
+
+    let today = moment();
     // Grab final season number and id
     let finalSeason = this.information.seasons[this.information.seasons.length -1].season_number;
     let seasonId = this.information.seasons[this.information.seasons.length -1].id;
@@ -65,33 +75,58 @@ userId:string;
     //Query api for episode realease date.
     let finalEpisodeSubscription:Subscription = this.api.findFinalEpisode(this.information.id, finalSeason).subscribe(res => {
 
-      res.episodes.forEach(episode => { 
-        //Get not only released episode air date.
-        if(date >= episode.air_date) {
-          episodeReleaseDate = episode.air_date;
-          return;
-        } else {
-          episodeReleaseDate = res.episodes[0].air_date;
-        }
-      });
+		for(var i in res.episodes) {
 
-      //Construct object
-      const data = {
-        userId: user.userId,
-        seasonId: seasonId,
-        episodeReleaseDate: episodeReleaseDate,
-        showName: this.information.title,
-        phoneNumber: user.phoneNumber,
-        email: user.email,
-        type: 'tvShow',
-        showId: this.information.id,
-        userName: user.displayName,
-      }
+			if( moment(res.episodes[i]['air_date']).startOf('day').isSame(today.startOf('day')) ) {
+				episodeData.episodesReleaseDate = res.episodes[i]['air_date'];
+				episodeData.episodeNumber = res.episodes[i]['episode_number'],
+				episodeData.name = res.episodes[i]['name'];
+				console.log('Found today')
+				break;
+			}
 
-      this.db.handleOnFollowInDb(data);
-    });
-    
-    return;
+			//If release date is before today plus 7 days AND its bigger than today.
+			if(moment(res.episodes[i]['air_date']) < moment(res.episodes[i]['air_date']).add(7, 'days') && moment(res.episodes[i]['air_date']) > today) {
+				console.log('Taking next')
+				episodeData.episodesReleaseDate = res.episodes[i]['air_date'];
+				episodeData.episodeNumber = res.episodes[i]['episode_number'],
+				episodeData.name = res.episodes[i]['name'];
+			}
+		}
+		
+		// Check if nothing found set to 0
+		if(episodeData.episodesReleaseDate == null) {
+
+			this.db.activatePopup('noMoreEpisodesMessage').subscribe(res => {
+				console.log(res)
+				this.popupMessage.title = res['title'];
+				this.popupMessage.content = res['content'];
+				this.popupMessage.isOpen = true;
+			});
+		  	episodeData.episodesReleaseDate = 0;
+		}
+
+		//Construct data object for firestore
+		const data = {
+			userId: user.userId,
+			seasonId: seasonId,
+			showName: this.information.title,
+			phoneNumber: user.phoneNumber,
+			email: user.email,
+			type: 'tvShow',
+			showId: this.information.id,
+			userName: user.displayName,
+			episode: episodeData,
+		}
+
+		//Go populate Db
+		this.db.populateFirestore(data);
+	});
+	return;
+  }
+
+  OnDestroy () {
+    this.subscriber.unsubscribe();
   }
 
   

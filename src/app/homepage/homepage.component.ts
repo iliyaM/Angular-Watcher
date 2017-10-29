@@ -4,6 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { TvShow } from '../interfaces/tv-show';
 import { Movie } from '../interfaces/movie';
 
+
+import { DbService } from '../services/db.service';
+
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -42,7 +45,7 @@ seeMoreFunction(event) {
 
 imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small_medium}`;
 
-  constructor(private apiService: ApiSearchService) { }
+  constructor(private apiService: ApiSearchService, public dbService: DbService) { }
 
   ngOnInit() {
     this.subscriber = this.apiService.getTopTen().subscribe(data => {
@@ -55,6 +58,8 @@ imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small_medium}`;
   	this.subscriber.unsubscribe();
   }
 
-
+  checkOnStage() {
+    this.dbService.checkOnStage();
+  }
 
 }

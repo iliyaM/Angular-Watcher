@@ -1,6 +1,7 @@
-# Application idea
-
-* Movies and TV show browser
+# Application
+  * Movies and TV show browser
+  * Follow movie and tv show episodes release date
+  * Get notified just before release data via SMS message
 
 ### Features:
 * [ ] Follow shows
@@ -10,66 +11,36 @@
 * [ ]  Desktop application
 * [ ] ? Recommendation system
 * [ ] Log user activity for statistics
-* [ ] Tool tip with explanations on how the site was built 
-		OR an admin login that shows another version of the site with explicit explanations\
+* [ ] Tool tip with explanations on how the site was built
+		OR an admin login that shows another version of the site with explicit explanations
 
 ## Components
-* [ ] Login/Signup pages
 * [x] Home page - Shows top ten movies and tvShows.
 * [x] ShowItem Tv page
 * [x] ShowItem Movie page
-* [ ] Browse page
-* [ ] Subscription page
 * [ ] User profile page
 * [x] Service
-* [ ] Do Search in header and show result in drop down. on click implement same functionality as allways.
+* [x] DropDown search in header.
+* [x] Subscriber - This component handles everything subsribing related.
 
 ### Todo:
-* [x] Service function to call query all movies by their popularity and call all images and display one.
+* [] QA everything
+* [] Connect the ability to unsubscribe in userProfile page for subscriptions.
+* [] Style Profile page
+* [] Route Guard the profile page if not logged in.
+* [] Connect profile page to a link in header.
+ 
+### Clear DB on stage every week.
+check who is subscribed to on stage shows. if nobody remove itself from there.
 
-* [x] Service function called for GetItemById
-* Queries api with id and brings all related images
-* Checks to see if movie or tvshow once and bring additional data.
+### Create timer for every day check for episodes.
+daily check works on button click needs to be independend.
 
-* [x] Two seprate templates according to item type the expect specific data to work with.
-* [x] TvShow item template is seperated into one include to handle episodes to each season (Done with subscribing to child route).
+### Make mailing list in mail gun and configure domain.
+
+### Find a nicer way to show information to user when interacting with follow button
+
+### We have no more information about upcoming episodes. cannot follow show.
 
 
 
-** Refrence
-"backdrop_sizes": [
-  "w300",
-  "w780",
-  "w1280",
-  "original"
-],
-"logo_sizes": [
-  "w45",
-  "w92",
-  "w154",
-  "w185",
-  "w300",
-  "w500",
-  "original"
-],
-"poster_sizes": [
-  "w92",
-  "w154",
-  "w185",
-  "w342",
-  "w500",
-  "w780",
-  "original"
-],
-"profile_sizes": [
-  "w45",
-  "w185",
-  "h632",
-  "original"
-],
-"still_sizes": [
-  "w92",
-  "w185",
-  "w300",
-  "original"
-]

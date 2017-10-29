@@ -47,6 +47,7 @@ userDocument: AngularFirestoreDocument<User>;
 
     //Get user document
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${userCredential.uid}/info/${userCredential.uid}`);
+    const userCollections: AngularFirestoreCollection<User> = this.afs.collection('users');
 
     //Construct user data object
     const data: User = {
@@ -54,8 +55,8 @@ userDocument: AngularFirestoreDocument<User>;
       email: userCredential.email,
       displayName: userCredential.displayName,
     }
-    userRef.update(data);
-
+    
+    userRef.set(data);
     this.router.navigate(['profile']);
     return;
   }

@@ -1,0 +1,10 @@
+<div *ngIf="popupMessage.isOpen" [@fadeInOut]>
+
+  <div class="popup">
+      <a href="javascript:void(0)" (click)="popupMessage.isOpen = false">closeIcon</a>
+      <h1>{{ popupMessage.title }}</h1>
+      <p>{{ popupMessage.content }}</p>
+      <button (click)="popupMessage.isOpen = false">Close</button>
+  </div>
+
+</div>

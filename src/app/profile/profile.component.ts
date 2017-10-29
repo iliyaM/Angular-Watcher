@@ -25,13 +25,12 @@ export class ProfileComponent implements OnInit {
 userLoggedIn:User; //User object from authentication subscription
 
 subscribtion: Subscription; 
-mySubscriptions:Array<number>;
+mySubscriptions;
 
 singupForm: FormGroup; //From group
 
 //Form erros
 displayNameError: string;
-phoneNumberError: string;
 
 //Svg Sprite arrayNames
 index:number = 0;
@@ -39,7 +38,7 @@ male:boolean = true;
 menAvatars:Array<string> = ['icon-man2','icon-man3','icon-man4','icon-man5','icon-man'];
 womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-woman4','icon-woman5','icon-woman6','icon-woman7','icon-woman8','icon-woman9'];
 
-	constructor(private fb: FormBuilder, public auth: AuthService, private db: DbService, private apiService: ApiSearchService) {
+	constructor(private fb: FormBuilder, public auth: AuthService, public db: DbService, private apiService: ApiSearchService) {
 		//Subscribe to the user observable in auth service
 		this.subscribtion = this.auth.user.subscribe(res => {
 			this.userLoggedIn = res;
@@ -48,31 +47,27 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 
 	ngOnInit() {
 		this.singupForm = this.fb.group({
-			'displayName':['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*[a-zA-Z0-9]$')])],
-			'phoneNumber':['', Validators.compose([Validators.required, Validators.pattern(/^05\d([-]{0,1})\d{7}$/)])]
+
+			'displayName':['',Validators.pattern('[\\w\\-\\s\\/]+')],
 		});
+
 		this.singupForm.valueChanges.subscribe(res => this.validation()); //Subscribe to value changes and run validation function
-		this.getSupscriptionDate();
+		this.mySubscriptions = this.db.getMySubscriptions();
+		
 	}
 
 	ngOnDestroy() {
 		this.subscribtion.unsubscribe();
 	}
 
-	getSupscriptionDate() {
-		this.mySubscriptions = this.db.getMySubscriptions();
-	}
-
 	//Form validation function
 	validation() {
 		this.displayNameError = '';
-		this.phoneNumberError = '';
 
 		let displayName = this.singupForm.get('displayName');
-		let phoneNumber = this.singupForm.get('phoneNumber');
 
 		//checkDisplayName
-		if (displayName.invalid) {
+		if (displayName.invalid && displayName.dirty) {
 			if (displayName.errors['required']) {
 				this.displayNameError = 'The NickName is required';
 			}
@@ -80,22 +75,11 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 				this.displayNameError = 'only English characters are allowed'
 			}
 		}
-
-		//CheckPhone
-		if (phoneNumber.invalid && phoneNumber.dirty) {
-			if (phoneNumber.errors['required']) {
-				this.phoneNumberError = 'The phoneNumber is required';
-			}
-			if (phoneNumber.errors['pattern']) {
-				this.phoneNumberError = 'Normal Israeli Phone number Please'
-			}
-		}
 	}
 	
 	//Form submit function
 	signUpFormSubmit(){
 		let displayName = this.singupForm.value['displayName'];
-		let phoneNumber = this.singupForm.value['phoneNumber'];
 
 		//Check for avatar gender
 		let avatar;
@@ -109,7 +93,7 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 		if(displayName == '') {
 			displayName = this.userLoggedIn.displayName;
 		}
-		this.db.updateUser(avatar, phoneNumber, this.userLoggedIn.userId, displayName);
+		this.db.updateUser(avatar, this.userLoggedIn.userId, displayName);
 	}
 
 	//Avatar buttons
@@ -131,5 +115,9 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 	generateRandom() {
 		let name = getRandomName();
 		this.singupForm.patchValue({displayName: name});
+	}
+
+	stopFollowing(userId, showName) {
+		this.db.removeSubscription(userId, showName);
 	}
 }

@@ -5,6 +5,8 @@ import { appRoutes } from './routes/routes';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //FireStore AUTH
 import { CoreModule } from './core/core.module';
@@ -27,9 +29,14 @@ import { ItemTvComponent } from './item-tv/item-tv.component';
 import { SeasonInformationComponent } from './season-information/season-information.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 
+//Pipes
+import { DaysUntillPipe } from './pipes/days.pipe';
+
 //Directives
 import { clickOutsideDirective } from './directives/click';
 import { SubscriberComponent } from './subscriber/subscriber.component';
+import { ModalComponent } from './modal/modal.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +50,9 @@ import { SubscriberComponent } from './subscriber/subscriber.component';
     SearchResultsComponent,
     clickOutsideDirective,
     SubscriberComponent,
+    DaysUntillPipe,
+    ModalComponent,
+    SidebarComponent,
   ],
   imports: [
     CoreModule,
@@ -52,6 +62,8 @@ import { SubscriberComponent } from './subscriber/subscriber.component';
     RouterModule.forRoot(appRoutes),
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [ApiSearchService,DbService],
   bootstrap: [AppComponent]

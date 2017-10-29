@@ -1,6 +1,6 @@
 <nav class="main">
   <div class="links_container">
-    <a href="#">Home</a>
+    <a href="javascript:void(0)" [routerLink]="['home']">Home</a>
     <div *ngIf=" auth.user | async; then authenticated else guest"></div>
   </div>
 
@@ -17,7 +17,7 @@
 <ng-template #authenticated>
   <div *ngIf="auth.user | async as user">
 
-      <a href="javascript:void(0)" [routerLink]="['register']">{{ user.displayName }}</a>
+      <a href="javascript:void(0)" [routerLink]="['profile']">{{ user.displayName }}</a>
 
       <span class="avatar_icon"><svg><use attr.xlink:href="assets/sprite.svg#{{ user.avatar }}"></use></svg></span>
 

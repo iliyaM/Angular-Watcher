@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 body {
 	margin: 0;
-	margin-top: 100px;
 	font-family: 'Arial', sans-serif;
 }
 
@@ -21,4 +20,19 @@ span.noImage i {
 div.creators span.noImage {
 	width: 150px;
 	height: 150px;
+}
+
+button.subscriber {
+	border-radius: 10px;
+	border: 1px solid #34495e;
+	background-color: #16a085;
+	color: white;
+	font-size: 1.1em;
+	padding: 1em;
+	transition: all 0.3s;
+}
+
+button.subscriber:hover {
+	transform: scale(1.1);
+	cursor: poiner;
 }

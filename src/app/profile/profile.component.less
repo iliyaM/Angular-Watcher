@@ -1,80 +1,173 @@
-section.signIn {
-    padding: 0 calc(~'(100% - 1200px) / 2');
-    padding-top: 1em;
-    text-align: center;
+@import '../common.less';
+
+:host {
+    width: 100%;
 }
 
 section.signIn h2 {
-    margin: 0 auto;
     font-size: 1.5em;
     margin-bottom: 1em;
+    text-align: left;
 
      & span.userName {
-        color: lightpink;
-        text-decoration: underline; 
+        color: @color_brown;
      }
 }
 
+// Sesction forms
 section.formContainer {
     display: flex;
-    flex: 1;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
+//Div informations left.
+section.formContainer div.formInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: @color_white;
+    box-shadow: 0px 3px 8px 3px #EDF2F6;
+    border-radius: 5px;
+
+    & h2 {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        padding: 0.5em 0;
+        color: @color_white;
+        background-color: @color_greyMedium;
+    }
+}
+section.formContainer div.formInfo div.content {
+    box-sizing: border-box;
+    padding: 1em;
+    & span,
+    & p {
+        margin: 0;
+        padding: 1em;
+        font-size: 1.3em;
+    }
+}
+
+
+//From right
 section.formContainer form {
     display: flex;
     flex-direction: column;
     align-items: start;
+
+    background-color: @color_white;
+    box-shadow: 0px 3px 8px 3px #EDF2F6;
+    border-radius: 5px;
+    
+    & h2 {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        padding: 0.5em 0;
+        color: @color_white;
+        background-color: @color_greyMedium;
+    }
 }
 
-section.formContainer form label {
-    padding-bottom: 0.5em;
-}
-
-section.formContainer form label span {
-    padding-right: 1em;
-}
-
-section.formContainer div.formInfo {
+section.formContainer form div.formGroup {
+    box-sizing: border-box;
+    padding: 1em;
     display: flex;
-    flex: 1;
     flex-direction: column;
-    box-sizing: border-box;
-    padding:  0 100px;
 }
 
-section.signIn div.avatar {
-    display: inline-block;
-    vertical-align: top;
-    margin: 0;
-    box-sizing: border-box;
-    padding: 0 1em;
+section.formContainer form div.formGroup {
+    padding: 0.5em;
+}
+
+section.formContainer form div.formGroup label span {
+    padding-right: 1em;
+    color: @color_orangeDark;
+}
+
+//Form
+form label.displayName input {
+    margin-bottom: 1em;
+    border: 1px solid @color_greyText;
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    transition: all 0.3s;
+    
+    &:hover,
+    &:focus {
+        border: 1px solid @color_orangeDark;
+    }
+}
+
+ section.formContainer form div.formGroup label.randomizer button {
+    background-color: @color_blueDeep;
+    color: @color_white;
+    border: 1px solid @color_greyMedium;
+    border-radius: 10px;
+    padding: 1em;
+    transition: all 0.3s;
+     &:hover {
+         cursor: pointer;
+         background-color: @color_brown;
+     }    
+}
+
+form button.submitBtn {
+    background-color: @color_blueDeep;
+    color: @color_white;
+    border: 1px solid @color_greyMedium;
+    border-radius: 10px;
+    padding: 1em;
+    
+    margin: 1em auto;
+    padding: 1em;
+    transition: all 0.3s;
+
+    &:hover {
+        cursor: pointer;
+        background-color: @color_brown;
+    }    
 }
 
 // Avatar
-section.signIn div.avatar button.male,
-section.signIn div.avatar button.female {
+section.avatar {
+    display: flex;
+    justify-content: space-around;
+}
+
+// Avatar
+div.selection {
+    border: 1px solid @color_purple;
+    box-sizing: border-box;
+    padding: 1em;
+    margin: 1em 0;
+}
+
+div.selection h2 {
+    background-color: red;
+    text-align: center;
+    color: @color_white;
+}
+
+div.selection button.male,
+div.selection button.female {
     font-size: 2em;
     color: pink;
     margin: 0 1em;
 }
 
-section.signIn div.avatar button.male {
+div.selection button.male{
     color: blue;
 }
 
-section.signIn div.avatar div.buttons button.arrowRight,
-section.signIn div.avatar div.buttons button.arrowLeft {
+div.selection div.buttons button.arrowRight,
+div.selection div.buttons button.arrowLeft {
     margin: 1em;
 }
 
-//Form
-section.signIn div.formContainer div.randomizer,
-section.signIn div.formContainer label {
-    margin-bottom: 1em;
 
-}
 
 section.subscriptions {
     display: flex;

@@ -1,88 +1,96 @@
-<section class="signIn">
-	<div *ngIf="auth.user | async as user">
+<div *ngIf="auth.user | async as user" class="profile">
 
-		<h2>Welcome: <span class="userName">{{ user.displayName }}</span> to your Personal Page</h2>
-		
-		<section class="formContainer">
-			<div class="formInfo">
-				<p>On your first login your information is populate through your google account
-					you name is optional you can leave it as is or change it anytime, how many time you want
-				</p>
+	<h2>Welcome: <span class="userName">{{ user.displayName }}</span></h2>
+	
+	<section class="formContainer">
+
+		<div class="formInfo">
+			<h2>Changing you Name</h2>
+			<div class="content">
+				<p>On your first login your information is populate through your google account</p>
+				<p>you name is optional you can leave it as is or change it anytime.</p>
+				<span style="color:#e3a74d">*This will not effect anything important</span>
 			</div>
-			<form [formGroup]="singupForm" (ngSubmit)="signUpFormSubmit()" id="signUpForm">
-				<label for="displayName">
+
+		</div>
+
+		<form [formGroup]="singupForm" (ngSubmit)="signUpFormSubmit()" id="signUpForm">
+			<h2>Apply Changes</h2>
+			<div class="formGroup">
+				<label class="displayName">
 					<span>You can change you name</span>
 					<input
 						type="displayName"
 						[placeholder]="user.displayName"
 						[formControl]="singupForm.controls['displayName']">
-
+	
 					<div class="error" *ngIf="displayNameError"><p>{{displayNameError}}</p></div>
 				</label>
-
+	
 				<label class="randomizer">
 					<span>Or Create a random one</span>
 					<button (click)="generateRandom()">Generate</button>
 				</label>
+			</div>
 	
-				<button type="submit" class="submitBtn" [disabled]="singupForm.invalid">Submit</button>
-			</form>
-		</section>	
 
-		<!-- Avatar -->
-		<section class="avatar">
+			<button type="submit" class="submitBtn" [disabled]="singupForm.invalid">Submit</button>
+		</form>
+	</section>	
 
-			<div class="selection">
-				<h2>Choose your Avatar</h2>
-				<button (click)="male = true; index = 0" class="fa fa-mars male"></button>
-				<button (click)="male = false; index = 0" class="fa fa-venus female"></button>
-	
-				<div *ngIf="male; else female" class="icons">
-						<svg><use attr.xlink:href="assets/menIcons.svg#{{menAvatars[index]}}"></use></svg>
-						<div class="buttons">
-								<button (click)="prev(menAvatars)" class="fa fa-arrow-left arrowLeft"></button>
-								<button (click)="next(menAvatars)" class="fa fa-arrow-right arrowRight"></button>
-						</div>
-				</div>
-				<ng-template #female>
-					<div class="icons">
-						<svg><use attr.xlink:href="assets/womenIcons.svg#{{womenAvatars[index]}}"></use></svg>
-			
-						<div class="buttons">
-								<button (click)="next(womenAvatars)" class="fa fa-arrow-right arrowRight"></button>
-								<button (click)="prev(womenAvatars)" class="fa fa-arrow-left arrowLeft"></button>
-						</div>
+	<!-- Avatar -->
+	<section class="avatar">
+
+		<div class="selection">
+			<h2>Choose your Avatar</h2>
+			<button (click)="male = true; index = 0" class="fa fa-mars male"></button>
+			<button (click)="male = false; index = 0" class="fa fa-venus female"></button>
+
+			<div *ngIf="male; else female" class="icons">
+					<svg><use attr.xlink:href="assets/menIcons.svg#{{menAvatars[index]}}"></use></svg>
+					<div class="buttons">
+							<button (click)="prev(menAvatars)" class="fa fa-arrow-left arrowLeft"></button>
+							<button (click)="next(menAvatars)" class="fa fa-arrow-right arrowRight"></button>
 					</div>
-				</ng-template>
 			</div>
-
-			<div class="avatarInfo">
-				<p>You can Choose and replace you avatar image anytime</p>
-				<p>Of course there is a femlae and male options</p>
-				<p>Ninjas will be added soon :)</p>
-			</div>
-		</section>
+			<ng-template #female>
+				<div class="icons">
+					<svg><use attr.xlink:href="assets/womenIcons.svg#{{womenAvatars[index]}}"></use></svg>
 		
-		<div *ngIf="mySubscriptions">
-
-			<h2>Following:</h2>
-			<section class="subscriptions">
-				<div *ngFor="let show of mySubscriptions">
-					<div *ngIf="show.item.title">
-						<a href="javascript:void(0)" [routerLink]="['/tv', show.item.title.split(' ').join('_'), show.item.id]">
-						<p>{{ show.item.title }}</p>
-							<img src="https://image.tmdb.org/t/p/w185{{show.item.poster }}" alt="{{show.item.name}}">	
-						</a>
-					</div>
-					<!-- db.today -  -->
-					<div class="sub-buttons">
-						<button (click)="stopFollowing(user.userId, show.item.title)">Stop Following</button>
+					<div class="buttons">
+							<button (click)="next(womenAvatars)" class="fa fa-arrow-right arrowRight"></button>
+							<button (click)="prev(womenAvatars)" class="fa fa-arrow-left arrowLeft"></button>
 					</div>
 				</div>
-			</section>
-		
+			</ng-template>
 		</div>
 
-	</div>
+		<div class="avatarInfo">
+			<p>You can Choose and replace you avatar image anytime</p>
+			<p>Of course there is a femlae and male options</p>
+			<p>Ninjas will be added soon :)</p>
+		</div>
+	</section>
 	
-</section>
+	<div *ngIf="mySubscriptions">
+
+		<h2>Following:</h2>
+		<section class="subscriptions">
+			<div *ngFor="let show of mySubscriptions">
+				<div *ngIf="show.item.title">
+					<a href="javascript:void(0)" [routerLink]="['/tv', show.item.title.split(' ').join('_'), show.item.id]">
+					<p>{{ show.item.title }}</p>
+						<img src="https://image.tmdb.org/t/p/w185{{show.item.poster }}" alt="{{show.item.name}}">	
+					</a>
+				</div>
+				<!-- db.today -  -->
+				<div class="sub-buttons">
+					<button (click)="stopFollowing(user.userId, show.item.title)">Stop Following</button>
+				</div>
+			</div>
+		</section>
+	
+	</div>
+
+</div>
+	

@@ -54,14 +54,16 @@ userDocument: AngularFirestoreDocument<User>;
       userId: userCredential.uid,
       email: userCredential.email,
       displayName: userCredential.displayName,
+      avatar: 'icon-man',
     }
 
     if(userRef != null) {
-      console.log('there is a user');
+      console.log('Found user')
+      return;
+    } else {
+      userRef.set(data);
+
     }
-    
-    userRef.set(data);
-    this.router.navigate(['profile']);
     return;
   }
 

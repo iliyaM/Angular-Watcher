@@ -3,54 +3,168 @@
 div.sidebar {
     display: flex;
     width: 250px;
-    background-color: @color_darkBlue;
+    background-color: @color_blueDark;
     flex-direction: column;
-    box-sizing: border-box;
-    padding: 0 1em;
-    height: 100vh;
+    height: 100%;
     transition: all 0.3s;
 
     position: relative;
-
-    & a {
-        color: white;
-        text-decoration: none;
-        font-size: 1.1em;
-        padding-bottom: 1em;
-    }
 }
 
 // logo
 div.sidebar div.logo {
-    border-bottom: 1px solid @color_darkBlue;
+    display: flex;
+    border-bottom: 1px solid @color_brown;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 1em;
 
-     & a {
-        height: 100px;
+     & img {
+        width: 50%;
+        height: 50%;
+     }
+
+     & span {
+         color: white;
+         font-size: 1.2em;
      }
 }
 
 // Avatar
 div.sidebar div.avatarIcon {
-    height: 230px;
-    border-radius: 100%;
-    border: 1px solid @color_white;
+    padding: 1em 0;
+
+}
+
+div.sidebar div.avatarNoUser {
+    display: block;
+    width: 80%;
+    height: 200px;
+    margin: 1em auto;
+
+    & i {
+       font-size: 6em;
+       padding: 0.5em;
+       border: 2px solid @color_white;
+       border-radius: 100%;
+       color: @color_white; 
+    }
+}
+
+div.sidebar a.noUser {
+    text-align: center;
+    color: @color_white;
+    text-decoration: none;
+    transition: all 0.3s;
+    margin: 1em 0;
+    font-size: 2em;
+
+    &:hover {
+        color: @color_blueShine;
+    }
 }
 
 div.sidebar div.avatarIcon svg {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     margin: 0 auto;
 }
 
-div.sidebar div.sidebarBtn {
-    position: absolute;
-    top: 200px;
-    right: -10px;
-    width: 30px;
-    height: 200px;
-    background-color: black;
+// SideBar links
+div.sidebar div.sidebarLinks {
+    padding: 1em 0;
+    display: block;
+}
 
+div.sidebar div.sidebarLinks a {
+    display: block;
+    padding-left: 1em;
+    transition: all 0.3s;
+    position: relative;
+    margin-bottom: 1em;
+
+    &:before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        content: '';
+        width: 5px;
+        background-color: transparent;
+    }
+
+    &:hover {
+        background-color: @color_hover;
+
+        &:before {
+            background-color: @color_blueShine;
+        }
+    }
+
+    & p {
+        display: inline-block;
+        vertical-align: middle;
+        color: @color_greyText;
+    }
+
+    & i {
+        display: inline-block;
+        vertical-align: middle;
+
+        color: @color_greyText;
+        font-size: 1.2em;
+    }
+}
+
+div.sidebar div.sidebarLinks a.active {
+    background-color: @color_hover;
+
+    &:before {
+        background-color: @color_blueShine;
+    }
+}
+
+div.sidebar div.subs a {
+    &:hover {
+        background-color: @color_mediumBlue;
+    }
+    &.active {
+        background-color: @color_mediumBlue;
+    }
+}
+
+div.sidebar div.sidebarLinks a.subsActive i {
+    color: @color_blueShine;
+    box-shadow: 0px 0px 29px 15px rgba(0, 180, 254, 0.55);
+}
+//Subs
+div.subsContainer ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    background-color: @color_purple;
+    box-sizing: border-box;
+    padding: 1em 0.5em;
+}
+
+div.subsContainer ul li {
+    display: flex;
+    color: @color_greyText;
+    font-size: 1.1em;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 1em;
+
+    & img {
+        width: 45px;
+        height: 40px;
+        padding-right: 0.5em;
+        border-radius: 5px;
+    }
 }
 
 div.sidebar h3 {
@@ -68,4 +182,40 @@ div.sidebar.closed {
 div.sidebar.closed div.sidebarBtn {
     background-color: red;
     right: -300px;
+}
+
+div.contact {
+    padding-top: 100px;
+}
+
+div.contact h4 {
+    color: white;
+    padding-left: 1em;
+}
+
+div.contact a {
+    box-sizing: border-box;
+    padding: 1em;
+    display: block;
+    text-decoration: none;
+    transition: all 0.3s;
+    color: @color_white;
+
+    & i {
+        display: inline-block;
+        vertical-align: middle;
+        padding-right: 0.5em;
+    }
+
+    &:hover {
+        color: @color_blueShine;
+    }
+}
+
+div.contact a.email i {
+    color: #16C793;
+}
+
+div.contact a.github i {
+    color: @color_orangeDark;
 }

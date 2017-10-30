@@ -6,10 +6,12 @@ import { ItemMovieComponent } from '../item-movie/item-movie.component';
 import { ItemTvComponent } from '../item-tv/item-tv.component';
 import { SeasonInformationComponent } from '../season-information/season-information.component';
 
+import { AuthGuard } from '../guards/canActivate';
+
 export const appRoutes: Routes = [
 	{ path: 'home', component: HomepageComponent },
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
-	{ path: 'profile', component: ProfileComponent },
+	{ path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 	{ path: 'movie/:movie-name/:id', component: ItemMovieComponent },
 	{ path: 'tv/:tv-name/:id', component: ItemTvComponent,
 		children: [

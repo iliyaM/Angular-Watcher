@@ -1,7 +1,7 @@
 <!-- Search input -->
 <input type="text" class="search" [formControl]="search">
 
-<div *ngIf="results">
+<div *ngIf="results" class="results">
 
     <div id="dropdown" [ngClass]="{'active':menuSwitcher}" (clickOutside)="close($event)">
         <ul>

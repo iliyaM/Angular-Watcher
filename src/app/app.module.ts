@@ -18,6 +18,10 @@ import { AngularFireModule } from 'angularfire2';
 //Services
 import { ApiSearchService } from './services/api-search.service';
 import { DbService } from './services/db.service';
+import { PublicService } from './services/publicService';
+
+//Route Guards
+import { AuthGuard } from './guards/canActivate';
 
 //Components
 import { AppComponent } from './app.component';
@@ -28,9 +32,6 @@ import { ItemMovieComponent } from './item-movie/item-movie.component';
 import { ItemTvComponent } from './item-tv/item-tv.component';
 import { SeasonInformationComponent } from './season-information/season-information.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
-
-//Pipes
-import { DaysUntillPipe } from './pipes/days.pipe';
 
 //Directives
 import { clickOutsideDirective } from './directives/click';
@@ -50,7 +51,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SearchResultsComponent,
     clickOutsideDirective,
     SubscriberComponent,
-    DaysUntillPipe,
     ModalComponent,
     SidebarComponent,
   ],
@@ -65,7 +65,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [ApiSearchService,DbService],
+  providers: [ApiSearchService,DbService,AuthGuard,PublicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

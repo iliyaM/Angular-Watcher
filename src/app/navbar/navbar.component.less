@@ -1,12 +1,15 @@
+@import '../common.less';
+
 nav.main {
 	display: flex;
 	box-sizing: border-box;
 	padding: 0 1em;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #292b2c;
+	background-color: @color_orangeDark;
+	padding: 1em;
 
-	padding: 1em calc(~'(100% - 1200px) / 2');
+// padding: 1em calc(~'(100% - 1200px) / 2');
 }
 
 div.search_container {
@@ -14,29 +17,29 @@ div.search_container {
 	flex-direction: row;
 	justify-content: space-between;
 	position: relative;
+	align-items: center;
+
+	& i,
+	& p {
+		padding: 0 0.5em;
+		color: @color_white;
+	}
 }
 
 div.links_container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	& a {
+		color: @color_white;
+		font-size: 1.2em;
+		padding-right: 1em;
+		text-decoration: none;
+	}
+
+	& a.menu {
+		font-size: 1.5em;
+	}
 }
 
-div.links_container a {
-	padding-right: 1em;
-}
-
-div.links_container span.avatar_icon {
-	border-radius: 100%;
-	border: 1px solid white;
-	display: inline-block;
-	vertical-align: middle;
-	margin-right: 1em;
-}
-
-div.links_container span.avatar_icon svg {
-	display: block;
-	margin: 0 auto;
-	width: 35px;
-	height: 35px;
-}

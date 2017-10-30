@@ -1,27 +1,45 @@
 <nav class="main">
-  <div class="links_container">
-    <a href="javascript:void(0)" [routerLink]="['home']">Home</a>
-    <div *ngIf=" auth.user | async; then authenticated else guest"></div>
-  </div>
+	<div class="links_container">
 
-  <div class="search_container">
-    <app-search-results></app-search-results>
-  </div> 
+		<!-- Menu link -->
+		<a href="javascript:void(0)" (click)="toggleSideBar()" class="menu">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+		</a>
+
+		<!-- Load diffrent templates -->
+		<div *ngIf="auth.user | async; then authenticated else guest"></div>
+	</div>
+
+
+	<!-- Search container with component -->
+	<div class="search_container">
+		<i class="fa fa-search" aria-hidden="true"></i>
+		<p>Search</p>
+		<app-search-results></app-search-results>
+	</div> 
 </nav>
 
 
 <ng-template #guest>
-  <a href="javascript:void(0)" (click)="auth.googleLogin()" >Login Guest</a>
+
+  <a href="javascript:void(0)" (click)="auth.googleLogin()">
+      <i class="fa fa-sign-in" aria-hidden="true"></i>
+    Sign in to use the app
+  </a>
+
 </ng-template>
 
 <ng-template #authenticated>
   <div *ngIf="auth.user | async as user">
 
-      <a href="javascript:void(0)" [routerLink]="['profile']">{{ user.displayName }}</a>
+      <!-- profile page -->
+      <a href="javascript:void(0)" [routerLink]="['profile']">Welcome {{ user.displayName }}</a>
 
-      <span class="avatar_icon"><svg><use attr.xlink:href="assets/sprite.svg#{{ user.avatar }}"></use></svg></span>
-
-      <a href="javascript:void(0)" (click)="auth.signOut()">SignOut</a>
+      <!-- Sign out -->
+      <a href="javascript:void(0)" (click)="auth.signOut()">
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+          SignOut
+      </a>
 
   </div>
 </ng-template>

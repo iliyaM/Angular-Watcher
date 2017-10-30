@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 
 import { AuthService } from '../services/auth.service';
+import { PublicService } from '../services/publicService';
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +12,13 @@ import { AuthService } from '../services/auth.service';
 
 export class NavbarComponent implements OnInit {
 
-  constructor(public auth:AuthService) { }
+  constructor(public auth:AuthService, public publicService: PublicService) { }
 
   ngOnInit() {
+  }
+
+  toggleSideBar() {
+    this.publicService.toggleSidebar.emit();
   }
 
 }

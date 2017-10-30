@@ -1,17 +1,26 @@
+@import '../common.less';
+
 input.search  {
 	display: block;
 	width: 400px;
-	border: 1px solid grey;
+	border: 1px solid @color_blueDeep;
+	border-radius: 5px;
 	transition: all 0.3s;
+	padding: 0.5em 1em;
 }
 
 input.search:focus {
 	border: 1px solid #007bff;
+	border-radius: 5px 5px 0 0;
+}
+
+div.results {
+	position: relative;
 }
 
 #dropdown {
 	position: absolute;
-	top: 27px;
+	top: 0;
 	background-color: white;
 	bottom: 0;
 	right: 0;

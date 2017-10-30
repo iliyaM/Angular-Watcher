@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLinkActive } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 import { DbService } from '../services/db.service';
+import { PublicService } from '../services/publicService';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,9 +13,10 @@ import { DbService } from '../services/db.service';
 export class SidebarComponent implements OnInit {
 sidebarClose:boolean = false;
 userInfo:object;
+subscriptionLink = false;
 subscriptions:Array<object>;
 
-  constructor(private auth:AuthService, private db: DbService) { }
+  constructor(private auth:AuthService, private db: DbService, public publicService: PublicService) { }
 
   ngOnInit() {
 	//Get user info
@@ -27,11 +30,18 @@ subscriptions:Array<object>;
 		}
 	});
 
+	this.publicService.toggleSidebar.subscribe(() => {
+		this.sidebarClose = !this.sidebarClose;
+	});
+
   }
 
   getSubscriptions() {
-	this.subscriptions = this.db.getMySubscriptions();
-	console.log(this.subscriptions)
+		this.subscriptions = this.db.getMySubscriptions();
+		this.subscriptionLink = !this.subscriptionLink;
   }
+
+
+
 
 }

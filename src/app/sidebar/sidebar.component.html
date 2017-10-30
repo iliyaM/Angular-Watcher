@@ -1,49 +1,77 @@
-<div *ngIf="userInfo !=null; else guest">
-	<div class="sidebar" [ngClass]="{'closed': sidebarClose}">
+<div class="sidebar" [ngClass]="{'closed': sidebarClose}" >
 
-		<div class="logo">
-			<a href="#">Logo</a>
-		</div>
+	<!-- Logo -->
+	<div class="logo">
+		<img src="../assets/angular.png" alt="angular_logo">
+		<span>Watcher</span>
+	</div>
 
-		<!-- user.avatar -->
+	<div *ngIf="userInfo !=null; else guest">
+
+		<!-- Avatar icon -->
 		<div class="avatarIcon">
 				<svg><use attr.xlink:href="assets/sprite.svg#{{userInfo.avatar}}"></use></svg>
 		</div>
-
-		<!-- user.name -->
+	
 		<h3>{{ userInfo.displayName }}</h3>
-
-		<div class="subs">
-			<a href="javascript:void(0)" (click)="getSubscriptions(userInfo.userId)">Subscriptions</a>
-			<div *ngIf="subscriptions">
-				<ul>
-					<li *ngFor="let subs of subscriptions">
-						{{ subs.item.title }}
-						<img src="https://image.tmdb.org/t/p/w185{{subs.item.poster }}" alt="{{subs.item.title}}">
-					</li>
-				</ul>
-			</div>
+		
+		<div class="sidebarLinks">
+			<!-- Home -->
+			<a href="javascript:void(0)" [routerLink]="['home']" routerLinkActive="active">
+				<i class="fa fa-home" aria-hidden="true"></i>
+				<p> Home</p>
+			</a>
+		
+			<!-- Profile -->
+			<a href="javascript:void(0)" [routerLink]="['profile']" routerLinkActive="active">
+				<i class="fa fa-user-o" aria-hidden="true"></i>
+				<p>Profile</p>
+			</a>
+	
+			<!-- Subscriptions -->
+			<a href="javascript:void(0)" (click)="getSubscriptions(userInfo.userId)" routerLinkActive="active" [ngClass]="{'subsActive': subscriptionLink}">
+					<i class="fa fa-television" aria-hidden="true"></i>
+				<p>	Subscriptions</p>
+			</a>
 		</div>
 
-		<div class="sidebarBtn" (click)="sidebarClose = !sidebarClose"> </div>
-		
+		<!-- Subscriptions Container-->
+		<div *ngIf="subscriptionLink" class="subsContainer">
+			<ul>
+				<li *ngFor="let subs of subscriptions">
+					<img src="https://image.tmdb.org/t/p/w185{{subs.item.poster }}" alt="{{subs.item.title}}">
+					{{ subs.item.title }}
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Contact information -->
+	<div class="contact">
+		<h4>Contact</h4>
+
+		<a href="mailto:iliya.melishev@gmail.com" class="email">
+				<i class="fa fa-envelope-o" aria-hidden="true"></i>
+				iliya.melishev@gmail.com
+		</a>
+
+		<a href="https://github.com/iliyaM" class="github">
+			<i class="fa fa-github" aria-hidden="true"></i>
+			Github
+		</a>
 	</div>
 
 </div>
 
 <ng-template #guest>
-
-	<div class="sidebar" [ngClass]="{'closed': sidebarClose}">
-				
-		<!-- user.avatar -->
-		<div class="avatarIcon">
-			<p>Avatar icon</p>
-		</div>
-
-		<!-- user.name -->
-		<a href="javascript:void(0)" (click)="auth.googleLogin()">Login Guest</a>
-
-		<div class="sidebarBtn" (click)="sidebarClose = !sidebarClose"> </div>
-		
+	<!-- user.avatar -->
+	<div class="avatarNoUser">
+		<i class="fa fa-user-o" aria-hidden="true"></i>
 	</div>
+
+	<a href="javascript:void(0)" (click)="auth.googleLogin()" class="noUser">
+			<i class="fa fa-sign-in" aria-hidden="true"></i>
+			Login Guest
+	</a>
 </ng-template>
+

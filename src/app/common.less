@@ -1,5 +1,4 @@
 @color_darkBlue: #3b5c5c;
-@color_white: #f9fafb;
 @color_mediumBlue:#497a8b;
 @color_grey:#dde2e4;
 @color_green: #35b297;
@@ -8,6 +7,7 @@
 
 //palette 2
 
+@color_bg: #1E2931;
 @color_greyLight: #a9a5ab;
 @color_blueDark: #354052;
 @color_orangeDark: #e3a74d;
@@ -18,3 +18,20 @@
 @color_greyText: #B9BFCA;
 @color_blueShine: #00B4FE;
 @color_greyMedium: #6F7E95;
+@color_white: #f9fafb;
+@color_cream: #EDF2F6;
+
+
+.darkbutton() {
+    color: @color_white;
+    background-color: @color_purple;
+    padding: 1em;
+    border-radius: 5px;
+    transition: all 0.3s;
+    border: none;
+
+    &:hover {
+        transform: scale(1.1);
+        color: @color_blueShine;
+    }
+}

@@ -192,11 +192,11 @@ export class DbService {
     this.authService.user.subscribe(res => {
 		if(res != null) {
 			this.afs.collection(`users/${res.userId}/subscriptions`, ref => { return ref.where('showId', '>', 0) } ).valueChanges().subscribe(res => {
-				data.length = 0;
-	
+        data.length = 0;
+        
 				res.forEach(result => {
 					api = this.api.fetchTvItem(result['showId']).subscribe(res => {
-						data.push({dick: result['releaseDate'], item: res});
+            data.push(res);
 					});
 				});
 	
@@ -206,6 +206,31 @@ export class DbService {
 		}
 	});
      return data;
+  }
+
+  getMyStatistics() {
+    let api: Subscription;
+    let statistics:Array<object> = [];
+
+	  let myObservable:Observable<any>;
+
+    this.authService.user.subscribe(res => {
+		if(res != null) {
+			this.afs.collection(`users/${res.userId}/subscriptions`, ref => { return ref.where('showId', '>', 0) } ).valueChanges().subscribe(res => {
+        statistics.length = 0;
+        
+				res.forEach(result => {
+					api = this.api.fetchTvItem(result['showId']).subscribe(res => {
+						statistics.push(res.genres);
+					});
+				});
+	
+			});
+		} else {
+			console.log('no user')
+		}
+	});
+     return statistics;
   }
 
   removeSubscription(userId, showName) {

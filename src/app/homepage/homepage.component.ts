@@ -10,7 +10,7 @@ import { DbService } from '../services/db.service';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css']
+  styleUrls: ['./homepage.component.less']
 })
 export class HomepageComponent implements OnInit {
   

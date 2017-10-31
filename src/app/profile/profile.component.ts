@@ -27,6 +27,8 @@ userLoggedIn:User; //User object from authentication subscription
 subscribtion: Subscription; 
 mySubscriptions;
 
+genres:Array<object>;
+
 singupForm: FormGroup; //From group
 
 //Form erros
@@ -47,13 +49,12 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 
 	ngOnInit() {
 		this.singupForm = this.fb.group({
-
 			'displayName':['',Validators.pattern('[\\w\\-\\s\\/]+')],
 		});
-
 		this.singupForm.valueChanges.subscribe(res => this.validation()); //Subscribe to value changes and run validation function
-		this.mySubscriptions = this.db.getMySubscriptions();
-		
+		this.mySubscriptions = this.db.getMySubscriptions()
+		this.genres = this.db.getMyStatistics();
+		console.log(this.genres)
 	}
 
 	ngOnDestroy() {
@@ -68,9 +69,6 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 
 		//checkDisplayName
 		if (displayName.invalid && displayName.dirty) {
-			if (displayName.errors['required']) {
-				this.displayNameError = 'The NickName is required';
-			}
 			if (displayName.errors['pattern']) {
 				this.displayNameError = 'only English characters are allowed'
 			}

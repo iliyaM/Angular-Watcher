@@ -1,22 +1,18 @@
-<div class="container topTen">
+<section class="topTen">
 
-
-<button (click)="checkOnStage()">Do daily Check</button>
-<h2>Top 10 Movies</h2>
-<div class="movies">
-	<div *ngFor= "let movie of movieList; let i = index">
-		<div *ngIf="i < 10" class="item" [routerLink]="['/movie', movie.title.split(' ').join('_'), movie.id]">
-			<img src="{{imageSrc}}{{movie.posters}}" alt="{{movie.title}}">
-		</div>
-	</div> 
-</div>
-
-<h2>Top 10 TvShows</h2>
-<div class="tv">
-	<div *ngFor= "let tv of tvList; let i = index ">
-		<div *ngIf="i < 10" class="item" [routerLink]="['/tv', tv.title.split(' ').join('_'), tv.id]">
-			<img src="{{imageSrc}}{{ tv.posters }}" alt="{{tv.name}}" style="width: 100%;">
+	<h2>Pupular Tv Shows</h2>
+	<div class="tv">
+		<div *ngFor= "let tv of tvList; let i = index" class="item" [routerLink]="['/tv', tv.title.split(' ').join('_'), tv.id]">
+				<img src="{{imageSrc}}{{ tv.posters }}" alt="{{tv.name}}" style="width: 100%;">
 		</div>
 	</div>
-</div>
-	
+
+	<h2>Popular Movies</h2>
+	<div class="movies">
+		<div *ngFor= "let movie of movieList; let i = index" class="item" [routerLink]="['/movie', movie.title.split(' ').join('_'), movie.id]">
+			<img src="{{imageSrc}}{{movie.posters}}" alt="{{movie.title}}">
+		</div>
+	</div>
+
+</section>
+

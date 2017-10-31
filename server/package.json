@@ -9,8 +9,11 @@
   "author": "Iliya Melishev",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/firestore": "^0.8.2",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "mailgun-js": "^0.13.1"
+    "mailgun-js": "^0.13.1",
+    "moment": "^2.19.1",
+    "moment-js": "^1.1.15"
   }
 }

@@ -4,194 +4,212 @@
     width: 100%;
 }
 
-section.signIn h2 {
-    font-size: 1.5em;
-    margin-bottom: 1em;
-    text-align: left;
-
-     & span.userName {
-        color: @color_brown;
-     }
+div.profile {
+    background-color: @color_cream;
 }
 
-// Sesction forms
-section.formContainer {
+section.mainProfile {
     display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    box-sizing: border-box;
+    padding: 1em;
     flex-wrap: wrap;
-    justify-content: space-around;
 }
 
-//Div informations left.
-section.formContainer div.formInfo {
+//Avatar box
+div.info,
+div.formContainer,
+div.avatarBox {
+    width: 30%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    border: 1px solid black;
     background-color: @color_white;
-    box-shadow: 0px 3px 8px 3px #EDF2F6;
-    border-radius: 5px;
-
-    & h2 {
-        width: 100%;
-        text-align: center;
-        margin: 0;
-        padding: 0.5em 0;
-        color: @color_white;
-        background-color: @color_greyMedium;
-    }
-}
-section.formContainer div.formInfo div.content {
-    box-sizing: border-box;
-    padding: 1em;
-    & span,
-    & p {
-        margin: 0;
-        padding: 1em;
-        font-size: 1.3em;
-    }
-}
-
-
-//From right
-section.formContainer form {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-
-    background-color: @color_white;
-    box-shadow: 0px 3px 8px 3px #EDF2F6;
-    border-radius: 5px;
+    box-shadow: 0px 3px 5px 2px @color_greyLight;
     
     & h2 {
-        width: 100%;
         text-align: center;
         margin: 0;
-        padding: 0.5em 0;
-        color: @color_white;
+        padding: 1em 0;
         background-color: @color_greyMedium;
+        color: @color_white;
     }
 }
 
-section.formContainer form div.formGroup {
-    box-sizing: border-box;
-    padding: 1em;
+div.avatarBox div.genderSwitchers {
     display: flex;
-    flex-direction: column;
-}
-
-section.formContainer form div.formGroup {
-    padding: 0.5em;
-}
-
-section.formContainer form div.formGroup label span {
-    padding-right: 1em;
-    color: @color_orangeDark;
-}
-
-//Form
-form label.displayName input {
-    margin-bottom: 1em;
-    border: 1px solid @color_greyText;
-    border-radius: 10px;
-    padding: 0.5em 1em;
-    transition: all 0.3s;
+    justify-content: space-between;
     
-    &:hover,
-    &:focus {
-        border: 1px solid @color_orangeDark;
-    }
-}
+    & button {
+        padding: 0.5em;
+        margin: 0.5em;
 
- section.formContainer form div.formGroup label.randomizer button {
-    background-color: @color_blueDeep;
-    color: @color_white;
-    border: 1px solid @color_greyMedium;
-    border-radius: 10px;
-    padding: 1em;
-    transition: all 0.3s;
-     &:hover {
-         cursor: pointer;
-         background-color: @color_brown;
-     }    
-}
-
-form button.submitBtn {
-    background-color: @color_blueDeep;
-    color: @color_white;
-    border: 1px solid @color_greyMedium;
-    border-radius: 10px;
-    padding: 1em;
-    
-    margin: 1em auto;
-    padding: 1em;
-    transition: all 0.3s;
+        border: 1px solid transparent;
+        border-radius: 100%;
+        transition: all 0.3s;
+        font-size: 25px;
+        background-color: #1D8CFF;
+        color: @color_white;
+        font-weight: 700;
 
     &:hover {
-        cursor: pointer;
-        background-color: @color_brown;
-    }    
+            color: @color_blueShine;
+            transform: scale(1.1);
+        }
+    }
+
+    & button.female {
+        background-color: #FE73AC
+    }
 }
 
-// Avatar
-section.avatar {
-    display: flex;
-    justify-content: space-around;
-}
 
-// Avatar
-div.selection {
-    border: 1px solid @color_purple;
+div.avatarBox div.icons {
     box-sizing: border-box;
     padding: 1em;
-    margin: 1em 0;
 }
 
-div.selection h2 {
-    background-color: red;
-    text-align: center;
-    color: @color_white;
+div.avatarBox div.icons svg {
+    display: block;
+    width: 200px;
+    height: 200px;
+
+    margin: 1em auto;
+    box-shadow: 0px 0px 2px 2px rgba(53, 51, 53, 0.46);
+    // border: 1px solid black;
+    border-radius: 100%;
+    padding: 1em;
 }
 
-div.selection button.male,
-div.selection button.female {
-    font-size: 2em;
-    color: pink;
-    margin: 0 1em;
+div.avatarBox div.icons div.buttons {
+    display: flex;
+    justify-content: space-between;
+
+    & button {
+        width: 50%;
+        padding: 1em;
+        margin: 0.5em;
+
+        background-color: @color_purple;
+        color: @color_white;
+        border: none;
+        font-size: 20px;
+        border-radius: 5px;
+
+        transition: all 0.3s;
+
+        &:hover {
+            color: @color_blueShine;
+        }
+    }
 }
 
-div.selection button.male{
-    color: blue;
+
+
+//Form
+div.formContainer form {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 1em;
 }
 
-div.selection div.buttons button.arrowRight,
-div.selection div.buttons button.arrowLeft {
-    margin: 1em;
+div.formContainer form label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2em;
+
+    & input {
+        box-sizing: border-box;
+        padding: 1em;
+        border: none;
+        border-bottom: 1px solid @color_orangeDark;
+        width: 100%;
+        font-size: 20px;
+    }
 }
 
+div.formContainer form label.randomizer button {
+    .darkbutton();
+    width: 80%;
+    margin: 2em auto;
+    padding: 2em;
+    background-color: @color_blueDeep;
+}
 
+div.formContainer form > button {
+    .darkbutton();
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 2em;
+    background-color: @color_green;
+}
 
+//Info Box
+div.info div.content {
+    box-sizing: border-box;
+    padding: 1em;
+
+    & h4 {
+        margin: 0;
+        padding: 0.5em 0;
+        color: @color_orangeDark;
+    }
+
+    & p {
+        margin: 2px;
+    }
+}
+
+//Subscriptions
 section.subscriptions {
     display: flex;
-    flex: 1;
+    align-items: baseline;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 1em;
     flex-wrap: wrap;
+}
+
+div.subItem {
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-}
+    align-items: baseline;
+    border:1px solid grey;
+    box-shadow: 0px 3px 5px 2px @color_greyLight;
+    width: 250px;
+    margin: 1em;
 
-section.subscriptions a img {
-    box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.3);
-}
+    & img {
+        display: block;
+        width: 100%;
+    }
 
-section.subscriptions div.sub-buttons button {
-    margin-top: 1em;
-    background-color: rgba(255,0,0,.9);
-    color: white;
-    font-size: 1.2em;
-    border-radius: 5px;
-    transition: all 0.3s;
-    border: 1px solid lightgray;
-    padding: 0.5em 1em;
-}
+    & div.subInfo {
+        box-sizing: border-box;
+        padding: 0 1em;
+        margin: 1em;
 
-section.subscriptions div.sub-buttons button:hover {
-    transform: scale(1.1);
-    cursor: pointer;
+
+
+        & h4 {
+            color: @color_orangeDark;
+            text-align: center;
+        }
+
+        & div.buttons button {
+            .darkbutton();
+            width: 100%;
+            margin: 1em auto;
+            background-color: @color_brown;
+        }
+
+        & div.buttons button.showPage {
+            background-color: @color_blueDeep;
+        }
+        
+    }
 }

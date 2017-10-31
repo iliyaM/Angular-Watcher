@@ -12,4 +12,5 @@ export class TvItem {
 	status: string;
 	seasons:Array<TvSeasonInfo> = [];
 	creators:Array<TvCreators> = [];
+	genres:Array<object> = [];
 }

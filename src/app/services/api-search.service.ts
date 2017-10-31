@@ -98,6 +98,10 @@ export class ApiSearchService {
       mainObject.overview =  res.overview;
       mainObject.status =  res.status;
 
+
+      mainObject.genres.push(res.genres);
+
+
       //Construct Seasons
       res.seasons.forEach(season =>{
         let object = new TvSeasonInfo();

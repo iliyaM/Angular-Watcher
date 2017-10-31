@@ -97,10 +97,15 @@ div.sidebar div.sidebarLinks a {
 
     &:hover {
         background-color: @color_hover;
-
+        
         &:before {
             background-color: @color_blueShine;
         }
+    }
+
+    &:hover i,
+    &:hover p {
+        color: @color_white;
     }
 
     & p {
@@ -120,6 +125,11 @@ div.sidebar div.sidebarLinks a {
 
 div.sidebar div.sidebarLinks a.active {
     background-color: @color_hover;
+
+    & p,
+    & i {
+        color: @color_white;
+    }
 
     &:before {
         background-color: @color_blueShine;

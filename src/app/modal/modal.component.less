@@ -1,26 +1,58 @@
+@import '../common.less';
+
 div.popup {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 500px;
-    min-height: 400px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    border-radius: 5px;
+    z-index: 2;
     
-    border: 1px solid lightcyan;
-    background-color: lightgray;
+    box-sizing: border-box;
+    padding: 1em;
+
+    background-color: #363B59;
 
     & h1 {
-        background-color: green;
-        color: white;
+        color: @color_greyText;
     }
 
     & p {
         color: white;
-        text-align: center;
         font-size: 1.3em;
+    }
+
+    & a {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1.3em;
+        padding: 1em;
+        transition: all 0.3s;
+        
+        &:hover i {
+            color: @color_blueShine;
+        }
+
+        i {
+            color: @color_white;
+        }
+    }
+}
+
+div.popup button {
+    display: block;
+    width: 50%;
+    margin: 1em auto;
+    padding: 1.5em 0;
+    color: @color_white;
+    border-radius: 5px;
+    border: none;
+    background-color: #8388A4;
+    transition: all 0.3s;
+    
+    &:hover {
+        transform: scale(1.1);
     }
 }

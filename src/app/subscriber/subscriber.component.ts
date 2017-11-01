@@ -20,7 +20,7 @@ import * as moment  from 'moment';
 @Component({
   selector: 'app-subscriber',
   templateUrl: './subscriber.component.html',
-  styleUrls: ['./subscriber.component.css']
+  styleUrls: ['./subscriber.component.less']
 })
 export class SubscriberComponent implements OnInit {
 subscriber:Subscription;
@@ -41,17 +41,38 @@ popupMessage = {
   }
 
   followInit() {
+		console.log(this.information)
     //Check status of tvShow
-    if(this.information.status == "Ended") {
-      alert('you cannot susbsribe to an ended series') 
-      return;
+    if(this.information.status === "Ended") {
+
+			//Activate popip with ended info
+			this.db.activatePopup('ended').subscribe(res => {
+				console.log(res)
+				this.popupMessage.title = res['title'];
+				this.popupMessage.content = res['content'];
+				this.popupMessage.isOpen = true;
+			});
     } else {
       //Check Authentication state. if not user disable button functions
       this.subscriber = this.auth.user.subscribe(res => {
           if(res == null) {
-            alert('You must be loggen in')
+
+						this.db.activatePopup('notLoggedIn').subscribe(res => {
+							console.log(res)
+							this.popupMessage.title = res['title'];
+							this.popupMessage.content = res['content'];
+							this.popupMessage.isOpen = true;
+						});
+
           } else {
-            alert('subscription has been added to your profile page'); // Change to something more appealing
+
+						this.db.activatePopup('sucsess').subscribe(res => {
+							console.log(res)
+							this.popupMessage.title = res['title'];
+							this.popupMessage.content = res['content'];
+							this.popupMessage.isOpen = true;
+						});
+						
             this.getEpisode(res);
           }
       });

@@ -1,61 +1,47 @@
-<div *ngIf="tvItem">
-	<div class="container">
+<section class="tvItem" *ngIf="tvItem">
 
-		<div class="title">
-			<h2>{{tvItem.title}}</h2>
+	<h2>{{tvItem.title}}</h2>
+	<div class="content">
+		<div *ngIf="tvItem.poster; else noImage" class="image">
+			<img src="{{imageSrc}}{{posterSizes.large}}{{tvItem.poster }}" alt="{{tvItem.name}}">
 		</div>
 
-		<div class="content">
+		<div class="info">
+			<p>summery: {{ tvItem.overview }}</p>
+			<p>ReleaseDate: {{ tvItem.first_air_date }}</p>
+			<p>Seasons: {{ tvItem.number_of_seasons }}</p>
+			<p>Episodes: {{ tvItem.number_of_episodes }}</p>
 
-			<div *ngIf="tvItem.poster; else noImage">
-				<img src="{{imageSrc}}{{posterSizes.huge}}{{tvItem.poster }}" alt="{{tvItem.name}}">
+			<div *ngIf="tvItem.status == 'Returning Series'; else cancled">
+				<p class="text-success">{{ tvItem.status }}</p>
 			</div>
 
-			<div class="info">
-				<p>summery: {{ tvItem.overview }}</p>
-				<p>ReleaseDate: {{ tvItem.first_air_date }}</p>
-				<p>Seasons: {{ tvItem.number_of_seasons }}</p>
-				<p>Episodes: {{ tvItem.number_of_episodes }}</p>
-				<div *ngIf="tvItem.status == 'Returning Series'; else cancled">
-					<p class="text-success">{{ tvItem.status }}</p>
-				</div>
-			</div>
+			<!-- Subscribe Component -->
+			<app-subscriber [information]="{status:tvItem.status, title:tvItem.title, id:tvItem.id, seasons:tvItem.seasons}"></app-subscriber>
 		</div>
-		
-		<div class="title">
-			<h5>Creators:</h5>
-		</div>
-
-		<!-- Subscribe Component -->
-		<app-subscriber [information]="{status:tvItem.status, title:tvItem.title, id:tvItem.id, seasons:tvItem.seasons}"></app-subscriber>
-
-		
-		<div class="creators">
-			<div *ngFor="let creator of tvItem.creators" class="creator">
-				<div *ngIf="creator.profile_poster; else noImage">
-					<img src="{{imageSrc}}{{posterSizes.super_small}}{{creator.profile_poster}}" alt="{{creator.name}}">
-				</div>	
-				<p>{{creator.name}}</p>
-			</div>
-		</div>
-
-
-		<div class="title">
-			<h2>Sesons</h2>
-		</div>
-		<div class="seasons">
-			<ul>
-				<li *ngFor="let season of tvItem.seasons" [routerLink]="['season', season.season_number]" fragment="test">
-					<a href="javascript:void(0)">
-						<span>{{season.season_number}}</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-
 	</div>
-</div>
-<router-outlet></router-outlet>
+
+	<div class="creators">
+		<h4>Creators:</h4>
+		<ul>
+			<li *ngFor="let creator of tvItem.creators" class="creator">{{creator.name}}</li>
+		</ul>
+	</div>
+
+	<div class="seasons">
+		<h2>Sesons</h2>
+		<ul>
+			<li *ngFor="let season of tvItem.seasons" [routerLink]="['season', season.season_number]" fragment="test">
+				{{season.season_number}}
+			</li>
+		</ul>
+	</div>
+	
+	<div class="seasonInfo">
+		<router-outlet></router-outlet>
+	</div>
+
+</section>
 
 <!-- No Image Template -->
 <ng-template #noImage>
@@ -68,3 +54,4 @@
 <ng-template #cancled>
 	<p class="text-danger">{{ tvItem.status }}</p>
 </ng-template>
+

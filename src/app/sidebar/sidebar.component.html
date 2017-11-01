@@ -39,8 +39,8 @@
 		<div *ngIf="subscriptionLink" class="subsContainer">
 			<ul>
 				<li *ngFor="let subs of subscriptions">
-					<img src="https://image.tmdb.org/t/p/w185{{subs.item.poster }}" alt="{{subs.item.title}}">
-					{{ subs.item.title }}
+					<img src="https://image.tmdb.org/t/p/w185{{subs.poster }}" alt="{{subs.title}}">
+					{{ subs.title }}
 				</li>
 			</ul>
 		</div>

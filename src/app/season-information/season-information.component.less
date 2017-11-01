@@ -1,0 +1,84 @@
+@import '../common.less';
+
+div.seasonOverview {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	margin-bottom: 2em;
+	align-items: center;
+
+	& div.thumnbnail {
+		padding-right: 1em;
+	
+		& img {
+			display: block;
+			border-radius: 0 15px 15px 0;
+		}
+	}
+
+	& div.seasonContent {
+		color: @color_white;
+	}
+}
+
+div.episodes_list {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+
+div.episodes_list ul {
+	padding: 0;
+	list-style: none;
+
+	& li {
+		display: flex;
+		flex: 1;
+		flex-direction: row;
+		margin-bottom: 1.5em;
+		box-shadow: -3px 7px 23px -3px rgba(0,0,0,0.35);
+		box-sizing: border-box;
+		padding: 0.5em;
+		justify-content: space-between;
+		background-color: @color_greyText;
+
+		& p.episodeRelease {
+			color: @color_green;
+		}
+	}
+}
+
+
+div.episodes_list ul li.episode img {
+	padding-left: 2em;
+	display: block;
+	border-radius: 15px;
+}
+
+//Headers
+h4,
+h2 {
+	text-align: left;
+	position: relative;
+	margin: 0;
+	padding: 1em 0;
+	padding-bottom: 0.5em;
+	display: flex;
+	flex-direction: column;
+	color: @color_white;
+
+	&:before {
+		content: '';
+		position: absolute;
+		bottom: 0em;
+		left: 0;
+		transform: translateY(-50%);
+		width: 25%;
+		height: 2px;
+		background-color: @color_orangeDark;
+	}
+}
+
+h4 {
+	color: @color_purple;
+}

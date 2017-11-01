@@ -1,36 +1,33 @@
-<div class="container">
-	<div class="Season_information" id="test">
-		<div class="thumnbnail">
-			<div *ngIf="TvSeason.poster; else noImage">
-				<img src="https://image.tmdb.org/t/p/{{posterSizes.medium}}{{TvSeason.poster}}" alt="{{TvSeason.name}}">
-			</div>
+<div class="seasonOverview" id="test">
+	<div class="thumnbnail">
+		<div *ngIf="TvSeason.poster; else noImage">
+			<img src="https://image.tmdb.org/t/p/{{posterSizes.medium}}{{TvSeason.poster}}" alt="{{TvSeason.name}}">
 		</div>
-		<div class="info">
-			<h2>{{ TvSeason.name }}</h2>
-			<p>Summery: {{TvSeason.overview}}</p>
-			<p>Released on: {{TvSeason.release_data}}</p>
-			<p>Episodes: {{TvSeason.episodes.length}}</p>
-		</div>
+	</div>
+	<div class="seasonContent">
+		<h2>{{ TvSeason.name }}</h2>
+		<p>Summery: {{TvSeason.overview}}</p>
+		<p>Released on: {{TvSeason.release_data}}</p>
+		<p>Episodes: {{TvSeason.episodes.length}}</p>
 	</div>
 </div>
 
-<div class="container">
-	<div class="episodes_list">
-		<ul>
-			<li *ngFor="let episode of TvSeason.episodes" class="episode">
-				<div class="info">
-					<p>Episode: {{episode.number}}</p>
-					<p>Name: {{ episode.name }}</p>
-					<p>Summery: {{episode.overview}}</p>
-					<p>Released: {{ episode.release_date }}</p>
-				</div>
-				<div *ngIf="episode.poster; else noImage">
-					<img src="{{imageSrc}}{{posterSizes.large}}{{episode.poster}}" alt="{{episode.name}}">
-				</div>
-			</li>
-		</ul>
-	</div>
+<div class="episodes_list">
+	<ul>
+		<li *ngFor="let episode of TvSeason.episodes" class="episode">
+			<div class="info">
+				<h4>Episode: {{episode.number}}</h4>
+				<p class="episodeName">Name: {{ episode.name }}</p>
+				<p>Summery: {{episode.overview}}</p>
+				<p class="episodeRelease">Released: {{ episode.release_date }}</p>
+			</div>
+			<div *ngIf="episode.poster; else noImage">
+				<img src="{{imageSrc}}{{posterSizes.large}}{{episode.poster}}" alt="{{episode.name}}">
+			</div>
+		</li>
+	</ul>
 </div>
+
 
 <!-- No Image Template -->
 <ng-template #noImage>

@@ -9,7 +9,7 @@ import { SeasonInformationComponent } from '../season-information/season-informa
 @Component({
   selector: 'app-item-tv',
   templateUrl: './item-tv.component.html',
-  styleUrls: ['./item-tv.component.css']
+  styleUrls: ['./item-tv.component.less']
 })
 
 export class ItemTvComponent implements OnInit {

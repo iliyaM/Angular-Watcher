@@ -6,7 +6,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 @Component({
   selector: 'app-season-information',
   templateUrl: './season-information.component.html',
-  styleUrls: ['./season-information.component.css']
+  styleUrls: ['./season-information.component.less']
 })
 export class SeasonInformationComponent implements OnInit {
 season_number;

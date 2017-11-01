@@ -6,26 +6,6 @@ const http = require('http');
 const CronJob = require('cron').CronJob;
 const app = express();
 
-// If an incoming request uses
-// a protocol other than HTTPS,
-// redirect that request to the
-// same url but with HTTPS
-const forceSSL = function() {
-    return function (req, res, next) {
-        if (req.headers['x-forwarded-proto'] !== 'https') {
-        return res.redirect(
-            ['https://', req.get('Host'), req.url].join('')
-        );
-        }
-        next();
-    }
-}
-
-// Instruct the app
-// to use the forceSSL
-// middleware
-app.use(forceSSL());
-
 //Moment js
 const moment = require('moment');
 
@@ -41,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Point static path to distnodemo
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '/dist')));
 
 //will run every day at 12:00 AM
 let job = new CronJob('0 0 0 * * *', function() {
@@ -138,7 +118,7 @@ let sendFromMailGun = function(message) {
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
+    res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 const port = process.env.PORT || '3000';

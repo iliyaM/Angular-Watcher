@@ -4,6 +4,32 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
 const CronJob = require('cron').CronJob;
+
+//Nodemailer
+let nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'angularwatcher@gmail.com',
+    pass: 'angularwatcher1597500'
+  }
+});
+
+// const mailOptions = {
+//     from: 'angularwatcher@gmail.com', // sender address
+//     to: 'iliya.melishev@gmail.com', // list of receivers
+//     subject: 'Subject of your email', // Subject line
+//     html: '<p>Your html here</p>'// plain text body
+//   };
+
+// transporter.sendMail(mailOptions, function (err, info) {
+//     if(err)
+//       console.log(err)
+//     else
+//       console.log(info);
+//  });
+
 const app = express();
 
 //Moment js
@@ -15,6 +41,8 @@ const firestore = new Firestore({
     projectId: 'angular-watcher',
     keyFilename: '/projects/Angular-Watcher-5494dd72116a.json',
 });
+
+
 
 // Permit the app to parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -93,28 +121,24 @@ let sendEmail = function(mailingList) {
     console.log(mailingList)
     
     for(var i in mailingList.users) {
+
         let message = {};
-            message.from =  'iliya.melishev@gmail.com',
+            message.from =  'angularwatcher@gmail.com',
             message.to =  mailingList.users[i].email,
             message.subject =  `New episode of ${mailingList.showName}!`,
-            message.text = `There is new episode coming out ${mailingList.linkingWord} for ${mailingList.showName} - episode: ${mailingList.episodeNumber} - '${mailingList.episodeName}'`;
-
-            sendFromMailGun(message);
+            message.html = `<h3>There is new episode coming out ${mailingList.linkingWord} for ${mailingList.showName}</h3></br><h4>episode: ${mailingList.episodeNumber} - '${mailingList.episodeName}</h4></br><p>Thank you for using angularWatcher</p>'`;
+            sendWithNodeMailer(message);
     }
 }
 
-let sendFromMailGun = function(message) {
-    mailgun.messages().send(message, function (error, body) {
-    
-        if(!error) {
-            console.log('Mail sent')
-        } else {
-            console.log('Error')
-            console.log(error)
-        }
-    });
+let sendWithNodeMailer = function(message) {
+    transporter.sendMail(message, function (err, info) {
+        if(err)
+          console.log(err)
+        else
+          console.log(info);
+     });
 }
-
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

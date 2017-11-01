@@ -2,19 +2,15 @@
   "name": "angular-watcher",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "./server/index.js",
+  "main": "app.js",
   "scripts": {
+    "postinstall": "ng build --aot -prod",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "postinstall": "ng build --aot -prod"
-  },
-  "engines": {
-    "node": "~8.1.4",
-    "npm": "~5.3.0"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

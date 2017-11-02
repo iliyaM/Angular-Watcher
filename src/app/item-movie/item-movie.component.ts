@@ -9,7 +9,7 @@ import { MovieItem } from '../interfaces/movie-item';
 @Component({
   selector: 'app-item-movie',
   templateUrl: './item-movie.component.html',
-  styleUrls: ['./item-movie.component.css']
+  styleUrls: ['./item-movie.component.less']
 })
 export class ItemMovieComponent implements OnInit {
 movieId:string;

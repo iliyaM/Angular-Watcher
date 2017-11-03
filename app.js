@@ -51,10 +51,16 @@ app.use(bodyParser.json());
 // Point static path to distnodemo
 app.use(express.static(path.join(__dirname, '/dist')));
 
+
 //will run every day at 12:00 AM
-let job = new CronJob('0 0 0 * * *', function() {
+var job = new CronJob('00 00 24 * * *', function() {
+    // do something
     checkUpdates();
-});
+     }, function () {
+       /* This function is executed when the job stops */
+     },
+     true, /* Start the job right now */
+   );
 
 let checkUpdates = function() {
     let today = moment();

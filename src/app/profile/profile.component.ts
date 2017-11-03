@@ -115,7 +115,7 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 		this.singupForm.patchValue({displayName: name});
 	}
 
-	stopFollowing(userId, showName) {
+	stopFolowing(userId, showName, showId) {
 		this.db.removeSubscription(userId, showName, showId);
 	}
 }

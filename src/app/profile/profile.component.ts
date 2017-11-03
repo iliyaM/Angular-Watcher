@@ -116,6 +116,6 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 	}
 
 	stopFollowing(userId, showName) {
-		this.db.removeSubscription(userId, showName);
+		this.db.removeSubscription(userId, showName, showId);
 	}
 }

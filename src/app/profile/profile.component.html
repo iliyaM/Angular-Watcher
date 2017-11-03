@@ -88,7 +88,7 @@
 				<div class="subInfo">
 					<h4>{{ show.title }}</h4>
 					<div *ngIf="show.title" class="buttons">
-						<button (click)="stopFollowing(user.userId, show.title)">Stop Following</button>
+						<button (click)="stopFollowing(user.userId, show.title, show.id)">Stop Following</button>
 						<button [routerLink]="['/tv', show.title.split(' ').join('_'), show.id]" class="showPage">Show's Page</button>
 					</div>
 				</div>

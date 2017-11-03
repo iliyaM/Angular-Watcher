@@ -231,9 +231,10 @@ export class DbService {
 		}
 	});
      return statistics;
-  }
+}
 
-  removeSubscription(userId, showName) {
+  removeSubscription(userId, showName, showId) {
+    this.afs.doc(`subscriptions/tv-shows/${showId}/${userId}`).delete();
     this.afs.doc(`users/${userId}/subscriptions/${showName}`).delete();
   }
 

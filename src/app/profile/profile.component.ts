@@ -27,8 +27,6 @@ userLoggedIn:User; //User object from authentication subscription
 subscribtion: Subscription; 
 mySubscriptions;
 
-genres:Array<object>;
-
 singupForm: FormGroup; //From group
 
 //Form erros
@@ -53,8 +51,6 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 		});
 		this.singupForm.valueChanges.subscribe(res => this.validation()); //Subscribe to value changes and run validation function
 		this.mySubscriptions = this.db.getMySubscriptions()
-		this.genres = this.db.getMyStatistics();
-		console.log(this.genres)
 	}
 
 	ngOnDestroy() {
@@ -115,7 +111,7 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 		this.singupForm.patchValue({displayName: name});
 	}
 
-	stopFolowing(userId, showName, showId) {
+	stopFollowing(userId, showName, showId) {
 		this.db.removeSubscription(userId, showName, showId);
 	}
 }

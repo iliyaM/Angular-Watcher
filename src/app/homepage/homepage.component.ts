@@ -16,7 +16,7 @@ export class HomepageComponent implements OnInit {
   
 tvList:Array<TvShow>;
 movieList:Array<Movie>;
-subscriber;
+mediaListSubscription;
 
 posterSizes = {
   super_small: 'w92',
@@ -48,18 +48,13 @@ imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small_medium}`;
   constructor(private apiService: ApiSearchService, public dbService: DbService) { }
 
   ngOnInit() {
-    this.subscriber = this.apiService.getTopTen().subscribe(data => {
+    this.mediaListSubscription = this.apiService.getTopTen().subscribe(data => {
         this.tvList = this.apiService.getTvCustomData(data[0].results);
         this.movieList = this.apiService.getMovieCustomData(data[1].results);
     });
   }
 
   ngOnDestroy() {
-  	this.subscriber.unsubscribe();
+  	this.mediaListSubscription.unsubscribe();
   }
-
-  checkOnStage() {
-    this.dbService.checkOnStage();
-  }
-
 }

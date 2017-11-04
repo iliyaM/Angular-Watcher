@@ -1,7 +1,28 @@
-<div *ngIf="popupMessage.isOpen" [@fadeInOut]>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div *ngIf="popupMessage.modalOpen" [@fadeInOut]>
 
   <div class="popup">
-      <a href="javascript:void(0)" (click)="popupMessage.isOpen = false">
+      <a href="javascript:void(0)" (click)="popupMessage.modalOpen = false">
           <i class="fa fa-times" aria-hidden="true"></i>
       </a>
 
@@ -9,7 +30,7 @@
 
       <p>{{ popupMessage.content }}</p>
 
-      <button (click)="popupMessage.isOpen = false">OK</button>
+      <button (click)="popupMessage.modalOpen = false">OK</button>
 
   </div>
 

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-modal',
@@ -23,9 +24,14 @@ import { trigger, style, animate, transition } from '@angular/animations';
 export class ModalComponent implements OnInit {
 @Input()popupMessage;
 
-  constructor() { }
+  constructor(private db:DbService) { }
 
   ngOnInit() {
+    console.log(this.popupMessage)
+  }
+
+  ngOnDestroy() {
+    this.db.destroyMessage();
   }
 
 }

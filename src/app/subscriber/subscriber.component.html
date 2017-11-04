@@ -1,4 +1,6 @@
 <button class="subscriber" (click)="followInit()">Follow</button>
 
 <!-- Popuop Module -->
-<app-modal [popupMessage]="popupMessage"></app-modal>
+<div *ngIf="popupMessage">
+    <app-modal [popupMessage]="popupMessage"></app-modal>
+</div>

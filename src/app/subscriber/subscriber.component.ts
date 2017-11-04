@@ -24,59 +24,43 @@ import * as moment  from 'moment';
 })
 export class SubscriberComponent implements OnInit {
 subscriber:Subscription;
-userId:string;
+user;
+finalEpisodeSubscription:Subscription;
+popupMessage:object;
 
-popupMessage = {
-	title: null,
-	content: null,
-	isOpen: false,
-}
 
 @Input()information;
 
   constructor(private db:DbService, private auth:AuthService, private api:ApiSearchService) { }
 
   ngOnInit() {
-	  
+	this.subscriber = this.auth.user.subscribe(res => {
+		if(res == null) {
+			this.user = null;
+		} else {
+			this.user = res;
+		}
+	});
+
   }
 
   followInit() {
-		console.log(this.information)
     //Check status of tvShow
     if(this.information.status === "Ended") {
+		//Activate popip with ended info
+		this.popupMessage  = this.db.activatePopup('ended');
+		return;
+	}
 
-			//Activate popip with ended info
-			this.db.activatePopup('ended').subscribe(res => {
-				console.log(res)
-				this.popupMessage.title = res['title'];
-				this.popupMessage.content = res['content'];
-				this.popupMessage.isOpen = true;
-			});
-    } else {
-      //Check Authentication state. if not user disable button functions
-      this.subscriber = this.auth.user.subscribe(res => {
-          if(res == null) {
-
-						this.db.activatePopup('notLoggedIn').subscribe(res => {
-							console.log(res)
-							this.popupMessage.title = res['title'];
-							this.popupMessage.content = res['content'];
-							this.popupMessage.isOpen = true;
-						});
-
-          } else {
-
-						this.db.activatePopup('sucsess').subscribe(res => {
-							console.log(res)
-							this.popupMessage.title = res['title'];
-							this.popupMessage.content = res['content'];
-							this.popupMessage.isOpen = true;
-						});
-						
-            this.getEpisode(res);
-          }
-      });
-    }
+	if(this.user == null) {
+		this.popupMessage = this.db.activatePopup('notLoggedIn');
+		return;
+	}
+	
+	if(this.user != null) {
+		this.popupMessage = this.db.activatePopup('sucsess');
+		this.getEpisode(this.user);
+	}
   }
 
   //Grab Series information
@@ -94,7 +78,7 @@ popupMessage = {
     let seasonId = this.information.seasons[this.information.seasons.length -1].id;
 
     //Query api for episode realease date.
-    let finalEpisodeSubscription:Subscription = this.api.findFinalEpisode(this.information.id, finalSeason).subscribe(res => {
+    this.finalEpisodeSubscription = this.api.findFinalEpisode(this.information.id, finalSeason).subscribe(res => {
 
 		for(var i in res.episodes) {
 
@@ -117,13 +101,7 @@ popupMessage = {
 		
 		// Check if nothing found set to 0
 		if(episodeData.episodesReleaseDate == null) {
-
-			this.db.activatePopup('noMoreEpisodesMessage').subscribe(res => {
-				console.log(res)
-				this.popupMessage.title = res['title'];
-				this.popupMessage.content = res['content'];
-				this.popupMessage.isOpen = true;
-			});
+			this.popupMessage = this.db.activatePopup('noMoreEpisodesMessage');
 		  	episodeData.episodesReleaseDate = 0;
 		}
 
@@ -147,7 +125,9 @@ popupMessage = {
   }
 
   OnDestroy () {
-    this.subscriber.unsubscribe();
+		this.subscriber.unsubscribe();
+		this.popupMessage = null;
+		this.finalEpisodeSubscription.unsubscribe();
   }
 
   

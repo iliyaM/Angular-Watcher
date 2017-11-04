@@ -57,7 +57,7 @@ userDocument: AngularFirestoreDocument<User>;
       avatar: 'icon-man',
     }
 
-    if(userRef == null) {
+    if(userRef != null) {
       console.log('Found user')
       return;
     } else {

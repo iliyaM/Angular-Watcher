@@ -82,6 +82,7 @@ popupMessage:object;
 
 		for(var i in res.episodes) {
 
+			//If episode releases today
 			if( moment(res.episodes[i]['air_date']).startOf('day').isSame(today.startOf('day')) ) {
 				episodeData.episodesReleaseDate = res.episodes[i]['air_date'];
 				episodeData.episodeNumber = res.episodes[i]['episode_number'],
@@ -90,12 +91,14 @@ popupMessage:object;
 				break;
 			}
 
-			//If release date is before today plus 7 days AND its bigger than today.
-			if(moment(res.episodes[i]['air_date']) < moment(res.episodes[i]['air_date']).add(7, 'days') && moment(res.episodes[i]['air_date']) > today) {
-				console.log('Taking next')
+			//If today is after episode release and before the next episode release. this is the one.
+			if( moment(res.episodes[i]['air_date']) > today  && moment(res.episodes[i]['air_date']) < moment(res.episodes[i]['air_date']).add(7, 'days') ) {
+				console.log('Taking episode for this week')
 				episodeData.episodesReleaseDate = res.episodes[i]['air_date'];
 				episodeData.episodeNumber = res.episodes[i]['episode_number'],
 				episodeData.name = res.episodes[i]['name'];
+				console.log(res.episodes[i]['air_date'])
+				break;
 			}
 		}
 		

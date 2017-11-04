@@ -8,6 +8,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 
 //rxjs
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 
 //Interfaces
@@ -18,6 +19,7 @@ export class AuthService {
 user: Observable<User>;
 userCollection: AngularFirestoreCollection<User>;
 userDocument: AngularFirestoreDocument<User>;
+userSubscriber: Subscription;
 
   constructor(private router: Router, private afAuth: AngularFireAuth, private afs: AngularFirestore) {
     // Get auth data
@@ -45,10 +47,6 @@ userDocument: AngularFirestoreDocument<User>;
   //Create data from loginProvider and navigate
   private updateUserData(userCredential) {
 
-    //Get user document
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${userCredential.uid}/info/${userCredential.uid}`);
-    const userCollections: AngularFirestoreCollection<User> = this.afs.collection('users');
-
     //Construct user data object
     const data: User = {
       userId: userCredential.uid,
@@ -57,14 +55,19 @@ userDocument: AngularFirestoreDocument<User>;
       avatar: 'icon-man',
     }
 
-    if(userRef != null) {
-      console.log('Found user')
-      return;
-    } else {
-      console.log('Creating user')
-      userRef.set(data);
-    }
-    return;
+    //Get user document
+    this.userDocument = this.afs.doc(`users/${userCredential.uid}/info/${userCredential.uid}`);
+
+    //Check if exists.
+    this.userSubscriber = this.userDocument.valueChanges().subscribe(res => {
+      if(res == null) {
+        console.log('Not User CREATING');
+        this.userDocument.set(data);
+      } else {
+        console.log('Found Document Exiting');
+        return;
+      }
+    });
   }
 
   signOut() {

@@ -52,15 +52,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/dist')));
 
 
-//will run every day at 12:00 AM
-var job = new CronJob('00 00 24 * * *', function() {
-    // do something
-    checkUpdates();
-     }, function () {
-       /* This function is executed when the job stops */
-     },
-     true, /* Start the job right now */
-   );
 
 let checkUpdates = function() {
     let today = moment();
@@ -145,6 +136,17 @@ let sendWithNodeMailer = function(message) {
           console.log(info);
      });
 }
+
+//will run every day at 12:00 AM
+var job = new CronJob('00 00 24 * * *', function() {
+    // do something
+    checkUpdates();
+     }, function () {
+       /* This function is executed when the job stops */
+     },
+     true, /* Start the job right now */
+   );
+
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

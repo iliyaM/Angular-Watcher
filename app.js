@@ -153,16 +153,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-const server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-const server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-
+const port = process.env.PORT || '3000';
 app.set('port', port);
 
-//const server = http.createServer(app);
-//server.listen(port, () => console.log('Running'));
-
-app.listen(server_port, server_ip_address, function () {
-    console.log( "Listening on " + server_ip_address + ", server_port " + server_port  );
-});
+const server = http.createServer(app);
+server.listen(port, () => console.log('Running'));
 
 module.exports = app; 

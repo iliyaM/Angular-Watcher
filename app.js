@@ -153,7 +153,7 @@ let sendWithNodeMailer = function(message) {
 }
 
 //will run every day at 10:00 AM
-var job = new CronJob('14 14 * * *', function() {
+var job = new CronJob('00 10 * * *', function() {
     // do something
     checkUpdates();
      }, function () {

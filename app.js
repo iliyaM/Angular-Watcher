@@ -123,8 +123,23 @@ let sendEmail = function(mailingList) {
             message.from =  'angularwatcher@gmail.com',
             message.to =  mailingList.users[i].email,
             message.subject =  `New episode of ${mailingList.showName}!`,
-            message.html = `<h3>There is new episode coming out ${mailingList.linkingWord} for ${mailingList.showName}</h3></br><h4>episode: ${mailingList.episodeNumber} - '${mailingList.episodeName}</h4></br><p>Thank you for using angularWatcher</p>'`;
+            message.html = `
+            <div class="email-container" style="background: linear-gradient(35deg, #6F7E95 25%, #394D5A 65%);font-family: arial;min-height: 400px;position: relative;">
+                <h1 style="text-align: center;position: relative;margin: 0 auto;padding: 0.5em 0;color: #f9fafb;font-weight: 400;">New Episode!!</h1>
+                <h3 style="color: #f9fafb;text-align: center;margin: 0;padding: 2em 0;"> Oh Yeah ${mailingList.showName} is Coming out ${mailingList.linkingWord} prepare yourself!</h3>
+                <h4 style="color: #f9fafb;text-align: center;margin: 0;padding: 2em 0;"> Episode ${mailingList.episodeNumber} ${mailingList.episodeName} </h4>
+
+                <div class="footer" style="position: absolute;bottom: 0;left: 0;right: 0;color: #e3a74d;padding: 1em;font-weight: 700;text-align: center;">
+                <p> Thank you for using Angular Watcher 
+                    for questions or issues contact the developer
+                </p>
+                <a href="mailto:iliya.melishev@gmail.com" style="color: #f9fafb;text-decoration: none;">Iliya Melishev</a>
+                </div>
+
+            </div>`;
             sendWithNodeMailer(message);
+
+    
     }
 }
 
@@ -137,8 +152,8 @@ let sendWithNodeMailer = function(message) {
      });
 }
 
-//will run every day at 12:00 AM
-var job = new CronJob('00 00 24 * * *', function() {
+//will run every day at 10:00 AM
+var job = new CronJob('14 14 * * *', function() {
     // do something
     checkUpdates();
      }, function () {

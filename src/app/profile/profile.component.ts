@@ -40,8 +40,10 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 
 type = 'pie';
 data = {
+  
   labels: ["Animation", "Comedy", "Action & Adventure", "Sci-Fi & Fantasy", "Drama", "Crime"],
-  datasets: []
+   datasets: [{label: "My First dataset",
+  data: [65, 59, 80, 81, 56, 55, 40]}]
 };
 options = {
   responsive: true,
@@ -52,17 +54,8 @@ options = {
 		//Subscribe to the user observable in auth service
 		this.subscribtion = this.auth.user.subscribe(res => {
 			this.userLoggedIn = res;
-
-			let data = this.db.getUserGenres(res.userId);
-			data.subscribe(res => {
-				if(res.length > 0) {
-					let array = [];
-					res.forEach(result => {
-						array.push(result['showId']);
-					  });
-					this.getMyStatistics(array);
-				}
-			});
+			this.getMyStatistics();
+			
 
 		}); // End Auth
 	 }
@@ -74,8 +67,6 @@ options = {
 		this.singupForm.valueChanges.subscribe(res => this.validation()); //Subscribe to value changes and run validation function
 		this.mySubscriptions = this.db.getMySubscriptions();
 
-		// this.data.datasets.push(this.db.getUserGenres());
-		// console.log(this.db.getUserGenres());
 
 
 	}
@@ -85,15 +76,22 @@ options = {
 	}
 
 	//Get statistsics objects
-	getMyStatistics(array) {
-		let data;
-		let penis = [];
+	getMyStatistics() {
+		// get user genres
+		let data = this.db.getUserGenres(this.userLoggedIn.userId);
 
-		data = this.apiService.getGenres(array);
 		data.subscribe(res => {
-			console.log(res)
+			if(res.length > 0) {
+				let array = [];
+				res.forEach(result => {
+					array.push(result['showId']);
+				  });
+				this.apiService.getGenres(array).subscribe(data => {
+					this.data = data
+					console.log(this.data)
+				});
+			}
 		});
-
 	}
 
 	//Form validation function

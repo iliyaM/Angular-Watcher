@@ -17,7 +17,6 @@ import { TvSeason } from '../interfaces/tv-season';
 import { TvEpisode } from '../interfaces/tv-episode';
 import { TvCreators } from '../interfaces/tv-creators';
 import { MediaItem } from '../interfaces/media_item';
-import { Genres } from '../interfaces/genres';
 
 @Injectable()
 export class ApiSearchService {
@@ -261,16 +260,18 @@ export class ApiSearchService {
     return data;
   }
 
+  //Find genres by list of TV items
   getGenres(idsArray) {
-    let genresObject = new Genres();
+    let res_data = {
+      labels: ["Animation", "Comedy", "Action & Adventure", "Sci-Fi & Fantasy", "Drama", "Crime"],
+      datasets: [{label: "Favourite Genres Piechart ", data: [0,0,0,0,0,0]}]
+    };
 
     for(let i = 0; i < idsArray.length; i++) {
-      
       let data = this.http.get(`${this.base_url}/tv/${idsArray[i]}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
-      
       data.forEach(result => {
         result.genres.forEach(genre => {
-          genresObject[genre.name] ++;
+          res_data.datasets[0].data[res_data.labels.indexOf(genre.name)] ++ ;
         });
       });
 
@@ -278,7 +279,7 @@ export class ApiSearchService {
 
     //Create custom observable and subscribe in component.
     let observable = Observable.create(observer => {
-      observer.next(genresObject);
+      observer.next(res_data);
       observer.complete(console.log('completed'));
       observer.error(new Error("error"));
     });

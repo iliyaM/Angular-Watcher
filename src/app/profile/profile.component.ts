@@ -39,12 +39,8 @@ menAvatars:Array<string> = ['icon-man2','icon-man3','icon-man4','icon-man5','ico
 womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-woman4','icon-woman5','icon-woman6','icon-woman7','icon-woman8','icon-woman9'];
 
 type = 'pie';
-data = {
-  
-  labels: ["Animation", "Comedy", "Action & Adventure", "Sci-Fi & Fantasy", "Drama", "Crime"],
-   datasets: [{label: "My First dataset",
-  data: [65, 59, 80, 81, 56, 55, 40]}]
-};
+data = null;
+
 options = {
   responsive: true,
   maintainAspectRatio: false

@@ -38,11 +38,33 @@ male:boolean = true;
 menAvatars:Array<string> = ['icon-man2','icon-man3','icon-man4','icon-man5','icon-man'];
 womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-woman4','icon-woman5','icon-woman6','icon-woman7','icon-woman8','icon-woman9'];
 
+type = 'pie';
+data = {
+  labels: ["Animation", "Comedy", "Action & Adventure", "Sci-Fi & Fantasy", "Drama", "Crime"],
+  datasets: []
+};
+options = {
+  responsive: true,
+  maintainAspectRatio: false
+};
+
 	constructor(private fb: FormBuilder, public auth: AuthService, public db: DbService, private apiService: ApiSearchService) {
 		//Subscribe to the user observable in auth service
 		this.subscribtion = this.auth.user.subscribe(res => {
 			this.userLoggedIn = res;
-		});
+
+			let data = this.db.getUserGenres(res.userId);
+			data.subscribe(res => {
+				if(res.length > 0) {
+					let array = [];
+					res.forEach(result => {
+						array.push(result['showId']);
+					  });
+					this.getMyStatistics(array);
+				}
+			});
+
+		}); // End Auth
 	 }
 
 	ngOnInit() {
@@ -50,11 +72,28 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 			'displayName':['',Validators.pattern('[\\w\\-\\s\\/]+')],
 		});
 		this.singupForm.valueChanges.subscribe(res => this.validation()); //Subscribe to value changes and run validation function
-		this.mySubscriptions = this.db.getMySubscriptions()
+		this.mySubscriptions = this.db.getMySubscriptions();
+
+		// this.data.datasets.push(this.db.getUserGenres());
+		// console.log(this.db.getUserGenres());
+
+
 	}
 
 	ngOnDestroy() {
 		this.subscribtion.unsubscribe();
+	}
+
+	//Get statistsics objects
+	getMyStatistics(array) {
+		let data;
+		let penis = [];
+
+		data = this.apiService.getGenres(array);
+		data.subscribe(res => {
+			console.log(res)
+		});
+
 	}
 
 	//Form validation function
@@ -114,4 +153,6 @@ womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-w
 	stopFollowing(userId, showName, showId) {
 		this.db.removeSubscription(userId, showName, showId);
 	}
+
+
 }

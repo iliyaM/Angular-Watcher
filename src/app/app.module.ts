@@ -39,6 +39,9 @@ import { SubscriberComponent } from './subscriber/subscriber.component';
 import { ModalComponent } from './modal/modal.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
+//ChartJs
+import { ChartModule } from 'angular2-chartjs';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +67,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ChartModule,
   ],
   providers: [ApiSearchService,DbService,AuthGuard,PublicService],
   bootstrap: [AppComponent]

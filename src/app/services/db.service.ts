@@ -160,6 +160,11 @@ export class DbService {
     this.messageRef.unsubscribe();
   }
 
+  getUserGenres(userId) {
+	return this.afs.collection(`users/${userId}/subscriptions`, ref => { return ref.where('showId', '>', 0) } ).valueChanges();
+  }
+  
+
 }
 
 

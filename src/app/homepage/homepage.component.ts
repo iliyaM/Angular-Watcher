@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { TvShow } from '../interfaces/tv-show';
 import { Movie } from '../interfaces/movie';
 
-
 import { DbService } from '../services/db.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { DbService } from '../services/db.service';
   styleUrls: ['./homepage.component.less']
 })
 export class HomepageComponent implements OnInit {
-  
+
 tvList:Array<TvShow>;
 movieList:Array<Movie>;
 mediaListSubscription;

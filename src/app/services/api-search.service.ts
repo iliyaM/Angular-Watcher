@@ -17,6 +17,7 @@ import { TvSeason } from '../interfaces/tv-season';
 import { TvEpisode } from '../interfaces/tv-episode';
 import { TvCreators } from '../interfaces/tv-creators';
 import { MediaItem } from '../interfaces/media_item';
+import { Genres } from '../interfaces/genres';
 
 @Injectable()
 export class ApiSearchService {
@@ -129,7 +130,7 @@ export class ApiSearchService {
     //Create observable from consctucted data
     let observable = Observable.create(observer => {
       observer.next(mainObject);
-      observer.complete(console.log('TvItem completed'));
+      observer.complete(console.log('Observerble TvItem completed'));
       observer.error(new Error("error TvItem"));
     });
 
@@ -258,6 +259,33 @@ export class ApiSearchService {
   findFinalEpisode(itemid, seasonNumber) {
     let data = this.http.get(`${this.base_url}/tv/${itemid}/season/${seasonNumber}${this.apikey}&language=en-US&page=1&`).map(res => res.json())
     return data;
+  }
+
+  getGenres(idsArray) {
+    let genresObject = new Genres();
+
+    for(let i = 0; i < idsArray.length; i++) {
+      
+      let data = this.http.get(`${this.base_url}/tv/${idsArray[i]}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
+      
+      data.forEach(result => {
+        result.genres.forEach(genre => {
+          genresObject[genre.name] ++;
+        });
+      });
+
+    }
+
+    //Create custom observable and subscribe in component.
+    let observable = Observable.create(observer => {
+      observer.next(genresObject);
+      observer.complete(console.log('completed'));
+      observer.error(new Error("error"));
+    });
+
+
+    return observable;
+
   }
 
 }

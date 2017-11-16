@@ -166,12 +166,38 @@ div.info div.content {
 
 //Subscriptions
 section.subscriptions {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 1em;
-    flex-wrap: wrap;
+
+    & h2 {
+		position: relative;
+		margin: 0;
+        padding-left: 0.4em;
+        
+		display: flex;
+		flex-direction: column;
+		color: @color_orangeDark;
+        font-weight: 400;
+        margin-bottom: 1em;
+
+		&:before {
+			content: '';
+			position: absolute;
+			bottom: 0em;
+			left: 0;
+			transform: translateY(-50%);
+			width: 25%;
+			height: 2px;
+			background-color: #101F26;
+		}
+	}
+    
+    & div.subsContainer {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 1em;
+        flex-wrap: wrap;
+    }
 }
 
 div.subItem {
@@ -212,5 +238,41 @@ div.subItem {
             background-color: @color_blueDeep;
         }
         
+    }
+}
+
+//Statistics
+section.statistics {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+
+    & img {
+        width: 50%;
+    }
+    
+
+}
+
+
+h2.statistics_header {
+    position: relative;
+    margin: 1em 0;
+    display: flex;
+    
+    flex-direction: column;
+    color: @color_orangeDark;
+    font-weight: 400;
+    margin-bottom: 1em;
+
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: 0em;
+        left: 0;
+        transform: translateY(-50%);
+        width: 25%;
+        height: 2px;
+        background-color: #101F26;
     }
 }

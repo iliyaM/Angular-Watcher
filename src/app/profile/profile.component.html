@@ -75,15 +75,10 @@
 		</div>
 	</section>
 
-	<!-- Avatar -->
-	<section class="Statistics">
-		<h2>statistics will be added soon</h2>
-		<chart [type]="type" [data]="data" [options]="options"></chart>
-	</section>
-	
-	<div *ngIf="mySubscriptions">
+	<!-- Subscriptions -->
+	<section class="subscriptions">
 		<h2>Following:</h2>
-		<section class="subscriptions">
+		<div *ngIf="mySubscriptions" class="subsContainer">
 			<div *ngFor="let show of mySubscriptions" class="subItem">
 				<img src="https://image.tmdb.org/t/p/w342{{show.poster }}" alt="{{show.name}}">	
 				<div class="subInfo">
@@ -94,6 +89,23 @@
 					</div>
 				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</section>
+
+	<!-- Statistics -->
+	<h2 class="statistics_header">Statistics:</h2>
+
+	<section class="statistics">
+		<div style="width: 50%;"  *ngIf="dataArrived">
+				<canvas baseChart 
+					[data]="doughnutChartData"
+					[labels]="doughnutChartLabels"
+					[chartType]="doughnutChartType"
+					[options]="options"
+					[colors]="colors"
+					>
+				</canvas>
+		</div>
+		<img src="../../assets/statistics.jpg" alt="vector_boy_watching_tv">
+	</section>
 </div>

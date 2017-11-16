@@ -17,6 +17,7 @@ import { TvSeason } from '../interfaces/tv-season';
 import { TvEpisode } from '../interfaces/tv-episode';
 import { TvCreators } from '../interfaces/tv-creators';
 import { MediaItem } from '../interfaces/media_item';
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Injectable()
 export class ApiSearchService {
@@ -261,32 +262,42 @@ export class ApiSearchService {
   }
 
   //Find genres by list of TV items
+  
   getGenres(idsArray) {
-    let res_data = {
-      labels: ["Animation", "Comedy", "Action & Adventure", "Sci-Fi & Fantasy", "Drama", "Crime"],
-      datasets: [{label: "Favourite Genres Piechart ", data: [0,0,0,0,0,0]}]
+    let customChartData = {
+      labels: [],
+      data: [0,0,0,0,0,0,0,0,0,0,0],
     };
 
     for(let i = 0; i < idsArray.length; i++) {
       let data = this.http.get(`${this.base_url}/tv/${idsArray[i]}${this.apikey}&language=en-US&page=1&`).map(res => res.json());
+
       data.forEach(result => {
         result.genres.forEach(genre => {
-          res_data.datasets[0].data[res_data.labels.indexOf(genre.name)] ++ ;
+
+          console.log(genre.name)
+
+          if(customChartData.data[customChartData.labels.indexOf(genre.name)] == null ) {
+            customChartData.labels.push(genre.name);
+            console.log('No index of that name. CREATING');
+          }
+
+          customChartData.data[customChartData.labels.indexOf(genre.name)] ++ ;
+
         });
       });
-
     }
+
+    console.log(customChartData.labels);
 
     //Create custom observable and subscribe in component.
     let observable = Observable.create(observer => {
-      observer.next(res_data);
+      observer.next(customChartData);
       observer.complete(console.log('completed'));
       observer.error(new Error("error"));
     });
 
-
     return observable;
-
   }
 
 }

@@ -38,21 +38,38 @@ male:boolean = true;
 menAvatars:Array<string> = ['icon-man2','icon-man3','icon-man4','icon-man5','icon-man'];
 womenAvatars:Array<string> = ['icon-woman1', 'icon-woman2','icon-woman3','icon-woman4','icon-woman5','icon-woman6','icon-woman7','icon-woman8','icon-woman9'];
 
-type = 'pie';
-data = null;
+// CHART configs
+public doughnutChartLabels:string[] = ["Animation", "Comedy", "Action & Adventure", "Sci-Fi & Fantasy", "Drama", "Crime"];
+public doughnutChartData:number[] = [];
+public doughnutChartType:string = 'doughnut';
+private options = {
+	legend: { position: 'left' }
+}
+dataArrived:boolean = false;
+colors = [
+	{ backgroundColor: ['#2FBCD0',
+	'#A47669',
+	'#C4996C',
+	'#949599',
+	'#FFC853',
+	'#F48859',
+	'#EE534F',
+	'#E52765',
+	'#582E60',
+	'#74507C',
+	'#1170A8',
+	'#19A8E2',
+	'#31BBA1',
+	'#8FCA6E'
+	]}
+];
 
-options = {
-  responsive: true,
-  maintainAspectRatio: false
-};
 
 	constructor(private fb: FormBuilder, public auth: AuthService, public db: DbService, private apiService: ApiSearchService) {
 		//Subscribe to the user observable in auth service
 		this.subscribtion = this.auth.user.subscribe(res => {
 			this.userLoggedIn = res;
 			this.getMyStatistics();
-			
-
 		}); // End Auth
 	 }
 
@@ -62,9 +79,6 @@ options = {
 		});
 		this.singupForm.valueChanges.subscribe(res => this.validation()); //Subscribe to value changes and run validation function
 		this.mySubscriptions = this.db.getMySubscriptions();
-
-
-
 	}
 
 	ngOnDestroy() {
@@ -82,9 +96,13 @@ options = {
 				res.forEach(result => {
 					array.push(result['showId']);
 				  });
-				this.apiService.getGenres(array).subscribe(data => {
-					this.data = data
-					console.log(this.data)
+				this.apiService.getGenres(array).subscribe(res => {
+					this.doughnutChartData = res.data;
+					this.doughnutChartLabels = res.labels;
+
+					setTimeout(() => {
+						this.dataArrived = !this.dataArrived;
+					}, 400)
 				});
 			}
 		});
@@ -146,6 +164,7 @@ options = {
 
 	stopFollowing(userId, showName, showId) {
 		this.db.removeSubscription(userId, showName, showId);
+		this.dataArrived = !this.dataArrived;
 	}
 
 

@@ -1,5 +1,48 @@
+@import 'common.less';
+
 div.stage {
     display: flex;
     flex: 1;
     min-height: 100%;
+}
+
+div.mobileTempalte {
+    background: linear-gradient(90deg, #1E2931 25%, #394D5A 110%);
+    color: @color_white;
+    position: relative;
+    min-height: 100%;
+}
+
+div.mobileContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+
+    & h1,
+    & h2 {
+        color: @color_orangeDark;
+        margin: 0;
+        padding: 0.5em 0;
+    }
+}
+
+div.mobileContent a.linkToApp {
+    display: block;
+    width: 60%;
+    padding: 1em;
+
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+
+    color: @color_white;
+    background-color: @color_orangeDark;
+    border: 1px solid @color_white;
+    margin: 2em auto;
+
+    border-radius: 10px;
+    
 }

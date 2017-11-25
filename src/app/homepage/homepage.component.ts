@@ -12,7 +12,6 @@ import { DbService } from '../services/db.service';
   styleUrls: ['./homepage.component.less']
 })
 export class HomepageComponent implements OnInit {
-
 tvList:Array<TvShow>;
 movieList:Array<Movie>;
 mediaListSubscription;
@@ -44,8 +43,8 @@ seeMoreFunction(event) {
 
 imageSrc:string = `https://image.tmdb.org/t/p/${this.posterSizes.small_medium}`;
 
-  constructor(private apiService: ApiSearchService, public dbService: DbService) { }
-
+  constructor(private apiService: ApiSearchService, public dbService: DbService) {}
+  
   ngOnInit() {
     this.mediaListSubscription = this.apiService.getTopTen().subscribe(data => {
         this.tvList = this.apiService.getTvCustomData(data[0].results);

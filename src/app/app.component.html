@@ -1,6 +1,23 @@
-<app-navbar></app-navbar>
+<div *ngIf="isMobile == false; else mobileTemplate">
+    <app-navbar></app-navbar>
 
-<div class="stage">
-    <app-sidebar></app-sidebar>
-    <router-outlet></router-outlet>
+    <div class="stage">
+        <app-sidebar></app-sidebar>
+        <router-outlet></router-outlet>
+    </div>
 </div>
+
+<ng-template #mobileTemplate>
+
+    <div class="mobileTempalte">
+        <div class="mobileContent">
+            <h1>You are using a mobile phone</h1>
+            <p>unfortunately there is no mobile/web version of this app</p>
+            <h2>But! there is an ionic app for ANDROID.</h2>
+    
+            <p>*note: the app is on the server and not on a playstore so give your device permission to download and install it. its perfectly safe.</p>
+            <a href="assets/watcher.apk" class="linkToApp">Download</a>
+        </div>
+    </div>
+
+</ng-template>

@@ -9,6 +9,13 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
 title:string =  'app component'
+isMobile:boolean = false;
+
+	constructor() {
+		if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+			this.isMobile = true;
+		}
+	}
 }
 
 

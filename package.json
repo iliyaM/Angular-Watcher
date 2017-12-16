@@ -32,6 +32,7 @@
     "@google-cloud/firestore": "^0.8.2",
     "angular2-chartjs": "^0.3.0",
     "angularfire2": "^5.0.0-rc.3",
+    "axios": "^0.16.2",
     "body-parser": "^1.18.2",
     "chart.js": "^2.7.1",
     "core-js": "^2.4.1",

@@ -160,10 +160,18 @@ export class DbService {
     this.messageRef.unsubscribe();
   }
 
-  getUserGenres(userId) {
-	return this.afs.collection(`users/${userId}/subscriptions`, ref => { return ref.where('showId', '>', 0) } ).valueChanges();
+	getUserGenres(userId) {
+		return this.afs.collection(`users/${userId}/subscriptions`, ref => { return ref.where('showId', '>', 0) } ).valueChanges();
+	}
+
+	/**
+	 * Clearing db functions.
+	 */
+	ShowNoReleaseDate() {
+		return this.afs.collection(`onStage/tv-shows/followed`, ref => { 
+			return ref.where('episodesReleaseDate', '==', 0)
+		}).valueChanges();
   }
-  
 
 }
 

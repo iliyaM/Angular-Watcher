@@ -6,12 +6,5 @@
 				<img src="{{imageSrc}}{{ tv.posters }}" alt="{{tv.name}}" style="width: 100%;">
 		</div>
 	</div>
-
-	<h2>Popular Movies</h2>
-	<div class="movies">
-		<div *ngFor= "let movie of movieList; let i = index" class="item" [routerLink]="['/movie', movie.title.split(' ').join('_'), movie.id]">
-			<img src="{{imageSrc}}{{movie.posters}}" alt="{{movie.title}}">
-		</div>
-	</div>
 </section>
 

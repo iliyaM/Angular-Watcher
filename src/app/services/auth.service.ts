@@ -29,7 +29,8 @@ userSubscriber: Subscription;
       } else {
         return Observable.of(null);
       }
-    });
+	  });
+
   }
 
   googleLogin() {
@@ -73,5 +74,4 @@ userSubscriber: Subscription;
   signOut() {
     this.afAuth.auth.signOut();
   }
-
 }

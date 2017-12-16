@@ -1,0 +1,18 @@
+
+<section class="admin">
+
+	<div class="Onstage">
+		<h2>Check onstage record with releaseDate of 0</h2>
+		<button (click)="showNoReleaseDate()">Print values</button>
+		<div *ngIf="OnstageRelease">
+			<ul>
+				<li *ngFor="let value of OnstageRelease">
+					{{ value.showName }}
+				</li>
+			</ul>
+			<button>Delete all</button>
+		</div>
+	</div>
+
+	<h2>Check onstage records without images</h2>
+</section>

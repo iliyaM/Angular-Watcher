@@ -170,14 +170,18 @@ export class ApiSearchService {
 	 * Query api based on type. return back and create obserable with image handling.
 	 */
 	search(queryString: string) {
-		let array: Array<MediaItem> = [];
-		let data: Observable<any> = this.http.get(`${this.base_url}/search/multi${this.apikey}&language=en-US&query=${queryString}`).map(res => res.json());
+		const array: Array<MediaItem> = [];
+		if (queryString === '') {
+			return [];
+		}
+		const data: Observable<any> = this.http.get(`${this.base_url}/search/multi${this.apikey}&language=en-US&query=${queryString}`)
+			.map(res => res.json());
 		data.forEach(object => {
 			object.results.forEach(data => {
-				if (data.media_type == 'person') {
-					return
+				if (data.media_type === 'person') {
+					return;
 				} else {
-					let object = new MediaItem();
+					const object = new MediaItem();
 
 					if (data.name) {
 						object.name = data.name;
@@ -196,8 +200,8 @@ export class ApiSearchService {
 			});
 		});
 
-		//Create custom observable and subscribe in component.
-		let observable = Observable.create(observer => {
+		// Create custom observable and subscribe in component.
+		const observable = Observable.create(observer => {
 			observer.next(array);
 			observer.complete(console.log('completed'));
 			observer.error(new Error('error'));

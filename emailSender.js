@@ -9,25 +9,25 @@ const transporter = nodemailer.createTransport({
 	}
 });
 
-
-
 module.exports = {
 	emailSender: (data) => {
 		const message = {};
 			message.from = 'angular-watcher.com',
 			message.to = data.email,
-			message.subject = `New episode of ${data.showName}!`,
+			message.subject = `New episode of ${data.seriesName}!`,
 			message.html = `
 			<div class="email-container" style="background: linear-gradient(180deg, #6F7E95 5%, #394D5A 85%);font-family: arial;min-height: 400px;position: relative;">
                 <h1 style="text-align: center;position: relative;margin: 0 auto;padding: 0.5em 0;color: #f9fafb;font-weight: 400;">New Episode!!</h1>
         
-                <h3 style="color: #f9fafb;text-align: center;margin: 0;padding: 0.5em 0;"> Oh Yeah ${data.showName} is Coming out ${data.linkingWord} prepare yourself!</h3>
-                <h4 style="color: #f9fafb;text-align: center;margin: 0;padding: 0.5em 0;">Episode number ${data.episodeNumber}</h4>
+                <h3 style="color: #f9fafb;text-align: center;margin: 0;padding: 0.5em 0;"> Oh Yeah ${data.seriesName} is Coming out ${data.linkingWord} prepare yourself!</h3>
+                <h4 style="color: #f9fafb;text-align: center;margin: 0;padding: 0.5em 0;">Season ${data.seasonNumber} Episode ${data.episodeNumber}</h4>
                 <h4 style="color: #f9fafb;text-align: center;margin: 0;padding: 0.5em 0;">${data.episodeName}</h4>
         
                 <a href="http://angular-watcher.com">
-                    <img src="https://image.tmdb.org/t/p/w500${data.imagePath}" alt="episode_poster" style="display: block;width: 90%;margin: 1em auto;box-shadow: -10px 10px 18px -2px rgba(0,0,0,0.70);">
-                </a>
+                    <img src="https://image.tmdb.org/t/p/w500${data.image}" alt="episode_poster" style="display: block;width: 90%;margin: 1em auto;box-shadow: -10px 10px 18px -2px rgba(0,0,0,0.70);">
+				</a>
+				
+                <h5 style="color: #f9fafb;text-align: center;margin: 0;padding: 0.5em 0;">${data.episodeOverview}</h5>
                 
                 <div class="app" style="color: #f9fafb;box-sizing: border-box;padding: 0.5em;margin: 1em 0;">
                     <h2 style="margin: 0.5em 0;">Good news now there is an Android App for angular-watcher</h2>

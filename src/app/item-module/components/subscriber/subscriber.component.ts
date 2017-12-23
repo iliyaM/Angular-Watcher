@@ -16,6 +16,7 @@ import { User } from '../../../interfaces/user';
 
 // Moment JS
 import * as moment from 'moment';
+import { TvSeasonInfo } from '../../../interfaces/tv-season-information';
 
 @Component({
 	selector: 'app-subscriber',
@@ -28,7 +29,6 @@ export class SubscriberComponent implements OnInit {
 	user;
 	finalEpisodeSubscription: Subscription;
 	popupMessage: object;
-
 
 	@Input() information;
 
@@ -45,6 +45,7 @@ export class SubscriberComponent implements OnInit {
 	}
 
 	followInit() {
+
 		// Check status of tvShow
 		if (this.information.status === 'Ended') {
 			// Activate popip with ended info
@@ -58,23 +59,12 @@ export class SubscriberComponent implements OnInit {
 		}
 
 		if (this.user != null) {
-			this.popupMessage = this.db.activatePopup('sucsess');
 			this.getEpisode(this.user);
 		}
 	}
 
-	// Create object with showId and showName
 	getEpisode(user) {
-
-		const episodeData = {
-			episodesReleaseDate: null,
-			episodeNumber: null,
-			name: null,
-		};
-
 		const today = moment();
-
-		// Grab final season number and id
 		const finalSeason = this.information.seasons[this.information.seasons.length - 1].season_number;
 		const seasonId = this.information.seasons[this.information.seasons.length - 1].id;
 
@@ -82,32 +72,14 @@ export class SubscriberComponent implements OnInit {
 		this.finalEpisodeSubscription = this.api.findFinalEpisode(this.information.id, finalSeason).subscribe(res => {
 
 			for (const i in res.episodes) {
-				// If episode releases today
-				if (moment(res.episodes[i]['air_date']).startOf('day').isSame(today.startOf('day'))) {
-					episodeData.episodesReleaseDate = res.episodes[i]['air_date'];
-					episodeData.episodeNumber = res.episodes[i]['episode_number'],
-						episodeData.name = res.episodes[i]['name'];
-					console.log('Found today')
-					break;
-				}
-
-				// If today is after episode release and before the next episode release. this is the one.
+				// tslint:disable-next-line:max-line-length
 				if (moment(res.episodes[i]['air_date']) > today && moment(res.episodes[i]['air_date']) < moment(res.episodes[i]['air_date']).add(7, 'days')) {
-					console.log('Taking episode for this week');
-					episodeData.episodesReleaseDate = res.episodes[i]['air_date'];
-					episodeData.episodeNumber = res.episodes[i]['episode_number'],
-						episodeData.name = res.episodes[i]['name'];
-					console.log(res.episodes[i]['air_date']);
+					this.popupMessage = this.db.activatePopup('sucsess');
 					break;
+				} else {
+					this.popupMessage = this.db.activatePopup('noMoreEpisodesMessage');
 				}
 			}
-
-			// Check if nothing found set to 0
-			if (episodeData.episodesReleaseDate == null) {
-				this.popupMessage = this.db.activatePopup('noMoreEpisodesMessage');
-				episodeData.episodesReleaseDate = 0;
-			}
-
 			// Construct data object for firestore
 			const data = {
 				userId: user.userId,
@@ -118,11 +90,10 @@ export class SubscriberComponent implements OnInit {
 				type: 'tvShow',
 				showId: this.information.id,
 				userName: user.displayName,
-				episode: episodeData,
 			};
 			// Go populate Db
 			this.db.populateFirestore(data);
+			return;
 		});
-		return;
 	}
 }

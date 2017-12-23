@@ -55,7 +55,6 @@ import { clickOutsideDirective } from './directives/click';
 		ReactiveFormsModule,
 		HttpClientModule,
 		BrowserAnimationsModule,
-
 	],
 	providers: [ApiSearchService, DbService, AuthGuard, PublicService, AuthAdmin],
 	bootstrap: [AppComponent]

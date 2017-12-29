@@ -15,6 +15,7 @@ require('rxjs/add/operator/map');
 require('rxjs/add/operator/filter');
 require('rxjs/add/operator/switchMap');
 require('rxjs/add/operator/delay');
+require('rxjs/add/operator/bufferCount');
 
 
 // FireStore
@@ -48,60 +49,61 @@ const handleReleases = () => {
 // Show id's observable gets the final episode from final season and checks if it up to release.
 showIds$
 	.map(x => x)
+	.filter(x => x !== null)
+	.bufferCount(10)
 	.subscribe(showId => {
-		if (showId) {
+		showId.forEach(showId => {
 			axios.get(`https://api.themoviedb.org/3/tv/${showId}${apiKey}`)
 				.then(result => {
-					shows$.next(
-						{
-							showId: showId,
-							finalSeason: result.data.seasons[result.data.seasons.length - 1].season_number,
-							showName: result.data.name
-						}
-					)
+					shows$.next({
+						showId: showId,
+						finalSeason: result.data.seasons[result.data.seasons.length - 1].season_number,
+						showName: result.data.name
+					});
 				}).catch(err => console.log(err));
-		}
+		});
 	});
 
 shows$
-	.map(x => x)
-	.delay(10000)
-	.subscribe(result => {
-		if (result) {
-			axios.get(`https://api.themoviedb.org/3/tv/${result.showId}/season/${result.finalSeason}${apiKey}`)
-				.then(seasonInfo => {
-					seasonInfo.data.episodes.forEach(episode => {
-						if (moment(episode.air_date).startOf('day').isSame(today)) {
-							releases$.next({
-								seriesName: result.showName,
-								seasonNumber: episode.season_number,
-								episodeNumber: episode.episode_number,
-								episodeName: episode.name,
-								episodeOverview: episode.overview,
-								image: episode.still_path,
-								showId: result.showId,
-								linkingWord: 'today'
-							});
-						}
-						if (moment(episode.air_date).isSame(tomorrow)) {
-							releases$.next({
-								seriesName: result.showName,
-								seasonNumber: episode.season_number,
-								episodeNumber: episode.episode_number,
-								episodeName: episode.name,
-								episodeOverview: episode.overview,
-								image: episode.still_path,
-								showId: result.showId,
-								linkingWord: 'tomorrow'
-							});
-						}
-					});
-				}).catch(err => console.log(err));
+	.filter(x => x != null)
+	.bufferCount(10)
+	.subscribe(showsArray => {
+		if (showsArray) {
+			showsArray.forEach(item => {
+				axios.get(`https://api.themoviedb.org/3/tv/${item.showId}/season/${item.finalSeason}${apiKey}`)
+					.then(seasonInfo => {
+						seasonInfo.data.episodes.forEach(episode => {
+							if (moment(episode.air_date).startOf('day').isSame(today)) {
+								releases$.next({
+									seriesName: item.showName,
+									seasonNumber: episode.season_number,
+									episodeNumber: episode.episode_number,
+									episodeName: episode.name,
+									episodeOverview: episode.overview,
+									image: episode.still_path,
+									showId: item.showId,
+									linkingWord: 'today'
+								});
+							}
+							if (moment(episode.air_date).isSame(tomorrow)) {
+								releases$.next({
+									seriesName: item.showName,
+									seasonNumber: episode.season_number,
+									episodeNumber: episode.episode_number,
+									episodeName: episode.name,
+									episodeOverview: episode.overview,
+									image: episode.still_path,
+									showId: item.showId,
+									linkingWord: 'tomorrow'
+								});
+							}
+						});
+					}).catch(err => console.log(err));
+			})
 		}
 	});
 
 releases$
-	.map(x => x)
 	.subscribe(res => {
 		if (res) {
 			const fireBaseCollection = firestore.collection(`subscriptions/tv-shows/${res.showId}`).get()
@@ -126,6 +128,8 @@ const job = new CronJob({
 	timeZone: 'Asia/Jerusalem'
 });
 job.start();
+
+handleReleases();
 
 app.use(express.static(path.join(__dirname, '/dist')));
 

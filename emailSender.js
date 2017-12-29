@@ -44,11 +44,11 @@ module.exports = {
                     <a href="mailto:iliya.melishev@gmail.com" style="color: #f9fafb;text-decoration: none;">Iliya Melishev</a>
                 </div>
 			</div>`;
-		transporter.sendMail(message, function (err, info) {
-			if (err)
-				console.log(err)
-			else
-				console.log(info);
-		});
+			transporter.sendMail(message, function (err, info) {
+				if (err)
+					console.log(err)
+				else
+					console.log(info);
+			});
 	}
 }
